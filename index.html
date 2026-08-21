@@ -1600,4 +1600,115 @@ footer {
 </footer>
 
 </body>
+    <script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    // Mobil menyu
+    const menuBtn = document.querySelector(".menu-btn");
+    const navLinks = document.querySelector(".nav-links");
+
+    if (menuBtn) {
+        menuBtn.addEventListener("click", function () {
+            navLinks.style.display =
+                navLinks.style.display === "flex" ? "none" : "flex";
+
+            if (window.innerWidth <= 700) {
+                navLinks.style.flexDirection = "column";
+                navLinks.style.position = "absolute";
+                navLinks.style.top = "72px";
+                navLinks.style.right = "20px";
+                navLinks.style.background = "white";
+                navLinks.style.padding = "20px";
+                navLinks.style.borderRadius = "15px";
+                navLinks.style.boxShadow = "0 10px 30px rgba(0,0,0,.15)";
+            }
+        });
+    }
+
+    // Axtarış
+    const searchInput = document.querySelector(".search-box input");
+    const searchButton = document.querySelector(".search-box button");
+
+    function searchSite() {
+        const text = searchInput.value.trim().toLowerCase();
+
+        if (!text) {
+            alert("Axtarmaq istədiyiniz sözü yazın.");
+            return;
+        }
+
+        const sections = document.querySelectorAll("section");
+
+        let found = false;
+
+        sections.forEach(section => {
+            if (section.innerText.toLowerCase().includes(text)) {
+                section.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+                found = true;
+            }
+        });
+
+        if (!found) {
+            alert("Bu mövzu saytda tapılmadı.");
+        }
+    }
+
+    if (searchButton) {
+        searchButton.addEventListener("click", searchSite);
+    }
+
+    if (searchInput) {
+        searchInput.addEventListener("keydown", function(e) {
+            if (e.key === "Enter") {
+                searchSite();
+            }
+        });
+    }
+
+    // Kalkulyator kartlarına klik
+    const calculatorCards = document.querySelectorAll("#tools .card");
+
+    calculatorCards.forEach(card => {
+
+        card.style.cursor = "pointer";
+
+        card.addEventListener("click", function(e) {
+
+            if (e.target.tagName === "A") {
+                e.preventDefault();
+            }
+
+            const title = card.querySelector("h3").innerText;
+
+            alert(
+                title +
+                "\n\nBu kalkulyatoru indi işlək formada əlavə edirik."
+            );
+        });
+
+    });
+
+    // Canlı TV
+    document.querySelectorAll(".live-card").forEach(card => {
+
+        card.addEventListener("click", function(e) {
+
+            e.preventDefault();
+
+            const title = card.querySelector("h3").innerText;
+
+            alert(
+                title +
+                "\n\nCanlı yayım bölməsi hazırlanır."
+            );
+
+        });
+
+    });
+
+});
+</script>
 </html>
