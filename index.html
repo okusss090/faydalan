@@ -9,859 +9,1037 @@
 <meta name="description"
 content="Faydalan — xəbərlər, kalkulyatorlar, canlı yayımlar, din, idman, avtomobil, təhsil və gündəlik faydalı alətlər.">
 
+<!-- HLS PLAYER -->
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
 <style>
+
 *{
-box-sizing:border-box;
-margin:0;
-padding:0;
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
 html{
-scroll-behavior:smooth;
+    scroll-behavior:smooth;
 }
 
 body{
-font-family:Arial,Helvetica,sans-serif;
-background:#f4f7fb;
-color:#172033;
-line-height:1.5;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f4f7fb;
+    color:#172033;
+    line-height:1.5;
 }
 
 a{
-text-decoration:none;
-color:inherit;
+    text-decoration:none;
+    color:inherit;
 }
 
-button,input,textarea,select{
-font:inherit;
+button,
+input,
+textarea,
+select{
+    font:inherit;
 }
+
+/* =========================
+   HEADER
+========================= */
 
 header{
-position:sticky;
-top:0;
-z-index:9999;
-background:rgba(255,255,255,.97);
-backdrop-filter:blur(12px);
-border-bottom:1px solid #e5e7eb;
+    position:sticky;
+    top:0;
+    z-index:9999;
+    background:rgba(255,255,255,.97);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid #e5e7eb;
 }
 
 .navbar{
-max-width:1280px;
-margin:auto;
-min-height:72px;
-padding:0 20px;
-display:flex;
-align-items:center;
-justify-content:space-between;
-gap:20px;
+    max-width:1280px;
+    margin:auto;
+    min-height:72px;
+    padding:0 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
 }
 
 .logo{
-font-size:30px;
-font-weight:900;
-color:#1769e0;
-white-space:nowrap;
+    font-size:30px;
+    font-weight:900;
+    color:#1769e0;
+    white-space:nowrap;
 }
 
 .logo span{
-color:#16a36d;
+    color:#16a36d;
 }
 
 .nav-links{
-display:flex;
-gap:18px;
-align-items:center;
+    display:flex;
+    gap:18px;
+    align-items:center;
 }
 
 .nav-links a{
-font-size:14px;
-font-weight:700;
-color:#344054;
+    font-size:14px;
+    font-weight:700;
+    color:#344054;
 }
 
 .nav-links a:hover{
-color:#1769e0;
+    color:#1769e0;
 }
 
 .language-select{
-border:1px solid #dfe5ee;
-background:#fff;
-border-radius:10px;
-padding:9px 10px;
-cursor:pointer;
-font-weight:700;
+    border:1px solid #dfe5ee;
+    background:#fff;
+    border-radius:10px;
+    padding:9px 10px;
+    cursor:pointer;
+    font-weight:700;
 }
 
 .menu-btn{
-display:none;
-border:0;
-background:#eef4ff;
-border-radius:10px;
-padding:10px 13px;
-cursor:pointer;
+    display:none;
+    border:0;
+    background:#eef4ff;
+    border-radius:10px;
+    padding:10px 13px;
+    cursor:pointer;
 }
 
+/* =========================
+   HERO
+========================= */
+
 .hero{
-padding:80px 20px 65px;
-text-align:center;
-background:
-radial-gradient(circle at top left,#dcecff,transparent 35%),
-radial-gradient(circle at bottom right,#dff9ee,transparent 35%),
-#fff;
+    padding:80px 20px 65px;
+    text-align:center;
+    background:
+    radial-gradient(circle at top left,#dcecff,transparent 35%),
+    radial-gradient(circle at bottom right,#dff9ee,transparent 35%),
+    #fff;
 }
 
 .hero h1{
-font-size:clamp(40px,6vw,68px);
-line-height:1.05;
-margin-bottom:18px;
+    font-size:clamp(40px,6vw,68px);
+    line-height:1.05;
+    margin-bottom:18px;
 }
 
 .hero h1 span{
-color:#1769e0;
+    color:#1769e0;
 }
 
 .hero p{
-max-width:760px;
-margin:auto;
-color:#667085;
-font-size:19px;
+    max-width:760px;
+    margin:auto;
+    color:#667085;
+    font-size:19px;
 }
 
 .search-box{
-max-width:760px;
-margin:30px auto 0;
-background:#fff;
-border:1px solid #e5e9f0;
-border-radius:16px;
-padding:7px;
-display:flex;
-box-shadow:0 15px 45px rgba(15,23,42,.10);
+    max-width:760px;
+    margin:30px auto 0;
+    background:#fff;
+    border:1px solid #e5e9f0;
+    border-radius:16px;
+    padding:7px;
+    display:flex;
+    box-shadow:0 15px 45px rgba(15,23,42,.10);
 }
 
 .search-box input{
-flex:1;
-min-width:0;
-border:0;
-outline:0;
-padding:14px;
+    flex:1;
+    min-width:0;
+    border:0;
+    outline:0;
+    padding:14px;
 }
 
 .search-box button{
-border:0;
-background:#1769e0;
-color:#fff;
-padding:0 25px;
-border-radius:11px;
-font-weight:800;
-cursor:pointer;
+    border:0;
+    background:#1769e0;
+    color:#fff;
+    padding:0 25px;
+    border-radius:11px;
+    font-weight:800;
+    cursor:pointer;
 }
 
+/* =========================
+   QUICK
+========================= */
+
 .quick{
-max-width:1280px;
-margin:-25px auto 0;
-padding:0 20px;
-position:relative;
-z-index:5;
+    max-width:1280px;
+    margin:-25px auto 0;
+    padding:0 20px;
+    position:relative;
+    z-index:5;
 }
 
 .quick-grid{
-display:grid;
-grid-template-columns:repeat(8,1fr);
-gap:12px;
+    display:grid;
+    grid-template-columns:repeat(8,1fr);
+    gap:12px;
 }
 
 .quick-item{
-background:#fff;
-border:1px solid #e5e9f0;
-border-radius:15px;
-padding:15px 8px;
-text-align:center;
-font-size:12px;
-font-weight:800;
-box-shadow:0 8px 25px rgba(0,0,0,.05);
-transition:.2s;
+    background:#fff;
+    border:1px solid #e5e9f0;
+    border-radius:15px;
+    padding:15px 8px;
+    text-align:center;
+    font-size:12px;
+    font-weight:800;
+    box-shadow:0 8px 25px rgba(0,0,0,.05);
+    transition:.2s;
 }
 
 .quick-item:hover{
-transform:translateY(-4px);
-border-color:#1769e0;
+    transform:translateY(-4px);
+    border-color:#1769e0;
 }
 
 .quick-item .emoji{
-display:block;
-font-size:25px;
-margin-bottom:5px;
+    display:block;
+    font-size:25px;
+    margin-bottom:5px;
 }
 
+/* =========================
+   GENERAL
+========================= */
+
 .container{
-max-width:1280px;
-margin:auto;
-padding:60px 20px;
+    max-width:1280px;
+    margin:auto;
+    padding:60px 20px;
 }
 
 .section-heading{
-margin-bottom:28px;
+    margin-bottom:28px;
 }
 
 .section-heading h2{
-font-size:32px;
-margin-bottom:6px;
+    font-size:32px;
+    margin-bottom:6px;
 }
 
 .section-heading p{
-color:#667085;
+    color:#667085;
 }
 
+.section-heading.center{
+    text-align:center;
+}
+
+/* =========================
+   PORTAL
+========================= */
+
 .portal{
-background:#fff;
+    background:#fff;
 }
 
 .portal-grid{
-display:grid;
-grid-template-columns:1.5fr 1fr;
-gap:20px;
+    display:grid;
+    grid-template-columns:1.5fr 1fr;
+    gap:20px;
 }
 
 .main-news{
-background:#101828;
-color:white;
-min-height:340px;
-border-radius:22px;
-padding:32px;
-display:flex;
-flex-direction:column;
-justify-content:flex-end;
-background:
-linear-gradient(180deg,rgba(16,24,40,.1),rgba(16,24,40,.95)),
-linear-gradient(135deg,#1769e0,#4837b8);
+    background:#101828;
+    color:white;
+    min-height:340px;
+    border-radius:22px;
+    padding:32px;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+    background:
+    linear-gradient(180deg,rgba(16,24,40,.1),rgba(16,24,40,.95)),
+    linear-gradient(135deg,#1769e0,#4837b8);
 }
 
 .main-news .tag{
-color:#9fc2ff;
-font-weight:800;
-font-size:12px;
-margin-bottom:8px;
+    color:#9fc2ff;
+    font-weight:800;
+    font-size:12px;
+    margin-bottom:8px;
 }
 
 .main-news h3{
-font-size:30px;
-margin-bottom:8px;
+    font-size:30px;
+    margin-bottom:8px;
 }
 
 .side-news{
-display:grid;
-gap:12px;
+    display:grid;
+    gap:12px;
 }
 
 .news-mini{
-background:#fff;
-border:1px solid #e5e9f0;
-border-radius:16px;
-padding:18px;
-transition:.2s;
+    background:#fff;
+    border:1px solid #e5e9f0;
+    border-radius:16px;
+    padding:18px;
+    transition:.2s;
 }
 
 .news-mini:hover{
-transform:translateY(-3px);
-box-shadow:0 10px 25px rgba(0,0,0,.06);
+    transform:translateY(-3px);
+    box-shadow:0 10px 25px rgba(0,0,0,.06);
 }
 
 .news-mini span{
-color:#1769e0;
-font-size:11px;
-font-weight:800;
+    color:#1769e0;
+    font-size:11px;
+    font-weight:800;
 }
 
 .news-mini h4{
-margin-top:5px;
+    margin-top:5px;
 }
 
+/* =========================
+   CARDS
+========================= */
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+}
+
+.card{
+    background:#fff;
+    border:1px solid #e5e9f0;
+    border-radius:18px;
+    padding:24px;
+    transition:.2s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 15px 35px rgba(15,23,42,.08);
+}
+
+.card-icon{
+    width:52px;
+    height:52px;
+    display:grid;
+    place-items:center;
+    background:#eef4ff;
+    border-radius:14px;
+    font-size:27px;
+    margin-bottom:15px;
+}
+
+.card h3{
+    margin-bottom:7px;
+    font-size:18px;
+}
+
+.card p{
+    color:#667085;
+    font-size:14px;
+}
+
+.action-btn{
+    margin-top:15px;
+    border:0;
+    background:#1769e0;
+    color:white;
+    border-radius:10px;
+    padding:10px 14px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.action-btn:hover{
+    background:#1257bb;
+}
+
+/* =========================
+   CATEGORY
+========================= */
+
+.category-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:16px;
+}
+
+.category-card{
+    background:white;
+    border:1px solid #e5e9f0;
+    border-radius:17px;
+    padding:24px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.category-card:hover{
+    transform:translateY(-4px);
+    border-color:#1769e0;
+}
+
+.category-card .big{
+    font-size:38px;
+    margin-bottom:10px;
+}
+
+/* =========================
+   NEWS
+========================= */
+
 .news-grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:18px;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
 }
 
 .news-card{
-background:white;
-border:1px solid #e5e9f0;
-border-radius:17px;
-overflow:hidden;
+    background:white;
+    border:1px solid #e5e9f0;
+    border-radius:17px;
+    overflow:hidden;
 }
 
 .news-image{
-height:145px;
-display:grid;
-place-items:center;
-font-size:50px;
-background:linear-gradient(135deg,#eaf2ff,#f5f8ff);
+    height:145px;
+    display:grid;
+    place-items:center;
+    font-size:50px;
+    background:linear-gradient(135deg,#eaf2ff,#f5f8ff);
 }
 
 .news-content{
-padding:20px;
+    padding:20px;
 }
 
 .news-content .tag{
-color:#1769e0;
-font-size:11px;
-font-weight:800;
+    color:#1769e0;
+    font-size:11px;
+    font-weight:800;
 }
 
 .news-content h3{
-margin:7px 0;
-font-size:17px;
+    margin:7px 0;
+    font-size:17px;
 }
 
 .news-content p{
-color:#667085;
-font-size:14px;
+    color:#667085;
+    font-size:14px;
 }
 
+/* =========================
+   ADS
+========================= */
+
 .ads{
-background:#fffdf5;
+    background:#fffdf5;
 }
 
 .ad-grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:18px;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
 }
 
 .ad-card{
-background:white;
-border:1px solid #f1dfb5;
-border-radius:18px;
-padding:25px;
+    background:white;
+    border:1px solid #f1dfb5;
+    border-radius:18px;
+    padding:25px;
 }
 
 .ad-card .ad-label{
-color:#a26a00;
-font-size:11px;
-font-weight:900;
-margin-bottom:7px;
+    color:#a26a00;
+    font-size:11px;
+    font-weight:900;
+    margin-bottom:7px;
 }
 
-/* LIVE TV */
+/* =========================
+   LIVE TV
+========================= */
 
 .tv-section{
-background:#101828;
-color:white;
+    background:#101828;
+    color:white;
 }
 
 .tv-section .section-heading p{
-color:#98a2b3;
+    color:#98a2b3;
 }
 
 .tv-layout{
-display:grid;
-grid-template-columns:1.7fr 1fr;
-gap:18px;
+    display:grid;
+    grid-template-columns:1.7fr 1fr;
+    gap:18px;
 }
 
 .video-player{
-background:#05070b;
-border-radius:20px;
-min-height:390px;
-display:flex;
-align-items:center;
-justify-content:center;
-overflow:hidden;
-border:1px solid #263244;
+    position:relative;
+    background:#05070b;
+    border-radius:20px;
+    min-height:390px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    border:1px solid #263244;
 }
 
-#liveFrame{
-width:100%;
-height:390px;
-border:0;
-border-radius:20px;
-display:block;
+#liveVideo{
+    width:100%;
+    height:100%;
+    min-height:390px;
+    background:#000;
+    object-fit:contain;
+}
+
+.video-message{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:30px;
+    pointer-events:none;
+}
+
+.video-message-content{
+    max-width:500px;
+}
+
+.video-message .play{
+    width:80px;
+    height:80px;
+    border-radius:50%;
+    background:#1769e0;
+    display:grid;
+    place-items:center;
+    margin:0 auto 18px;
+    font-size:30px;
+}
+
+.video-status{
+    margin-top:12px;
+    font-size:13px;
+    color:#98a2b3;
 }
 
 .channel-list{
-display:grid;
-gap:10px;
+    display:grid;
+    gap:10px;
 }
 
 .channel{
-background:#182230;
-border:1px solid #263244;
-border-radius:13px;
-padding:17px;
-cursor:pointer;
-transition:.2s;
+    background:#182230;
+    border:1px solid #263244;
+    border-radius:13px;
+    padding:17px;
+    cursor:pointer;
+    transition:.2s;
 }
 
 .channel:hover,
 .channel.active{
-background:#1769e0;
-border-color:#1769e0;
+    background:#1769e0;
+    border-color:#1769e0;
 }
 
 .channel small{
-display:block;
-color:#b7c0cd;
-margin-top:3px;
+    display:block;
+    color:#b7c0cd;
+    margin-top:3px;
 }
 
-.channel.active small{
-color:white;
-}
-
-/* CALCULATORS */
+/* =========================
+   CALCULATORS
+========================= */
 
 .calc-grid{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:16px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:16px;
 }
 
 .calc-card{
-background:white;
-border:1px solid #e5e9f0;
-border-radius:17px;
-padding:22px;
+    background:white;
+    border:1px solid #e5e9f0;
+    border-radius:17px;
+    padding:22px;
 }
 
 .calc-card h3{
-margin-bottom:8px;
+    margin-bottom:8px;
 }
 
 .calc-card p{
-color:#667085;
-font-size:13px;
+    color:#667085;
+    font-size:13px;
 }
 
 .calc-form{
-margin-top:15px;
-display:none;
+    margin-top:15px;
+    display:none;
 }
 
 .calc-form.active{
-display:block;
+    display:block;
 }
 
 .calc-form input{
-width:100%;
-border:1px solid #d8dee8;
-border-radius:9px;
-padding:10px;
-margin-bottom:8px;
-outline:none;
+    width:100%;
+    border:1px solid #d8dee8;
+    border-radius:9px;
+    padding:10px;
+    margin-bottom:8px;
+    outline:none;
 }
 
 .result{
-margin-top:10px;
-padding:10px;
-background:#eef8f3;
-border-radius:9px;
-color:#087443;
-font-weight:700;
+    margin-top:10px;
+    padding:10px;
+    background:#eef8f3;
+    border-radius:9px;
+    color:#087443;
+    font-weight:700;
 }
 
-.action-btn{
-margin-top:15px;
-border:0;
-background:#1769e0;
-color:white;
-border-radius:10px;
-padding:10px 14px;
-font-weight:700;
-cursor:pointer;
-}
-
-.action-btn:hover{
-background:#1257bb;
-}
-
-/* KEYBOARD */
+/* =========================
+   KEYBOARD
+========================= */
 
 .keyboard-section{
-background:#eef4ff;
+    background:#eef4ff;
 }
 
 .keyboard-tabs{
-display:flex;
-flex-wrap:wrap;
-gap:8px;
-margin-bottom:18px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-bottom:18px;
 }
 
 .keyboard-tabs button{
-border:1px solid #d7dfec;
-background:white;
-border-radius:10px;
-padding:10px 14px;
-cursor:pointer;
-font-weight:700;
+    border:1px solid #d7dfec;
+    background:white;
+    border-radius:10px;
+    padding:10px 14px;
+    cursor:pointer;
+    font-weight:700;
 }
 
 .keyboard-tabs button.active{
-background:#1769e0;
-color:white;
+    background:#1769e0;
+    color:white;
 }
 
 .keyboard textarea{
-width:100%;
-min-height:130px;
-border:1px solid #d8dee8;
-border-radius:15px;
-padding:18px;
-resize:vertical;
-outline:none;
-background:white;
+    width:100%;
+    min-height:130px;
+    border:1px solid #d8dee8;
+    border-radius:15px;
+    padding:18px;
+    resize:vertical;
+    outline:none;
+    background:white;
 }
 
 .keys{
-margin-top:15px;
-display:flex;
-flex-wrap:wrap;
-gap:7px;
-padding:15px;
-background:#fff;
-border-radius:15px;
-border:1px solid #dfe5ee;
+    margin-top:15px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+    padding:15px;
+    background:#fff;
+    border-radius:15px;
+    border:1px solid #dfe5ee;
 }
 
 .key{
-min-width:42px;
-height:42px;
-border:1px solid #d7dfec;
-background:#f8fafc;
-border-radius:8px;
-cursor:pointer;
-font-weight:700;
+    min-width:42px;
+    height:42px;
+    border:1px solid #d7dfec;
+    background:#f8fafc;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:700;
 }
 
 .key:hover{
-background:#1769e0;
-color:white;
+    background:#1769e0;
+    color:white;
 }
 
-/* RELIGION */
+/* =========================
+   RELIGION
+========================= */
 
 .religion{
-background:linear-gradient(180deg,#f1fbf7,#fff);
+    background:linear-gradient(180deg,#f1fbf7,#fff);
 }
 
 .religion-grid{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:17px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:17px;
 }
 
 .religion-card{
-background:white;
-border:1px solid #dceee6;
-border-radius:17px;
-padding:23px;
+    background:white;
+    border:1px solid #dceee6;
+    border-radius:17px;
+    padding:23px;
 }
 
 .religion-card .big{
-font-size:38px;
-margin-bottom:8px;
+    font-size:38px;
+    margin-bottom:8px;
 }
 
 .religion-card p{
-color:#667085;
-font-size:14px;
+    color:#667085;
+    font-size:14px;
 }
 
-/* SPORTS */
+/* =========================
+   SPORTS
+========================= */
 
 .sports-grid{
-display:grid;
-grid-template-columns:repeat(5,1fr);
-gap:15px;
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:15px;
 }
 
 .sport-card{
-background:white;
-border:1px solid #e5e9f0;
-border-radius:17px;
-padding:25px 10px;
-text-align:center;
+    background:white;
+    border:1px solid #e5e9f0;
+    border-radius:17px;
+    padding:25px 10px;
+    text-align:center;
 }
 
 .sport-card .big{
-font-size:40px;
-margin-bottom:8px;
+    font-size:40px;
+    margin-bottom:8px;
 }
 
-/* DAILY */
+/* =========================
+   DAILY
+========================= */
 
 .daily-grid{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:16px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:16px;
 }
 
 .daily-card{
-background:white;
-border:1px solid #e5e9f0;
-border-radius:16px;
-padding:22px;
+    background:white;
+    border:1px solid #e5e9f0;
+    border-radius:16px;
+    padding:22px;
 }
 
 .daily-card strong{
-display:block;
-margin-bottom:6px;
+    display:block;
+    margin-bottom:6px;
 }
 
 .daily-card span{
-color:#667085;
+    color:#667085;
 }
 
-/* F1 */
+/* =========================
+   F1
+========================= */
 
 .f1{
-background:#fff;
+    background:#fff;
 }
 
 .f1-box{
-border-radius:22px;
-min-height:250px;
-padding:32px;
-color:white;
-display:flex;
-flex-direction:column;
-justify-content:flex-end;
-background:linear-gradient(135deg,#101828,#3b1d5e);
+    border-radius:22px;
+    min-height:250px;
+    padding:32px;
+    color:white;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+    background:linear-gradient(135deg,#101828,#3b1d5e);
 }
 
 .f1-box h3{
-font-size:30px;
-margin-bottom:7px;
+    font-size:30px;
+    margin-bottom:7px;
 }
 
-/* TOOLS */
+/* =========================
+   TOOLS
+========================= */
 
 .tool-grid{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:15px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
 }
 
 .tool{
-background:white;
-border:1px solid #e5e9f0;
-border-radius:15px;
-padding:20px;
+    background:white;
+    border:1px solid #e5e9f0;
+    border-radius:15px;
+    padding:20px;
 }
 
 .tool strong{
-display:block;
-margin-bottom:5px;
+    display:block;
+    margin-bottom:5px;
 }
 
 .tool small{
-color:#667085;
+    color:#667085;
 }
 
-/* FOOTER */
+/* =========================
+   FOOTER
+========================= */
 
 footer{
-background:#101828;
-color:white;
+    background:#101828;
+    color:white;
 }
 
 .footer-inner{
-max-width:1280px;
-margin:auto;
-padding:50px 20px 30px;
-display:grid;
-grid-template-columns:2fr 1fr 1fr 1fr;
-gap:30px;
+    max-width:1280px;
+    margin:auto;
+    padding:50px 20px 30px;
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr 1fr;
+    gap:30px;
 }
 
 .footer-brand h2{
-font-size:28px;
-margin-bottom:8px;
+    font-size:28px;
+    margin-bottom:8px;
 }
 
 .footer-brand p{
-color:#98a2b3;
+    color:#98a2b3;
 }
 
 .footer-column h4{
-margin-bottom:12px;
+    margin-bottom:12px;
 }
 
 .footer-column a{
-display:block;
-color:#98a2b3;
-margin:8px 0;
-font-size:14px;
+    display:block;
+    color:#98a2b3;
+    margin:8px 0;
+    font-size:14px;
 }
 
 .footer-bottom{
-max-width:1280px;
-margin:auto;
-border-top:1px solid #263244;
-padding:20px;
-color:#98a2b3;
-font-size:13px;
+    max-width:1280px;
+    margin:auto;
+    border-top:1px solid #263244;
+    padding:20px;
+    color:#98a2b3;
+    font-size:13px;
 }
 
+/* =========================
+   TOAST
+========================= */
+
 .toast{
-position:fixed;
-right:20px;
-bottom:20px;
-background:#101828;
-color:white;
-padding:13px 17px;
-border-radius:11px;
-opacity:0;
-transform:translateY(20px);
-pointer-events:none;
-transition:.3s;
-z-index:10000;
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    background:#101828;
+    color:white;
+    padding:13px 17px;
+    border-radius:11px;
+    opacity:0;
+    transform:translateY(20px);
+    pointer-events:none;
+    transition:.3s;
+    z-index:10000;
 }
 
 .toast.show{
-opacity:1;
-transform:translateY(0);
+    opacity:1;
+    transform:translateY(0);
 }
+
+/* =========================
+   MOBILE
+========================= */
 
 @media(max-width:1100px){
 
-.nav-links{
-display:none;
-}
+    .nav-links{
+        display:none;
+    }
 
-.menu-btn{
-display:block;
-}
+    .menu-btn{
+        display:block;
+    }
 
-.quick-grid{
-grid-template-columns:repeat(4,1fr);
-}
+    .quick-grid{
+        grid-template-columns:repeat(4,1fr);
+    }
 
-.cards,
-.calc-grid,
-.religion-grid,
-.daily-grid,
-.tool-grid{
-grid-template-columns:repeat(2,1fr);
-}
+    .cards,
+    .calc-grid,
+    .religion-grid,
+    .daily-grid,
+    .tool-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
 
-.category-grid{
-grid-template-columns:repeat(2,1fr);
-}
+    .category-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
 
-.sports-grid{
-grid-template-columns:repeat(3,1fr);
-}
-
+    .sports-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
 }
 
 @media(max-width:700px){
 
-.navbar{
-min-height:64px;
-}
+    .navbar{
+        min-height:64px;
+    }
 
-.logo{
-font-size:25px;
-}
+    .logo{
+        font-size:25px;
+    }
 
-.language-select{
-max-width:120px;
-}
+    .language-select{
+        max-width:120px;
+    }
 
-.hero{
-padding:60px 15px 50px;
-}
+    .hero{
+        padding:60px 15px 50px;
+    }
 
-.hero p{
-font-size:16px;
-}
+    .hero p{
+        font-size:16px;
+    }
 
-.search-box{
-flex-direction:column;
-gap:7px;
-}
+    .search-box{
+        flex-direction:column;
+        gap:7px;
+    }
 
-.search-box button{
-height:48px;
-}
+    .search-box button{
+        height:48px;
+    }
 
-.quick-grid{
-grid-template-columns:repeat(2,1fr);
-}
+    .quick-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
 
-.portal-grid,
-.tv-layout{
-grid-template-columns:1fr;
-}
+    .portal-grid,
+    .tv-layout{
+        grid-template-columns:1fr;
+    }
 
-.cards,
-.calc-grid,
-.news-grid,
-.ad-grid,
-.religion-grid,
-.daily-grid,
-.tool-grid,
-.category-grid{
-grid-template-columns:1fr;
-}
+    .cards,
+    .calc-grid,
+    .news-grid,
+    .ad-grid,
+    .religion-grid,
+    .daily-grid,
+    .tool-grid,
+    .category-grid{
+        grid-template-columns:1fr;
+    }
 
-.sports-grid{
-grid-template-columns:repeat(2,1fr);
-}
+    .sports-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
 
-.footer-inner{
-grid-template-columns:1fr;
-}
+    .footer-inner{
+        grid-template-columns:1fr;
+    }
 
-.container{
-padding:45px 15px;
-}
+    .container{
+        padding:45px 15px;
+    }
 
-.section-heading h2{
-font-size:27px;
-}
-
-#liveFrame{
-height:300px;
-}
+    .section-heading h2{
+        font-size:27px;
+    }
 
 }
+
 </style>
 </head>
 
 <body>
 
 <header>
+
 <div class="navbar">
 
-<a href="#" class="logo">Faydalan<span>.</span></a>
+<a href="#" class="logo">
+Faydalan<span>.</span>
+</a>
 
 <nav class="nav-links">
+
 <a href="#portal">Xəbərlər</a>
 <a href="#calculators">Kalkulyatorlar</a>
 <a href="#keyboard">Klaviatura</a>
 <a href="#live">Canlı TV</a>
 <a href="#religion">Din</a>
 <a href="#sports">İdman</a>
+
 </nav>
 
 <select class="language-select" id="language">
+
 <option value="az">🇦🇿 Azərbaycan</option>
 <option value="ru">🇷🇺 Русский</option>
 <option value="en">🇬🇧 English</option>
 <option value="ar">🇸🇦 العربية</option>
 <option value="tr">🇹🇷 Türkçe</option>
 <option value="de">🇩🇪 Deutsch</option>
+
 </select>
 
-<button class="menu-btn" onclick="toggleMobile()">☰</button>
+<button class="menu-btn" onclick="toggleMobile()">
+☰
+</button>
 
 </div>
+
 </header>
+
+
+<!-- HERO -->
 
 <section class="hero">
 
-<h1>Hər şey <span>Faydalan</span> ilə</h1>
+<h1>
+Hər şey <span>Faydalan</span> ilə
+</h1>
 
 <p>
 Gündəlik həyatınızı asanlaşdıran faydalı məlumatlar,
@@ -870,10 +1048,12 @@ kalkulyatorlar, xəbərlər, idman, din və daha çoxu.
 
 <div class="search-box">
 
-<input id="searchInput"
-placeholder="Nə axtarırsınız?">
+<input
+id="searchInput"
+placeholder="Nə axtarırsınız?"
+>
 
-<button onclick="searchSite">
+<button onclick="searchSite()">
 Axtar
 </button>
 
@@ -881,44 +1061,59 @@ Axtar
 
 </section>
 
+
+<!-- QUICK -->
+
 <div class="quick">
 
 <div class="quick-grid">
 
 <a class="quick-item" href="#calculators">
-<span class="emoji">🧮</span>Kalkulyatorlar
+<span class="emoji">🧮</span>
+Kalkulyatorlar
 </a>
 
 <a class="quick-item" href="#keyboard">
-<span class="emoji">⌨️</span>Klaviatura
+<span class="emoji">⌨️</span>
+Klaviatura
 </a>
 
 <a class="quick-item" href="#portal">
-<span class="emoji">📰</span>Xəbərlər
+<span class="emoji">📰</span>
+Xəbərlər
 </a>
 
 <a class="quick-item" href="#live">
-<span class="emoji">📺</span>Canlı TV
+<span class="emoji">📺</span>
+Canlı TV
 </a>
 
 <a class="quick-item" href="#religion">
-<span class="emoji">🕋</span>Din
+<span class="emoji">🕋</span>
+Din
 </a>
 
 <a class="quick-item" href="#sports">
-<span class="emoji">⚽</span>İdman
+<span class="emoji">⚽</span>
+İdman
 </a>
 
 <a class="quick-item" href="#home">
-<span class="emoji">🏠</span>Ev & Təmir
+<span class="emoji">🏠</span>
+Ev & Təmir
 </a>
 
 <a class="quick-item" href="#tools">
-<span class="emoji">🛠</span>Faydalı alətlər
+<span class="emoji">🛠</span>
+Faydalı alətlər
 </a>
 
 </div>
+
 </div>
+
+
+<!-- NEWS PORTAL -->
 
 <section class="portal" id="portal">
 
@@ -929,7 +1124,8 @@ Axtar
 <h2>📰 Son xəbərlər</h2>
 
 <p>
-Azərbaycan, dünya, iqtisadiyyat, texnologiya, din, avtomobil və idman.
+Azərbaycan, dünya, iqtisadiyyat, texnologiya,
+din, avtomobil və idman.
 </p>
 
 </div>
@@ -938,9 +1134,13 @@ Azərbaycan, dünya, iqtisadiyyat, texnologiya, din, avtomobil və idman.
 
 <div class="main-news">
 
-<div class="tag">SEÇİLMİŞ</div>
+<div class="tag">
+SEÇİLMİŞ
+</div>
 
-<h3>Günün əsas xəbərləri burada olacaq</h3>
+<h3>
+Günün əsas xəbərləri burada olacaq
+</h3>
 
 <p>
 Real online xəbər sistemi növbəti mərhələdə qoşulacaq.
@@ -975,12 +1175,18 @@ Real online xəbər sistemi növbəti mərhələdə qoşulacaq.
 </div>
 
 </div>
+
 </section>
+
+
+<!-- NEWS -->
 
 <section class="container">
 
 <div class="section-heading">
+
 <h2>📰 Xəbər kateqoriyaları</h2>
+
 </div>
 
 <div class="news-grid">
@@ -1040,15 +1246,24 @@ Real online xəbər sistemi növbəti mərhələdə qoşulacaq.
 </div>
 
 </div>
+
 </section>
+
+
+<!-- ADS -->
 
 <section class="ads">
 
 <div class="container">
 
 <div class="section-heading">
+
 <h2>📢 Elanlar</h2>
-<p>Faydalı elanlar və xidmətlər.</p>
+
+<p>
+Faydalı elanlar və xidmətlər.
+</p>
+
 </div>
 
 <div class="ad-grid">
@@ -1072,10 +1287,13 @@ Real online xəbər sistemi növbəti mərhələdə qoşulacaq.
 </div>
 
 </div>
+
 </div>
+
 </section>
 
-<!-- CANLI TV -->
+
+<!-- LIVE TV -->
 
 <section class="tv-section" id="live">
 
@@ -1083,10 +1301,10 @@ Real online xəbər sistemi növbəti mərhələdə qoşulacaq.
 
 <div class="section-heading">
 
-<h2>📺 Canlı TV</h2>
+<h2>📺 Canlı yayımlar</h2>
 
 <p>
-Kanal seçin və canlı yayımı izləyin.
+Kanal seçin və video playerdə izləyin.
 </p>
 
 </div>
@@ -1095,92 +1313,139 @@ Kanal seçin və canlı yayımı izləyin.
 
 <div class="video-player">
 
-<iframe
-id="liveFrame"
-src="https://www.youtube.com/embed/7-Qf3g-0xEI?autoplay=0&rel=0"
-title="Məkkə Canlı Yayım"
-allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
-allowfullscreen>
-</iframe>
+<video
+id="liveVideo"
+controls
+playsinline
+poster=""
+>
+</video>
+
+<div class="video-message" id="videoMessage">
+
+<div class="video-message-content">
+
+<div class="play">
+▶
+</div>
+
+<h3 id="selectedChannel">
+Kanal seçin
+</h3>
+
+<p id="videoDescription">
+Canlı yayımı başlatmaq üçün kanal seçin.
+</p>
+
+<div class="video-status" id="videoStatus">
+Hazırdır
+</div>
 
 </div>
+
+</div>
+
+</div>
+
 
 <div class="channel-list">
 
-<div
-class="channel active"
-onclick="selectChannel(
-'🕋 Məkkə',
-'https://www.youtube.com/embed/7-Qf3g-0xEI?autoplay=1&rel=0',
-this
-)">
-
-<strong>🕋 Məkkə</strong>
-<small>🔴 CANLI</small>
-
-</div>
 
 <div
 class="channel"
-onclick="selectChannel(
-'🕌 Mədinə',
-'https://www.youtube.com/embed/7-Qf3g-0xEI?autoplay=1&rel=0',
-this
-)">
+onclick="playChannel('mecca',this)"
+>
 
-<strong>🕌 Mədinə</strong>
-<small>🔴 CANLI</small>
+<strong>
+🕋 Məkkə
+</strong>
+
+<small>
+CANLI
+</small>
 
 </div>
+
 
 <div
 class="channel"
-onclick="selectChannel(
-'📖 Quran TV',
-'https://www.youtube.com/embed/7-Qf3g-0xEI?autoplay=1&rel=0',
-this
-)">
+onclick="playChannel('madina',this)"
+>
 
-<strong>📖 Quran TV</strong>
-<small>🔴 CANLI</small>
+<strong>
+🕌 Mədinə
+</strong>
+
+<small>
+CANLI
+</small>
 
 </div>
+
 
 <div
 class="channel"
-onclick="openOfficialTV(
-'🇦🇿 AzTV',
-'https://aztv.az/az/live'
-)">
+onclick="playChannel('dini',this)"
+>
 
-<strong>🇦🇿 AzTV</strong>
-<small>🔴 RƏSMİ CANLI</small>
+<strong>
+📖 Dini TV
+</strong>
+
+<small>
+CANLI
+</small>
 
 </div>
+
 
 <div
 class="channel"
-onclick="openOfficialTV(
-'📺 İTV',
-'https://itv.az/'
-)">
+onclick="playChannel('azerbaijan',this)"
+>
 
-<strong>📺 İTV</strong>
-<small>RƏSMİ SAYT</small>
+<strong>
+🇦🇿 Azərbaycan TV
+</strong>
+
+<small>
+CANLI
+</small>
 
 </div>
+
 
 <div
 class="channel"
-onclick="openOfficialTV(
-'⚽ İdman TV',
-'https://aztv.az/az/live'
-)">
+onclick="playChannel('dunya',this)"
+>
 
-<strong>⚽ İdman TV</strong>
-<small>RƏSMİ CANLI</small>
+<strong>
+🌍 Dünya TV
+</strong>
+
+<small>
+CANLI
+</small>
 
 </div>
+
+
+<div
+class="channel"
+onclick="playChannel('sport',this)"
+>
+
+<strong>
+⚽ İdman
+</strong>
+
+<small>
+CANLI
+</small>
+
+</div>
+
 
 </div>
 
@@ -1189,6 +1454,9 @@ onclick="openOfficialTV(
 </div>
 
 </section>
+
+
+<!-- CALCULATORS -->
 
 <section class="container" id="calculators">
 
@@ -1204,108 +1472,517 @@ Gündəlik istifadə üçün faydalı hesablayıcılar.
 
 <div class="calc-grid">
 
+
 <div class="calc-card">
+
 <h3>💰 Kredit</h3>
-<p>Məbləğ və aylıq faiz.</p>
-<button class="action-btn" onclick="toggleCalc('credit')">Hesabla</button>
+
+<p>
+Məbləğ və aylıq faiz.
+</p>
+
+<button
+class="action-btn"
+onclick="toggleCalc('credit')"
+>
+Hesabla
+</button>
+
 <div class="calc-form" id="credit">
-<input id="loan" type="number" placeholder="Kredit məbləği">
-<input id="rate" type="number" placeholder="İllik faiz (%)">
-<input id="months" type="number" placeholder="Müddət (ay)">
-<button class="action-btn" onclick="creditCalc()">Hesabla</button>
-<div class="result" id="creditResult"></div>
-</div>
+
+<input
+id="loan"
+type="number"
+placeholder="Kredit məbləği"
+>
+
+<input
+id="rate"
+type="number"
+placeholder="İllik faiz (%)"
+>
+
+<input
+id="months"
+type="number"
+placeholder="Müddət (ay)"
+>
+
+<button
+class="action-btn"
+onclick="creditCalc()"
+>
+Hesabla
+</button>
+
+<div
+class="result"
+id="creditResult"
+></div>
+
 </div>
 
+</div>
+
+
 <div class="calc-card">
+
 <h3>⛽ Yanacaq</h3>
-<p>Yanacaq xərcini hesabla.</p>
-<button class="action-btn" onclick="toggleCalc('fuel')">Hesabla</button>
+
+<p>
+Yanacaq xərcini hesabla.
+</p>
+
+<button
+class="action-btn"
+onclick="toggleCalc('fuel')"
+>
+Hesabla
+</button>
+
 <div class="calc-form" id="fuel">
-<input id="distance" type="number" placeholder="Məsafə (km)">
-<input id="consumption" type="number" placeholder="Sərfiyyat L/100km">
-<input id="fuelprice" type="number" placeholder="1 litr qiyməti">
-<button class="action-btn" onclick="fuelCalc()">Hesabla</button>
-<div class="result" id="fuelResult"></div>
-</div>
+
+<input
+id="distance"
+type="number"
+placeholder="Məsafə (km)"
+>
+
+<input
+id="consumption"
+type="number"
+placeholder="Sərfiyyat L/100km"
+>
+
+<input
+id="fuelprice"
+type="number"
+placeholder="1 litr qiyməti"
+>
+
+<button
+class="action-btn"
+onclick="fuelCalc()"
+>
+Hesabla
+</button>
+
+<div
+class="result"
+id="fuelResult"
+></div>
+
 </div>
 
+</div>
+
+
 <div class="calc-card">
+
 <h3>❄️ BTU</h3>
-<p>Otaq üçün kondisioner gücü.</p>
-<button class="action-btn" onclick="toggleCalc('btu')">Hesabla</button>
+
+<p>
+Otaq üçün kondisioner gücü.
+</p>
+
+<button
+class="action-btn"
+onclick="toggleCalc('btu')"
+>
+Hesabla
+</button>
+
 <div class="calc-form" id="btu">
-<input id="roomArea" type="number" placeholder="Otaq sahəsi m²">
-<button class="action-btn" onclick="btuCalc()">Hesabla</button>
-<div class="result" id="btuResult"></div>
-</div>
+
+<input
+id="roomArea"
+type="number"
+placeholder="Otaq sahəsi m²"
+>
+
+<button
+class="action-btn"
+onclick="btuCalc()"
+>
+Hesabla
+</button>
+
+<div
+class="result"
+id="btuResult"
+></div>
+
 </div>
 
+</div>
+
+
 <div class="calc-card">
+
 <h3>🎂 Yaş</h3>
-<p>Doğum tarixindən yaş.</p>
-<button class="action-btn" onclick="toggleCalc('age')">Hesabla</button>
+
+<p>
+Doğum tarixindən yaş.
+</p>
+
+<button
+class="action-btn"
+onclick="toggleCalc('age')"
+>
+Hesabla
+</button>
+
 <div class="calc-form" id="age">
-<input id="birthDate" type="date">
-<button class="action-btn" onclick="ageCalc()">Hesabla</button>
-<div class="result" id="ageResult"></div>
-</div>
+
+<input
+id="birthDate"
+type="date"
+>
+
+<button
+class="action-btn"
+onclick="ageCalc()"
+>
+Hesabla
+</button>
+
+<div
+class="result"
+id="ageResult"
+></div>
+
 </div>
 
+</div>
+
+
 <div class="calc-card">
+
 <h3>📊 Faiz</h3>
-<p>Məbləğin faizini hesabla.</p>
-<button class="action-btn" onclick="toggleCalc('percent')">Hesabla</button>
+
+<p>
+Məbləğin faizini hesabla.
+</p>
+
+<button
+class="action-btn"
+onclick="toggleCalc('percent')"
+>
+Hesabla
+</button>
+
 <div class="calc-form" id="percent">
-<input id="percentAmount" type="number" placeholder="Məbləğ">
-<input id="percentValue" type="number" placeholder="Faiz">
-<button class="action-btn" onclick="percentCalc()">Hesabla</button>
-<div class="result" id="percentResult"></div>
-</div>
+
+<input
+id="percentAmount"
+type="number"
+placeholder="Məbləğ"
+>
+
+<input
+id="percentValue"
+type="number"
+placeholder="Faiz"
+>
+
+<button
+class="action-btn"
+onclick="percentCalc()"
+>
+Hesabla
+</button>
+
+<div
+class="result"
+id="percentResult"
+></div>
+
 </div>
 
+</div>
+
+
 <div class="calc-card">
+
 <h3>⚖️ BMI</h3>
-<p>Boy və çəkiyə görə BMI.</p>
-<button class="action-btn" onclick="toggleCalc('bmi')">Hesabla</button>
+
+<p>
+Boy və çəkiyə görə BMI.
+</p>
+
+<button
+class="action-btn"
+onclick="toggleCalc('bmi')"
+>
+Hesabla
+</button>
+
 <div class="calc-form" id="bmi">
-<input id="height" type="number" placeholder="Boy (sm)">
-<input id="weight" type="number" placeholder="Çəki (kg)">
-<button class="action-btn" onclick="bmiCalc()">Hesabla</button>
-<div class="result" id="bmiResult"></div>
-</div>
+
+<input
+id="height"
+type="number"
+placeholder="Boy (sm)"
+>
+
+<input
+id="weight"
+type="number"
+placeholder="Çəki (kg)"
+>
+
+<button
+class="action-btn"
+onclick="bmiCalc()"
+>
+Hesabla
+</button>
+
+<div
+class="result"
+id="bmiResult"
+></div>
+
 </div>
 
+</div>
+
+
 <div class="calc-card">
+
 <h3>📐 Sahə</h3>
-<p>Uzunluq × en.</p>
-<button class="action-btn" onclick="toggleCalc('area')">Hesabla</button>
+
+<p>
+Uzunluq × en.
+</p>
+
+<button
+class="action-btn"
+onclick="toggleCalc('area')"
+>
+Hesabla
+</button>
+
 <div class="calc-form" id="area">
-<input id="length" type="number" placeholder="Uzunluq">
-<input id="width" type="number" placeholder="En">
-<button class="action-btn" onclick="areaCalc()">Hesabla</button>
-<div class="result" id="areaResult"></div>
+
+<input
+id="length"
+type="number"
+placeholder="Uzunluq"
+>
+
+<input
+id="width"
+type="number"
+placeholder="En"
+>
+
+<button
+class="action-btn"
+onclick="areaCalc()"
+>
+Hesabla
+</button>
+
+<div
+class="result"
+id="areaResult"
+></div>
+
 </div>
+
 </div>
+
 
 <div class="calc-card">
+
 <h3>⚡ Elektrik</h3>
-<p>Cihazın enerji xərci.</p>
-<button class="action-btn" onclick="toggleCalc('electric')">Hesabla</button>
+
+<p>
+Cihazın enerji xərci.
+</p>
+
+<button
+class="action-btn"
+onclick="toggleCalc('electric')"
+>
+Hesabla
+</button>
+
 <div class="calc-form" id="electric">
-<input id="power" type="number" placeholder="Güc (W)">
-<input id="hours" type="number" placeholder="Gündə saat">
-<input id="days" type="number" placeholder="Gün">
-<input id="electricPrice" type="number" placeholder="kWh qiyməti">
-<button class="action-btn" onclick="electricCalc()">Hesabla</button>
-<div class="result" id="electricResult"></div>
-</div>
+
+<input
+id="power"
+type="number"
+placeholder="Güc (W)"
+>
+
+<input
+id="hours"
+type="number"
+placeholder="Gündə saat"
+>
+
+<input
+id="days"
+type="number"
+placeholder="Gün"
+>
+
+<input
+id="electricPrice"
+type="number"
+placeholder="kWh qiyməti"
+>
+
+<button
+class="action-btn"
+onclick="electricCalc()"
+>
+Hesabla
+</button>
+
+<div
+class="result"
+id="electricResult"
+></div>
+
 </div>
 
 </div>
+
+
+<div class="calc-card">
+<h3>🎨 Boya</h3>
+<p>Divar sahəsinə görə boya.</p>
+<button
+class="action-btn"
+onclick="simpleTool('Boya hesablayıcısı')"
+>
+Aç
+</button>
+</div>
+
+
+<div class="calc-card">
+<h3>🧱 Kafel</h3>
+<p>Kafel miqdarı.</p>
+<button
+class="action-btn"
+onclick="simpleTool('Kafel hesablayıcısı')"
+>
+Aç
+</button>
+</div>
+
+
+<div class="calc-card">
+<h3>🪵 Laminat</h3>
+<p>Laminat miqdarı.</p>
+<button
+class="action-btn"
+onclick="simpleTool('Laminat hesablayıcısı')"
+>
+Aç
+</button>
+</div>
+
+
+<div class="calc-card">
+<h3>🏗️ Təmir smetası</h3>
+<p>İlkin təmir xərci.</p>
+<button
+class="action-btn"
+onclick="simpleTool('Təmir smetası')"
+>
+Aç
+</button>
+</div>
+
+
+<div class="calc-card">
+<h3>🔌 Elektrik yükü</h3>
+<p>Ümumi elektrik yükü.</p>
+<button
+class="action-btn"
+onclick="simpleTool('Elektrik yükü kalkulyatoru')"
+>
+Aç
+</button>
+</div>
+
+
+<div class="calc-card">
+<h3>📅 Tarix</h3>
+<p>Tarixlər arasındakı müddət.</p>
+<button
+class="action-btn"
+onclick="simpleTool('Tarix kalkulyatoru')"
+>
+Aç
+</button>
+</div>
+
+
+<div class="calc-card">
+<h3>⏱ Vaxt</h3>
+<p>Vaxt hesablamaları.</p>
+<button
+class="action-btn"
+onclick="simpleTool('Vaxt kalkulyatoru')"
+>
+Aç
+</button>
+</div>
+
+
+<div class="calc-card">
+<h3>📏 Ölçü</h3>
+<p>Ölçü vahidlərinin çevrilməsi.</p>
+<button
+class="action-btn"
+onclick="simpleTool('Ölçü çevirici')"
+>
+Aç
+</button>
+</div>
+
+
+<div class="calc-card">
+<h3>🍽️ Porsiya</h3>
+<p>Qonaq sayına görə miqdar.</p>
+<button
+class="action-btn"
+onclick="simpleTool('Porsiya kalkulyatoru')"
+>
+Aç
+</button>
+</div>
+
+
+<div class="calc-card">
+<h3>🔥 Kalori</h3>
+<p>Kalori hesablamaları.</p>
+<button
+class="action-btn"
+onclick="simpleTool('Kalori kalkulyatoru')"
+>
+Aç
+</button>
+</div>
+
+
+</div>
+
 </section>
 
-<section class="keyboard-section" id="keyboard">
+
+<!-- KEYBOARD -->
+
+<section
+class="keyboard-section"
+id="keyboard"
+>
 
 <div class="container">
 
@@ -1323,33 +2000,86 @@ Mətn yazın və bir toxunuşla kopyalayın.
 
 <div class="keyboard-tabs">
 
-<button class="active" onclick="setKeyboard('az',this)">🇦🇿 Azərbaycan</button>
-<button onclick="setKeyboard('tr',this)">🇹🇷 Türk</button>
-<button onclick="setKeyboard('en',this)">🇬🇧 English</button>
-<button onclick="setKeyboard('ru',this)">🇷🇺 Русский</button>
-<button onclick="setKeyboard('ar',this)">🇸🇦 العربية</button>
-<button onclick="setKeyboard('emoji',this)">😀 Emoji</button>
+<button
+class="active"
+onclick="setKeyboard('az',this)"
+>
+🇦🇿 Azərbaycan
+</button>
+
+<button
+onclick="setKeyboard('tr',this)"
+>
+🇹🇷 Türk
+</button>
+
+<button
+onclick="setKeyboard('en',this)"
+>
+🇬🇧 English
+</button>
+
+<button
+onclick="setKeyboard('ru',this)"
+>
+🇷🇺 Русский
+</button>
+
+<button
+onclick="setKeyboard('ar',this)"
+>
+🇸🇦 العربية
+</button>
+
+<button
+onclick="setKeyboard('emoji',this)"
+>
+😀 Emoji
+</button>
 
 </div>
 
-<textarea id="keyboardText"
-placeholder="Burada yazın..."></textarea>
+<textarea
+id="keyboardText"
+placeholder="Burada yazın..."
+></textarea>
 
 <div style="margin-top:10px">
 
-<button class="action-btn" onclick="copyKeyboard()">📋 Kopyala</button>
+<button
+class="action-btn"
+onclick="copyKeyboard()"
+>
+📋 Kopyala
+</button>
 
-<button class="action-btn" onclick="clearKeyboard()">🗑 Təmizlə</button>
+<button
+class="action-btn"
+onclick="clearKeyboard()"
+>
+🗑 Təmizlə
+</button>
 
 </div>
 
-<div class="keys" id="keys"></div>
+<div
+class="keys"
+id="keys"
+></div>
 
 </div>
+
 </div>
+
 </section>
 
-<section class="religion" id="religion">
+
+<!-- RELIGION -->
+
+<section
+class="religion"
+id="religion"
+>
 
 <div class="container">
 
@@ -1357,11 +2087,14 @@ placeholder="Burada yazın..."></textarea>
 
 <h2>🕋 Din və İslam</h2>
 
-<p>Dini məlumatlar, Quran, Həcc və Ümrə.</p>
+<p>
+Dini məlumatlar, Quran, Həcc və Ümrə.
+</p>
 
 </div>
 
 <div class="religion-grid">
+
 
 <div class="religion-card">
 <div class="big">📖</div>
@@ -1369,11 +2102,13 @@ placeholder="Burada yazın..."></textarea>
 <p>Quran və surələr.</p>
 </div>
 
+
 <div class="religion-card">
 <div class="big">🤲</div>
 <h3>Dua və zikrlər</h3>
 <p>Gündəlik dualar.</p>
 </div>
+
 
 <div class="religion-card">
 <div class="big">🕋</div>
@@ -1381,197 +2116,399 @@ placeholder="Burada yazın..."></textarea>
 <p>Müqəddəs Məkkə haqqında məlumat.</p>
 </div>
 
+
 <div class="religion-card">
 <div class="big">🕌</div>
 <h3>Mədinə</h3>
 <p>Mədinə haqqında məlumat.</p>
 </div>
 
+
+<div class="religion-card">
+<div class="big">🕋</div>
+<h3>Həcc</h3>
+<p>Həcc hazırlığı.</p>
 </div>
+
+
+<div class="religion-card">
+<div class="big">✈️</div>
+<h3>Ümrə</h3>
+<p>Ümrə səfəri haqqında məlumat.</p>
 </div>
+
+
+<div class="religion-card">
+<div class="big">🛂</div>
+<h3>Viza</h3>
+<p>Səfər və viza məlumatları.</p>
+</div>
+
+
+<div class="religion-card">
+<div class="big">🏨</div>
+<h3>Otel və paketlər</h3>
+<p>Həcc və Ümrə paketləri.</p>
+</div>
+
+
+</div>
+
+</div>
+
 </section>
 
-<section class="container" id="sports">
+
+<!-- SPORTS -->
+
+<section
+class="container"
+id="sports"
+>
 
 <div class="section-heading">
 
 <h2>⚽ İdman</h2>
 
-<p>Futbol, MMA, basketbol, tennis və Formula 1.</p>
+<p>
+Futbol, MMA, basketbol, tennis və Formula 1.
+</p>
 
 </div>
 
 <div class="sports-grid">
+
 
 <div class="sport-card">
 <div class="big">⚽</div>
 <h3>Futbol</h3>
 </div>
 
+
 <div class="sport-card">
 <div class="big">🥊</div>
 <h3>MMA / UFC</h3>
 </div>
+
 
 <div class="sport-card">
 <div class="big">🏀</div>
 <h3>Basketbol</h3>
 </div>
 
+
 <div class="sport-card">
 <div class="big">🎾</div>
 <h3>Tennis</h3>
 </div>
+
 
 <div class="sport-card">
 <div class="big">🏎️</div>
 <h3>Formula 1</h3>
 </div>
 
+
 </div>
+
 </section>
 
-<section class="container" id="home">
+
+<!-- HOME -->
+
+<section
+class="container"
+id="home"
+>
 
 <div class="section-heading">
+
 <h2>🏠 Ev & Təmir</h2>
-<p>Ev tikintisi və təmir üçün faydalı bölmələr.</p>
+
+<p>
+Ev tikintisi və təmir üçün faydalı bölmələr.
+</p>
+
 </div>
 
 <div class="cards">
 
+
 <div class="card">
+
 <div class="card-icon">🎨</div>
+
 <h3>Boya</h3>
-<p>Divar sahəsinə görə boya hesabla.</p>
-<button class="action-btn" onclick="simpleTool('Boya hesablayıcısı')">Aç</button>
+
+<p>
+Divar sahəsinə görə boya hesabla.
+</p>
+
+<button
+class="action-btn"
+onclick="simpleTool('Boya hesablayıcısı')"
+>
+Aç
+</button>
+
 </div>
 
+
 <div class="card">
+
 <div class="card-icon">🧱</div>
+
 <h3>Kafel</h3>
-<p>Kafel miqdarını hesabla.</p>
-<button class="action-btn" onclick="simpleTool('Kafel hesablayıcısı')">Aç</button>
+
+<p>
+Kafel miqdarını hesabla.
+</p>
+
+<button
+class="action-btn"
+onclick="simpleTool('Kafel hesablayıcısı')"
+>
+Aç
+</button>
+
 </div>
 
+
 <div class="card">
+
 <div class="card-icon">🪵</div>
+
 <h3>Laminat</h3>
-<p>Laminat miqdarını hesabla.</p>
-<button class="action-btn" onclick="simpleTool('Laminat hesablayıcısı')">Aç</button>
+
+<p>
+Laminat miqdarını hesabla.
+</p>
+
+<button
+class="action-btn"
+onclick="simpleTool('Laminat hesablayıcısı')"
+>
+Aç
+</button>
+
 </div>
+
 
 <div class="card">
+
 <div class="card-icon">🏗️</div>
+
 <h3>Təmir smetası</h3>
-<p>Təmir üçün ilkin smeta.</p>
-<button class="action-btn" onclick="simpleTool('Təmir smetası')">Aç</button>
-</div>
+
+<p>
+Təmir üçün ilkin smeta.
+</p>
+
+<button
+class="action-btn"
+onclick="simpleTool('Təmir smetası')"
+>
+Aç
+</button>
 
 </div>
+
+
+</div>
+
 </section>
+
+
+<!-- DAILY -->
 
 <section class="container">
 
 <div class="section-heading">
+
 <h2>🌤 Gündəlik məlumatlar</h2>
-<p>Hava və valyuta bölmələri.</p>
+
+<p>
+Hava və valyuta bölmələri.
+</p>
+
 </div>
 
 <div class="daily-grid">
+
 
 <div class="daily-card">
 <strong>🌤 Hava</strong>
 <span>Bakı və rayonlar</span>
 </div>
 
+
 <div class="daily-card">
 <strong>💵 USD / AZN</strong>
 <span>Valyuta məzənnəsi</span>
 </div>
+
 
 <div class="daily-card">
 <strong>💶 EUR / AZN</strong>
 <span>Avro məzənnəsi</span>
 </div>
 
+
 <div class="daily-card">
 <strong>₺ TRY / AZN</strong>
 <span>Türkiyə lirəsi</span>
 </div>
 
+
 </div>
+
 </section>
+
+
+<!-- OTHER -->
 
 <section class="container">
 
 <div class="section-heading">
+
 <h2>📚 Digər bölmələr</h2>
+
 </div>
 
-<div class="news-grid">
+<div class="category-grid">
 
-<div class="news-card">
-<div class="news-image">🚗</div>
-<div class="news-content">
+
+<div class="category-card">
+
+<div class="big">🚗</div>
+
 <h3>Avtomobil</h3>
-<p>Təkər, servis, yanacaq və avtomobil xəbərləri.</p>
-</div>
+
+<p>
+Təkər, servis, yanacaq və avtomobil xəbərləri.
+</p>
+
 </div>
 
-<div class="news-card">
-<div class="news-image">📚</div>
-<div class="news-content">
+
+<div class="category-card">
+
+<div class="big">📚</div>
+
 <h3>Təhsil</h3>
-<p>İngilis dili, tərcümə, essay və lüğət.</p>
-</div>
+
+<p>
+İngilis dili, tərcümə, essay və lüğət.
+</p>
+
 </div>
 
-<div class="news-card">
-<div class="news-image">🎮</div>
-<div class="news-content">
+
+<div class="category-card">
+
+<div class="big">🎮</div>
+
 <h3>Oyunlar</h3>
-<p>GTA, PlayStation və oyun bələdçiləri.</p>
-</div>
-</div>
+
+<p>
+GTA, PlayStation və oyun bələdçiləri.
+</p>
 
 </div>
+
+
+<div class="category-card">
+
+<div class="big">🍳</div>
+
+<h3>Mətbəx</h3>
+
+<p>
+Reseptlər, ölçülər və porsiya hesablamaları.
+</p>
+
+</div>
+
+
+</div>
+
 </section>
 
-<section class="container" id="tools">
+
+<!-- TOOLS -->
+
+<section
+class="container"
+id="tools"
+>
 
 <div class="section-heading">
 
 <h2>🛠 Faydalı alətlər</h2>
 
-<p>Gündəlik istifadə üçün əlavə alətlər.</p>
+<p>
+Gündəlik istifadə üçün əlavə alətlər.
+</p>
 
 </div>
 
 <div class="tool-grid">
+
 
 <div class="tool">
 <strong>🔳 QR generatoru</strong>
 <small>QR kod yaratmaq.</small>
 </div>
 
+
 <div class="tool">
 <strong>🔐 Parol generatoru</strong>
 <small>Güclü parol yaratmaq.</small>
 </div>
+
 
 <div class="tool">
 <strong>🔢 Mətn sayğacı</strong>
 <small>Söz və simvolları saymaq.</small>
 </div>
 
+
 <div class="tool">
 <strong>📄 PDF alətləri</strong>
 <small>PDF ilə işləmək.</small>
 </div>
 
+
+<div class="tool">
+<strong>📐 Ölçü çevirici</strong>
+<small>Ölçü vahidlərini çevirmək.</small>
 </div>
+
+
+<div class="tool">
+<strong>📅 Tarix alətləri</strong>
+<small>Tarix hesablamaları.</small>
+</div>
+
+
+<div class="tool">
+<strong>⏱ Vaxt alətləri</strong>
+<small>Vaxt hesablamaları.</small>
+</div>
+
+
+<div class="tool">
+<strong>🔗 Link alətləri</strong>
+<small>Faydalı link funksiyaları.</small>
+</div>
+
+
+</div>
+
 </section>
+
+
+<!-- FORMULA 1 -->
 
 <section class="f1">
 
@@ -1579,7 +2516,9 @@ placeholder="Burada yazın..."></textarea>
 
 <div class="f1-box">
 
-<h3>🏎️ Formula 1 & Yarışlar</h3>
+<h3>
+🏎️ Formula 1 & Yarışlar
+</h3>
 
 <p>
 Formula 1, yarışlar, yayımlar və idman dünyası.
@@ -1588,15 +2527,22 @@ Formula 1, yarışlar, yayımlar və idman dünyası.
 </div>
 
 </div>
+
 </section>
+
+
+<!-- FOOTER -->
 
 <footer>
 
 <div class="footer-inner">
 
+
 <div class="footer-brand">
 
-<h2>Faydalan</h2>
+<h2>
+Faydalan
+</h2>
 
 <p>
 Gündəlik həyat üçün faydalı məlumatlar,
@@ -1605,65 +2551,117 @@ alətlər, xəbərlər və xidmətlər.
 
 </div>
 
+
 <div class="footer-column">
 
 <h4>Kəşf et</h4>
 
-<a href="#portal">Xəbərlər</a>
-<a href="#calculators">Kalkulyatorlar</a>
-<a href="#keyboard">Klaviatura</a>
-<a href="#live">Canlı TV</a>
+<a href="#portal">
+Xəbərlər
+</a>
+
+<a href="#calculators">
+Kalkulyatorlar
+</a>
+
+<a href="#keyboard">
+Klaviatura
+</a>
+
+<a href="#live">
+Canlı TV
+</a>
 
 </div>
+
 
 <div class="footer-column">
 
 <h4>Kateqoriyalar</h4>
 
-<a href="#religion">Din</a>
-<a href="#sports">İdman</a>
-<a href="#home">Ev & Təmir</a>
-<a href="#tools">Faydalı alətlər</a>
+<a href="#religion">
+Din
+</a>
+
+<a href="#sports">
+İdman
+</a>
+
+<a href="#home">
+Ev & Təmir
+</a>
+
+<a href="#tools">
+Faydalı alətlər
+</a>
 
 </div>
+
 
 <div class="footer-column">
 
 <h4>Faydalan</h4>
 
-<a href="#">Haqqımızda</a>
-<a href="#">Əlaqə</a>
-<a href="#">Məxfilik</a>
-<a href="#">Qaydalar</a>
+<a href="#">
+Haqqımızda
+</a>
+
+<a href="#">
+Əlaqə
+</a>
+
+<a href="#">
+Məxfilik
+</a>
+
+<a href="#">
+Qaydalar
+</a>
 
 </div>
+
 
 </div>
 
 <div class="footer-bottom">
+
 © 2026 Faydalan. Bütün hüquqlar qorunur.
+
 </div>
 
 </footer>
 
-<div class="toast" id="toast"></div>
+
+<div
+class="toast"
+id="toast"
+></div>
+
 
 <script>
 
-/* SEARCH */
+/* =========================
+   SEARCH
+========================= */
 
 function searchSite(){
 
-const value=document.getElementById("searchInput").value.trim();
+const value=
+document.getElementById("searchInput")
+.value
+.trim()
+.toLowerCase();
 
 if(!value){
+
 showToast("Axtarış sözünü yazın.");
+
 return;
+
 }
 
-const text=value.toLowerCase();
-
 const map={
+
 "hesab":"calculators",
 "kalk":"calculators",
 "klav":"keyboard",
@@ -1673,6 +2671,7 @@ const map={
 "tv":"live",
 "canlı":"live",
 "din":"religion",
+"dini":"religion",
 "futbol":"sports",
 "mma":"sports",
 "ufc":"sports",
@@ -1682,13 +2681,15 @@ const map={
 "maşın":"home",
 "qr":"tools",
 "parol":"tools"
+
 };
 
 for(const key in map){
 
-if(text.includes(key)){
+if(value.includes(key)){
 
-const element=document.getElementById(map[key]);
+const element=
+document.getElementById(map[key]);
 
 if(element){
 
@@ -1699,6 +2700,7 @@ behavior:"smooth"
 showToast("Bölmə tapıldı.");
 
 return;
+
 }
 
 }
@@ -1706,213 +2708,321 @@ return;
 }
 
 showToast("Nəticə tapılmadı.");
+
 }
 
-/* CALCULATORS */
+
+/* =========================
+   CALCULATORS
+========================= */
 
 function toggleCalc(id){
 
-document.getElementById(id).classList.toggle("active");
+document
+.getElementById(id)
+.classList
+.toggle("active");
 
 }
+
 
 function creditCalc(){
 
-const P=Number(document.getElementById("loan").value);
-const annual=Number(document.getElementById("rate").value);
-const n=Number(document.getElementById("months").value);
+const P=
+Number(document.getElementById("loan").value);
 
-if(!P||!annual||!n){
+const annual=
+Number(document.getElementById("rate").value);
 
-document.getElementById("creditResult").textContent=
+const n=
+Number(document.getElementById("months").value);
+
+if(!P || !annual || !n){
+
+document.getElementById("creditResult")
+.textContent=
 "Məlumatları tam daxil edin.";
 
 return;
+
 }
 
-const r=annual/100/12;
+const r=
+annual/100/12;
 
 const payment=
 P*r*Math.pow(1+r,n)/
 (Math.pow(1+r,n)-1);
 
-document.getElementById("creditResult").textContent=
-"Aylıq ödəniş: "+payment.toFixed(2);
+document.getElementById("creditResult")
+.textContent=
+"Aylıq ödəniş: "+
+payment.toFixed(2);
 
 }
+
 
 function fuelCalc(){
 
-const d=Number(document.getElementById("distance").value);
-const c=Number(document.getElementById("consumption").value);
-const p=Number(document.getElementById("fuelprice").value);
+const d=
+Number(document.getElementById("distance").value);
 
-if(!d||!c||!p){
+const c=
+Number(document.getElementById("consumption").value);
 
-document.getElementById("fuelResult").textContent=
+const p=
+Number(document.getElementById("fuelprice").value);
+
+if(!d || !c || !p){
+
+document.getElementById("fuelResult")
+.textContent=
 "Məlumatları daxil edin.";
 
 return;
-}
-
-const liters=d*c/100;
-const cost=liters*p;
-
-document.getElementById("fuelResult").textContent=
-"Yanacaq: "+liters.toFixed(2)+" L | Xərc: "+cost.toFixed(2);
 
 }
+
+const liters=
+d*c/100;
+
+const cost=
+liters*p;
+
+document.getElementById("fuelResult")
+.textContent=
+"Yanacaq: "+
+liters.toFixed(2)+
+" L | Xərc: "+
+cost.toFixed(2);
+
+}
+
 
 function btuCalc(){
 
-const area=Number(document.getElementById("roomArea").value);
+const area=
+Number(document.getElementById("roomArea").value);
 
 if(!area){
 
-document.getElementById("btuResult").textContent=
+document.getElementById("btuResult")
+.textContent=
 "Sahəni daxil edin.";
 
 return;
-}
-
-const btu=area*400;
-
-document.getElementById("btuResult").textContent=
-"Təxmini: "+Math.round(btu)+" BTU";
 
 }
+
+const btu=
+area*400;
+
+document.getElementById("btuResult")
+.textContent=
+"Təxmini: "+
+Math.round(btu)+
+" BTU";
+
+}
+
 
 function ageCalc(){
 
-const date=document.getElementById("birthDate").value;
+const date=
+document.getElementById("birthDate").value;
 
 if(!date){
 
-document.getElementById("ageResult").textContent=
+document.getElementById("ageResult")
+.textContent=
 "Doğum tarixini seçin.";
 
 return;
+
 }
 
-const birth=new Date(date);
-const today=new Date();
+const birth=
+new Date(date);
+
+const today=
+new Date();
 
 let age=
-today.getFullYear()-birth.getFullYear();
+today.getFullYear()-
+birth.getFullYear();
 
 const m=
-today.getMonth()-birth.getMonth();
+today.getMonth()-
+birth.getMonth();
 
 if(
 m<0 ||
-(m===0 && today.getDate()<birth.getDate())
+(m===0 &&
+today.getDate()<birth.getDate())
 ){
+
 age--;
+
 }
 
-document.getElementById("ageResult").textContent=
+document.getElementById("ageResult")
+.textContent=
 "Yaş: "+age;
 
 }
 
+
 function percentCalc(){
 
 const amount=
-Number(document.getElementById("percentAmount").value);
+Number(
+document.getElementById("percentAmount").value
+);
 
 const percent=
-Number(document.getElementById("percentValue").value);
+Number(
+document.getElementById("percentValue").value
+);
 
-if(!amount||!percent){
+if(!amount || !percent){
 
-document.getElementById("percentResult").textContent=
+document.getElementById("percentResult")
+.textContent=
 "Məlumatları daxil edin.";
 
 return;
-}
-
-document.getElementById("percentResult").textContent=
-"Nəticə: "+(amount*percent/100).toFixed(2);
 
 }
+
+document.getElementById("percentResult")
+.textContent=
+"Nəticə: "+
+(amount*percent/100).toFixed(2);
+
+}
+
 
 function bmiCalc(){
 
 const h=
-Number(document.getElementById("height").value)/100;
+Number(
+document.getElementById("height").value
+)/100;
 
 const w=
-Number(document.getElementById("weight").value);
+Number(
+document.getElementById("weight").value
+);
 
-if(!h||!w){
+if(!h || !w){
 
-document.getElementById("bmiResult").textContent=
+document.getElementById("bmiResult")
+.textContent=
 "Boy və çəki daxil edin.";
 
 return;
-}
-
-const bmi=w/(h*h);
-
-document.getElementById("bmiResult").textContent=
-"BMI: "+bmi.toFixed(1);
 
 }
+
+const bmi=
+w/(h*h);
+
+document.getElementById("bmiResult")
+.textContent=
+"BMI: "+
+bmi.toFixed(1);
+
+}
+
 
 function areaCalc(){
 
 const l=
-Number(document.getElementById("length").value);
+Number(
+document.getElementById("length").value
+);
 
 const w=
-Number(document.getElementById("width").value);
+Number(
+document.getElementById("width").value
+);
 
-if(!l||!w){
+if(!l || !w){
 
-document.getElementById("areaResult").textContent=
+document.getElementById("areaResult")
+.textContent=
 "Ölçüləri daxil edin.";
 
 return;
-}
-
-document.getElementById("areaResult").textContent=
-"Sahə: "+(l*w).toFixed(2);
 
 }
+
+document.getElementById("areaResult")
+.textContent=
+"Sahə: "+
+(l*w).toFixed(2);
+
+}
+
 
 function electricCalc(){
 
 const power=
-Number(document.getElementById("power").value);
+Number(
+document.getElementById("power").value
+);
 
 const hours=
-Number(document.getElementById("hours").value);
+Number(
+document.getElementById("hours").value
+);
 
 const days=
-Number(document.getElementById("days").value);
+Number(
+document.getElementById("days").value
+);
 
 const price=
-Number(document.getElementById("electricPrice").value);
+Number(
+document.getElementById("electricPrice").value
+);
 
-if(!power||!hours||!days||!price){
+if(
+!power ||
+!hours ||
+!days ||
+!price
+){
 
-document.getElementById("electricResult").textContent=
+document.getElementById("electricResult")
+.textContent=
 "Məlumatları daxil edin.";
 
 return;
-}
-
-const kwh=(power/1000)*hours*days;
-
-const cost=kwh*price;
-
-document.getElementById("electricResult").textContent=
-"İstehlak: "+kwh.toFixed(2)+
-" kWh | Xərc: "+cost.toFixed(2);
 
 }
 
-/* KEYBOARD */
+const kwh=
+(power/1000)*
+hours*
+days;
+
+const cost=
+kwh*price;
+
+document.getElementById("electricResult")
+.textContent=
+"İstehlak: "+
+kwh.toFixed(2)+
+" kWh | Xərc: "+
+cost.toFixed(2);
+
+}
+
+
+/* =========================
+   KEYBOARD
+========================= */
 
 const keyboardLayouts={
 
@@ -1957,20 +3067,26 @@ emoji:[
 
 };
 
+
 function setKeyboard(lang,button){
 
 document
 .querySelectorAll(".keyboard-tabs button")
-.forEach(b=>b.classList.remove("active"));
+.forEach(b=>{
+b.classList.remove("active");
+});
 
+if(button){
 button.classList.add("active");
+}
 
 const keys=
 document.getElementById("keys");
 
 keys.innerHTML="";
 
-keyboardLayouts[lang].forEach(key=>{
+keyboardLayouts[lang]
+.forEach(key=>{
 
 const b=
 document.createElement("button");
@@ -1981,7 +3097,8 @@ b.textContent=key;
 
 b.onclick=()=>{
 
-document.getElementById("keyboardText").value+=key;
+document.getElementById("keyboardText")
+.value+=key;
 
 };
 
@@ -1991,10 +3108,12 @@ keys.appendChild(b);
 
 }
 
+
 setKeyboard(
 "az",
 document.querySelector(".keyboard-tabs button")
 );
+
 
 function copyKeyboard(){
 
@@ -2004,71 +3123,314 @@ document.getElementById("keyboardText");
 navigator.clipboard
 .writeText(text.value)
 .then(()=>{
+
 showToast("Mətn kopyalandı.");
+
 })
 .catch(()=>{
+
 text.select();
+
 document.execCommand("copy");
+
 showToast("Mətn kopyalandı.");
+
 });
 
 }
 
+
 function clearKeyboard(){
 
-document.getElementById("keyboardText").value="";
+document.getElementById("keyboardText")
+.value="";
 
 }
 
-/* TV SYSTEM */
 
-function selectChannel(name,url,element){
+/* =========================
+   LIVE TV SYSTEM
+========================= */
+
+/*
+    REAL M3U8 LINKLƏRİ BURADA OLACAQ.
+
+    Hələlik boş saxlanılıb.
+    Uydurma link qoyulmayıb.
+*/
+
+const tvChannels={
+
+mecca:{
+name:"🕋 Məkkə",
+url:""
+},
+
+madina:{
+name:"🕌 Mədinə",
+url:""
+},
+
+dini:{
+name:"📖 Dini TV",
+url:""
+},
+
+azerbaijan:{
+name:"🇦🇿 Azərbaycan TV",
+url:""
+},
+
+dunya:{
+name:"🌍 Dünya TV",
+url:""
+},
+
+sport:{
+name:"⚽ İdman",
+url:""
+}
+
+};
+
+
+let hlsPlayer=null;
+
+
+function playChannel(channelKey,element){
+
+const channel=
+tvChannels[channelKey];
+
+if(!channel){
+
+showToast("Kanal tapılmadı.");
+
+return;
+
+}
+
 
 document
 .querySelectorAll(".channel")
-.forEach(c=>c.classList.remove("active"));
+.forEach(c=>{
+c.classList.remove("active");
+});
+
+
+if(element){
 
 element.classList.add("active");
 
-const frame=
-document.getElementById("liveFrame");
+}
 
-frame.src=url;
 
-showToast(name+" seçildi.");
+const video=
+document.getElementById("liveVideo");
+
+const message=
+document.getElementById("videoMessage");
+
+const title=
+document.getElementById("selectedChannel");
+
+const description=
+document.getElementById("videoDescription");
+
+const status=
+document.getElementById("videoStatus");
+
+
+title.textContent=
+channel.name;
+
+
+message.style.display="none";
+
+
+if(hlsPlayer){
+
+hlsPlayer.destroy();
+
+hlsPlayer=null;
 
 }
 
-function openOfficialTV(name,url){
 
-showToast(name+" rəsmi canlı yayımı açılır...");
+video.pause();
 
-window.open(
-url,
-"_blank",
-"noopener,noreferrer"
+video.removeAttribute("src");
+
+video.load();
+
+
+if(!channel.url){
+
+message.style.display="flex";
+
+description.textContent=
+"Bu kanal üçün real canlı yayım mənbəyi hələ əlavə edilməyib.";
+
+status.textContent=
+"Yayım mənbəyi gözlənilir.";
+
+showToast(
+channel.name+
+" seçildi."
+);
+
+return;
+
+}
+
+
+status.textContent=
+"Yayım yüklənir...";
+
+
+if(
+window.Hls &&
+Hls.isSupported()
+){
+
+hlsPlayer=
+new Hls({
+enableWorker:true,
+lowLatencyMode:true
+});
+
+
+hlsPlayer.loadSource(
+channel.url
+);
+
+
+hlsPlayer.attachMedia(video);
+
+
+hlsPlayer.on(
+Hls.Events.MANIFEST_PARSED,
+function(){
+
+status.textContent=
+"CANLI";
+
+video.play()
+.catch(()=>{
+
+showToast(
+"Videonu başlatmaq üçün ▶ düyməsinə basın."
+);
+
+});
+
+}
+);
+
+
+hlsPlayer.on(
+Hls.Events.ERROR,
+function(event,data){
+
+console.error(
+"HLS ERROR:",
+data
+);
+
+if(data.fatal){
+
+status.textContent=
+"Yayım açıla bilmədi.";
+
+message.style.display="flex";
+
+description.textContent=
+"Canlı yayım mənbəyində problem var.";
+
+showToast(
+channel.name+
+" yayımı açıla bilmədi."
 );
 
 }
 
-/* TOAST */
+}
+);
+
+}
+
+else if(
+video.canPlayType(
+"application/vnd.apple.mpegurl"
+)
+){
+
+video.src=
+channel.url;
+
+video.addEventListener(
+"loadedmetadata",
+function(){
+
+status.textContent=
+"CANLI";
+
+video.play()
+.catch(()=>{});
+
+},
+{once:true}
+);
+
+}
+
+else{
+
+message.style.display="flex";
+
+description.textContent=
+"Bu brauzer HLS yayımını dəstəkləmir.";
+
+status.textContent=
+"Xəta";
+
+}
+
+}
+
+
+/* =========================
+   OTHER
+========================= */
+
+function simpleTool(message){
+
+showToast(
+message+
+" — növbəti funksional mərhələdə aktiv ediləcək."
+);
+
+}
+
 
 function showToast(message){
 
 const toast=
 document.getElementById("toast");
 
-toast.textContent=message;
+toast.textContent=
+message;
 
 toast.classList.add("show");
 
 setTimeout(()=>{
+
 toast.classList.remove("show");
+
 },3000);
 
 }
 
-/* MOBILE */
 
 function toggleMobile(){
 
@@ -2076,20 +3438,27 @@ showToast("Menyu");
 
 }
 
-/* ENTER SEARCH */
+
+/* =========================
+   ENTER SEARCH
+========================= */
 
 document
 .getElementById("searchInput")
-.addEventListener("keydown",function(e){
+.addEventListener(
+"keydown",
+function(e){
 
 if(e.key==="Enter"){
+
 searchSite();
+
 }
 
-});
+}
+);
 
 </script>
 
 </body>
 </html>
-```
