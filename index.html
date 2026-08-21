@@ -1,279 +1,1602 @@
 <!DOCTYPE html>
 <html lang="az">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Faydalan — Faydalı alətlər və məlumatlar</title>
-    <meta name="description" content="Faydalan — gündəlik həyat üçün faydalı məlumatlar, kalkulyatorlar və alətlər.">
+<title>Faydalan — Faydalı məlumatlar və alətlər</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+<meta name="description" content="Faydalan — gündəlik həyat üçün faydalı alətlər, kalkulyatorlar, xəbərlər, idman, din, Həcc və Ümrə məlumatları.">
 
-        body {
-            font-family: Arial, sans-serif;
-            background: #f5f7fb;
-            color: #172033;
-        }
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-        header {
-            background: #ffffff;
-            border-bottom: 1px solid #e8ebf2;
-            padding: 18px 7%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+html {
+    scroll-behavior: smooth;
+}
 
-        .logo {
-            font-size: 28px;
-            font-weight: 800;
-            color: #2563eb;
-        }
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f7fb;
+    color: #172033;
+    line-height: 1.5;
+}
 
-        nav a {
-            text-decoration: none;
-            color: #444;
-            margin-left: 25px;
-            font-size: 15px;
-        }
+a {
+    text-decoration: none;
+    color: inherit;
+}
 
-        .hero {
-            text-align: center;
-            padding: 75px 20px 55px;
-            background: linear-gradient(135deg, #eef5ff, #ffffff);
-        }
+header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: rgba(255,255,255,.96);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid #e5e7eb;
+}
 
-        .hero h1 {
-            font-size: 48px;
-            margin-bottom: 18px;
-        }
+.navbar {
+    max-width: 1250px;
+    margin: auto;
+    min-height: 72px;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
 
-        .hero h1 span {
-            color: #2563eb;
-        }
+.logo {
+    font-size: 30px;
+    font-weight: 900;
+    color: #1769e0;
+}
 
-        .hero p {
-            font-size: 19px;
-            color: #667085;
-            margin-bottom: 30px;
-        }
+.logo span {
+    color: #14a36d;
+}
 
-        .search {
-            max-width: 650px;
-            margin: auto;
-            display: flex;
-            background: white;
-            border-radius: 14px;
-            padding: 7px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
-        }
+.nav-links {
+    display: flex;
+    gap: 22px;
+    align-items: center;
+}
 
-        .search input {
-            flex: 1;
-            border: none;
-            outline: none;
-            padding: 15px;
-            font-size: 16px;
-        }
+.nav-links a {
+    color: #344054;
+    font-size: 14px;
+    font-weight: 600;
+}
 
-        .search button {
-            border: none;
-            background: #2563eb;
-            color: white;
-            padding: 0 25px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 15px;
-        }
+.nav-links a:hover {
+    color: #1769e0;
+}
 
-        .container {
-            max-width: 1150px;
-            margin: 50px auto;
-            padding: 0 20px;
-        }
+.menu-btn {
+    display: none;
+    border: 0;
+    background: #eef4ff;
+    padding: 10px 13px;
+    border-radius: 10px;
+    font-size: 20px;
+    cursor: pointer;
+}
 
-        .section-title {
-            text-align: center;
-            font-size: 30px;
-            margin-bottom: 30px;
-        }
+/* HERO */
 
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-            gap: 20px;
-        }
+.hero {
+    padding: 85px 20px 70px;
+    text-align: center;
+    background:
+        radial-gradient(circle at top left, #dcecff, transparent 35%),
+        radial-gradient(circle at bottom right, #dff9ee, transparent 35%),
+        #ffffff;
+}
 
-        .card {
-            background: white;
-            border-radius: 16px;
-            padding: 28px;
-            border: 1px solid #e8ebf2;
-            transition: 0.2s;
-        }
+.hero h1 {
+    font-size: clamp(38px, 6vw, 68px);
+    line-height: 1.05;
+    margin-bottom: 20px;
+}
 
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.08);
-        }
+.hero h1 span {
+    color: #1769e0;
+}
 
-        .icon {
-            font-size: 35px;
-            margin-bottom: 15px;
-        }
+.hero p {
+    max-width: 720px;
+    margin: auto;
+    color: #667085;
+    font-size: 19px;
+}
 
-        .card h3 {
-            margin-bottom: 10px;
-        }
+.search-box {
+    max-width: 720px;
+    margin: 32px auto 0;
+    display: flex;
+    background: white;
+    padding: 7px;
+    border-radius: 16px;
+    box-shadow: 0 15px 45px rgba(15, 23, 42, .12);
+    border: 1px solid #e8edf5;
+}
 
-        .card p {
-            color: #667085;
-            line-height: 1.5;
-            font-size: 14px;
-        }
+.search-box input {
+    flex: 1;
+    min-width: 0;
+    border: 0;
+    outline: 0;
+    padding: 15px;
+    font-size: 16px;
+}
 
-        footer {
-            margin-top: 70px;
-            background: #172033;
-            color: white;
-            text-align: center;
-            padding: 35px 20px;
-        }
+.search-box button {
+    border: 0;
+    background: #1769e0;
+    color: white;
+    border-radius: 11px;
+    padding: 0 25px;
+    cursor: pointer;
+    font-weight: 700;
+}
 
-        footer p {
-            color: #aeb7c8;
-            margin-top: 8px;
-        }
+/* GENERAL */
 
-        @media (max-width: 700px) {
-            header {
-                padding: 16px 20px;
-            }
+.container {
+    max-width: 1250px;
+    margin: auto;
+    padding: 65px 20px;
+}
 
-            nav {
-                display: none;
-            }
+.section-heading {
+    margin-bottom: 30px;
+}
 
-            .hero h1 {
-                font-size: 36px;
-            }
+.section-heading h2 {
+    font-size: 32px;
+    margin-bottom: 7px;
+}
 
-            .hero {
-                padding-top: 55px;
-            }
-        }
-    </style>
+.section-heading p {
+    color: #667085;
+}
+
+.section-heading.center {
+    text-align: center;
+}
+
+/* QUICK CATEGORIES */
+
+.quick-categories {
+    max-width: 1250px;
+    margin: -30px auto 0;
+    padding: 0 20px;
+    position: relative;
+    z-index: 5;
+}
+
+.quick-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
+}
+
+.quick-item {
+    background: white;
+    border: 1px solid #e6eaf0;
+    border-radius: 14px;
+    padding: 17px 10px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 13px;
+    box-shadow: 0 8px 25px rgba(0,0,0,.05);
+    transition: .2s;
+}
+
+.quick-item:hover {
+    transform: translateY(-4px);
+    border-color: #1769e0;
+}
+
+.quick-item .emoji {
+    display: block;
+    font-size: 27px;
+    margin-bottom: 7px;
+}
+
+/* CARDS */
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+}
+
+.card {
+    background: white;
+    border: 1px solid #e5e9f0;
+    border-radius: 18px;
+    padding: 25px;
+    transition: .2s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(15,23,42,.08);
+}
+
+.card .icon {
+    width: 52px;
+    height: 52px;
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+    background: #eef4ff;
+    font-size: 27px;
+    margin-bottom: 16px;
+}
+
+.card h3 {
+    margin-bottom: 8px;
+    font-size: 18px;
+}
+
+.card p {
+    color: #667085;
+    font-size: 14px;
+}
+
+.card-link {
+    display: inline-block;
+    margin-top: 15px;
+    color: #1769e0;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+/* FEATURED */
+
+.featured {
+    background: #ffffff;
+}
+
+.featured-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 20px;
+}
+
+.feature-box {
+    border-radius: 20px;
+    padding: 35px;
+    color: white;
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.feature-box h3 {
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+.feature-box p {
+    opacity: .9;
+}
+
+.makkah {
+    background: linear-gradient(135deg,#0b7050,#064b39);
+}
+
+.sports {
+    background: linear-gradient(135deg,#1769e0,#4837b8);
+}
+
+/* NEWS */
+
+.news-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.news-card {
+    background: white;
+    border-radius: 17px;
+    border: 1px solid #e5e9f0;
+    overflow: hidden;
+}
+
+.news-image {
+    height: 145px;
+    display: grid;
+    place-items: center;
+    font-size: 50px;
+    background: linear-gradient(135deg,#eaf2ff,#f5f8ff);
+}
+
+.news-content {
+    padding: 20px;
+}
+
+.news-category {
+    display: inline-block;
+    color: #1769e0;
+    font-size: 12px;
+    font-weight: 800;
+    margin-bottom: 7px;
+}
+
+.news-content h3 {
+    font-size: 17px;
+    margin-bottom: 8px;
+}
+
+.news-content p {
+    color: #667085;
+    font-size: 14px;
+}
+
+/* SPORTS */
+
+.sports-grid {
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    gap: 15px;
+}
+
+.sport-card {
+    background: white;
+    border: 1px solid #e5e9f0;
+    border-radius: 16px;
+    text-align: center;
+    padding: 25px 12px;
+    transition: .2s;
+}
+
+.sport-card:hover {
+    transform: translateY(-4px);
+}
+
+.sport-card .sport-icon {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.sport-card h3 {
+    font-size: 16px;
+}
+
+/* RELIGION */
+
+.religion-section {
+    background: linear-gradient(180deg,#f1fbf7,#ffffff);
+}
+
+.religion-grid {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 18px;
+}
+
+.religion-card {
+    background: white;
+    border: 1px solid #dceee6;
+    border-radius: 18px;
+    padding: 25px;
+}
+
+.religion-card .icon {
+    font-size: 38px;
+    margin-bottom: 12px;
+}
+
+.religion-card h3 {
+    margin-bottom: 7px;
+}
+
+.religion-card p {
+    color: #667085;
+    font-size: 14px;
+}
+
+/* LIVE */
+
+.live-grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 20px;
+}
+
+.live-card {
+    background: #101828;
+    color: white;
+    min-height: 210px;
+    border-radius: 18px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.live-card .live {
+    color: #ff5b5b;
+    font-weight: 800;
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.live-card h3 {
+    font-size: 22px;
+}
+
+/* TOOLS */
+
+.tool-grid {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 16px;
+}
+
+.tool {
+    background: white;
+    padding: 20px;
+    border: 1px solid #e5e9f0;
+    border-radius: 15px;
+}
+
+.tool strong {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.tool small {
+    color: #667085;
+}
+
+/* HAJJ */
+
+.hajj {
+    background: #fffaf0;
+}
+
+.hajj-box {
+    background: white;
+    border: 1px solid #f1dfb5;
+    border-radius: 20px;
+    padding: 30px;
+}
+
+.hajj-list {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.hajj-item {
+    padding: 20px;
+    background: #fffaf0;
+    border-radius: 14px;
+    text-align: center;
+}
+
+.hajj-item strong {
+    display: block;
+    margin-top: 7px;
+}
+
+/* TABLE */
+
+.info-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+.info-table th,
+.info-table td {
+    padding: 14px;
+    border-bottom: 1px solid #edf0f4;
+    text-align: left;
+}
+
+.info-table th {
+    background: #f8fafc;
+}
+
+/* FOOTER */
+
+footer {
+    background: #101828;
+    color: white;
+    margin-top: 40px;
+}
+
+.footer-inner {
+    max-width: 1250px;
+    margin: auto;
+    padding: 50px 20px 30px;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 30px;
+}
+
+.footer-brand h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.footer-brand p {
+    color: #98a2b3;
+}
+
+.footer-column h4 {
+    margin-bottom: 13px;
+}
+
+.footer-column a {
+    display: block;
+    color: #98a2b3;
+    margin: 8px 0;
+    font-size: 14px;
+}
+
+.footer-bottom {
+    max-width: 1250px;
+    margin: auto;
+    border-top: 1px solid #263244;
+    padding: 20px;
+    color: #98a2b3;
+    font-size: 13px;
+}
+
+/* MOBILE */
+
+@media (max-width: 1000px) {
+
+    .quick-grid {
+        grid-template-columns: repeat(3,1fr);
+    }
+
+    .cards {
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .sports-grid {
+        grid-template-columns: repeat(3,1fr);
+    }
+
+    .religion-grid {
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .tool-grid {
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .hajj-list {
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .footer-inner {
+        grid-template-columns: repeat(2,1fr);
+    }
+}
+
+@media (max-width: 700px) {
+
+    .nav-links {
+        display: none;
+    }
+
+    .menu-btn {
+        display: block;
+    }
+
+    .quick-grid {
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .cards,
+    .news-grid,
+    .live-grid,
+    .religion-grid,
+    .tool-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .featured-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .sports-grid {
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .hajj-list {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-inner {
+        grid-template-columns: 1fr;
+    }
+
+    .search-box {
+        flex-direction: column;
+        gap: 7px;
+    }
+
+    .search-box button {
+        height: 50px;
+    }
+}
+</style>
 </head>
 
 <body>
 
-<header>
-    <div class="logo">Faydalan</div>
+<!-- HEADER -->
 
-    <nav>
-        <a href="#">Ana səhifə</a>
-        <a href="#tools">Alətlər</a>
-        <a href="#about">Haqqımızda</a>
-    </nav>
+<header>
+    <div class="navbar">
+
+        <a href="#" class="logo">
+            Faydalan<span>.</span>
+        </a>
+
+        <nav class="nav-links">
+            <a href="#tools">Kalkulyatorlar</a>
+            <a href="#news">Xəbərlər</a>
+            <a href="#religion">Din</a>
+            <a href="#sports">İdman</a>
+            <a href="#live">Canlı TV</a>
+        </nav>
+
+        <button class="menu-btn">☰</button>
+
+    </div>
 </header>
 
+
+<!-- HERO -->
+
 <section class="hero">
-    <h1>Hər şey <span>Faydalan</span> ilə</h1>
+
+    <h1>
+        Hər şey <span>Faydalan</span> ilə
+    </h1>
 
     <p>
-        Gündəlik həyatınızı asanlaşdıran faydalı alətlər,
-        kalkulyatorlar və məlumatlar.
+        Gündəlik həyatınızı asanlaşdıran faydalı məlumatlar,
+        kalkulyatorlar, xəbərlər, idman və daha çoxu.
     </p>
 
-    <div class="search">
-        <input type="text" placeholder="Nə axtarırsınız?">
-        <button>Axtar</button>
+    <div class="search-box">
+
+        <input
+            type="text"
+            placeholder="Nə axtarırsınız?"
+        >
+
+        <button>
+            Axtar
+        </button>
+
     </div>
+
 </section>
+
+
+<!-- QUICK CATEGORIES -->
+
+<div class="quick-categories">
+
+    <div class="quick-grid">
+
+        <a class="quick-item" href="#tools">
+            <span class="emoji">🧮</span>
+            Kalkulyatorlar
+        </a>
+
+        <a class="quick-item" href="#home">
+            <span class="emoji">🏠</span>
+            Ev & Təmir
+        </a>
+
+        <a class="quick-item" href="#religion">
+            <span class="emoji">🕋</span>
+            Din
+        </a>
+
+        <a class="quick-item" href="#sports">
+            <span class="emoji">⚽</span>
+            İdman
+        </a>
+
+        <a class="quick-item" href="#news">
+            <span class="emoji">📰</span>
+            Xəbərlər
+        </a>
+
+        <a class="quick-item" href="#live">
+            <span class="emoji">📺</span>
+            Canlı TV
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- CALCULATORS -->
 
 <section class="container" id="tools">
 
-    <h2 class="section-title">Faydalı alətlər</h2>
+    <div class="section-heading">
+
+        <h2>🧮 Faydalı kalkulyatorlar</h2>
+
+        <p>
+            Gündəlik həyatda lazım olan hesablamalar.
+        </p>
+
+    </div>
 
     <div class="cards">
 
         <div class="card">
-            <div class="icon">🏠</div>
-            <h3>Ev və Təmir</h3>
-            <p>
-                Təmir xərcləri, otaq ölçüləri və ev üçün
-                faydalı hesablamalar.
-            </p>
+            <div class="icon">💰</div>
+            <h3>Kredit kalkulyatoru</h3>
+            <p>Kredit məbləğini, faizini və aylıq ödənişi hesablayın.</p>
+            <a class="card-link" href="#">Hesabla →</a>
+        </div>
+
+        <div class="card">
+            <div class="icon">⛽</div>
+            <h3>Yanacaq kalkulyatoru</h3>
+            <p>Avtomobilinizin yol üçün yanacaq xərcini hesablayın.</p>
+            <a class="card-link" href="#">Hesabla →</a>
         </div>
 
         <div class="card">
             <div class="icon">❄️</div>
-            <h3>Kondisioner</h3>
-            <p>
-                Otağınız üçün uyğun kondisioner gücünü
-                asanlıqla hesablayın.
-            </p>
-        </div>
-
-        <div class="card">
-            <div class="icon">🚗</div>
-            <h3>Avtomobil</h3>
-            <p>
-                Yanacaq sərfiyyatı, yol xərci və digər
-                avtomobil hesablamaları.
-            </p>
-        </div>
-
-        <div class="card">
-            <div class="icon">💰</div>
-            <h3>Maliyyə</h3>
-            <p>
-                Maaş, kredit və gündəlik maliyyə
-                hesablamaları.
-            </p>
+            <h3>BTU kalkulyatoru</h3>
+            <p>Otağınıza uyğun kondisioner gücünü hesablayın.</p>
+            <a class="card-link" href="#">Hesabla →</a>
         </div>
 
         <div class="card">
             <div class="icon">⚡</div>
-            <h3>Elektrik</h3>
+            <h3>Elektrik kalkulyatoru</h3>
+            <p>Cihazların aylıq elektrik xərcini hesablayın.</p>
+            <a class="card-link" href="#">Hesabla →</a>
+        </div>
+
+        <div class="card">
+            <div class="icon">🎂</div>
+            <h3>Yaş kalkulyatoru</h3>
+            <p>Doğum tarixinizə əsasən dəqiq yaşınızı hesablayın.</p>
+            <a class="card-link" href="#">Hesabla →</a>
+        </div>
+
+        <div class="card">
+            <div class="icon">📊</div>
+            <h3>Faiz kalkulyatoru</h3>
+            <p>Faiz və endirim hesablamalarını asanlıqla aparın.</p>
+            <a class="card-link" href="#">Hesabla →</a>
+        </div>
+
+        <div class="card">
+            <div class="icon">⚖️</div>
+            <h3>BMI kalkulyatoru</h3>
+            <p>Boy və çəkinizə əsasən BMI göstəricisini hesablayın.</p>
+            <a class="card-link" href="#">Hesabla →</a>
+        </div>
+
+        <div class="card">
+            <div class="icon">📐</div>
+            <h3>Sahə və həcm</h3>
+            <p>Otaq, divar və müxtəlif sahələri hesablayın.</p>
+            <a class="card-link" href="#">Hesabla →</a>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- HOME -->
+
+<section class="container" id="home">
+
+    <div class="section-heading">
+        <h2>🏠 Ev & Təmir</h2>
+        <p>Ev tikintisi və təmirində sizə lazım olacaq hesablamalar.</p>
+    </div>
+
+    <div class="cards">
+
+        <div class="card">
+            <div class="icon">🎨</div>
+            <h3>Boya hesablayıcı</h3>
+            <p>Divar sahəsinə görə lazım olan boya miqdarını hesablayın.</p>
+        </div>
+
+        <div class="card">
+            <div class="icon">🧱</div>
+            <h3>Kafel hesablayıcı</h3>
+            <p>Hamam və digər sahələr üçün kafel miqdarını hesablayın.</p>
+        </div>
+
+        <div class="card">
+            <div class="icon">🪵</div>
+            <h3>Laminat hesablayıcı</h3>
+            <p>Otağa neçə kvadrat metr laminat lazım olduğunu hesablayın.</p>
+        </div>
+
+        <div class="card">
+            <div class="icon">🏗️</div>
+            <h3>Təmir smetası</h3>
+            <p>Təmir işləri üçün ilkin xərc hesablaması aparın.</p>
+        </div>
+
+        <div class="card">
+            <div class="icon">🔌</div>
+            <h3>Elektrik yükü</h3>
+            <p>Ev cihazlarının ümumi elektrik yükünü hesablayın.</p>
+        </div>
+
+        <div class="card">
+            <div class="icon">🏠</div>
+            <h3>Otaq sahəsi</h3>
+            <p>Uzunluq və enə əsasən otağın sahəsini hesablayın.</p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FEATURED -->
+
+<section class="featured">
+
+    <div class="container">
+
+        <div class="featured-grid">
+
+            <div class="feature-box makkah">
+
+                <h3>🕋 Məkkə və Mədinə</h3>
+
+                <p>
+                    Müqəddəs məkanlar haqqında məlumat,
+                    canlı yayımlar və dini resurslar.
+                </p>
+
+            </div>
+
+            <div class="feature-box sports">
+
+                <h3>⚽ İdman</h3>
+
+                <p>
+                    Futbol, MMA, UFC, basketbol və
+                    digər idman xəbərləri.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- RELIGION -->
+
+<section class="religion-section" id="religion">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <h2>🕋 Din və İslam</h2>
+
             <p>
-                Elektrik cihazlarının aylıq enerji
-                xərclərini hesablayın.
+                Dini məlumatlar, canlı yayımlar, Həcc və Ümrə.
             </p>
+
+        </div>
+
+        <div class="religion-grid">
+
+            <div class="religion-card">
+                <div class="icon">🕋</div>
+                <h3>Məkkə canlı</h3>
+                <p>Məkkədən canlı yayımı izləmək üçün bölmə.</p>
+            </div>
+
+            <div class="religion-card">
+                <div class="icon">🕌</div>
+                <h3>Mədinə canlı</h3>
+                <p>Mədinədən canlı yayımı izləmək üçün bölmə.</p>
+            </div>
+
+            <div class="religion-card">
+                <div class="icon">📖</div>
+                <h3>Quran</h3>
+                <p>Quran, surələr və dini resurslar.</p>
+            </div>
+
+            <div class="religion-card">
+                <div class="icon">🤲</div>
+                <h3>Dua və zikrlər</h3>
+                <p>Gündəlik dualar və zikrlər.</p>
+            </div>
+
+            <div class="religion-card">
+                <div class="icon">🕋</div>
+                <h3>Həcc</h3>
+                <p>Həcc haqqında məlumat və hazırlıq bələdçisi.</p>
+            </div>
+
+            <div class="religion-card">
+                <div class="icon">✈️</div>
+                <h3>Ümrə</h3>
+                <p>Ümrə səfəri, sənədlər və hazırlıq məlumatları.</p>
+            </div>
+
+            <div class="religion-card">
+                <div class="icon">🛂</div>
+                <h3>Viza</h3>
+                <p>Səfər və viza haqqında aktual məlumatlar.</p>
+            </div>
+
+            <div class="religion-card">
+                <div class="icon">🏨</div>
+                <h3>Otel və paketlər</h3>
+                <p>Həcc və Ümrə paketləri və otel məlumatları.</p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- HAJJ -->
+
+<section class="hajj">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <h2>✈️ Həcc və Ümrə səfəri</h2>
+
+            <p>
+                Səfər planlaşdırmaq üçün faydalı məlumatlar.
+            </p>
+
+        </div>
+
+        <div class="hajj-box">
+
+            <h3>Həcc / Ümrə üçün nələr lazımdır?</h3>
+
+            <div class="hajj-list">
+
+                <div class="hajj-item">
+                    📄
+                    <strong>Sənədlər</strong>
+                </div>
+
+                <div class="hajj-item">
+                    🛂
+                    <strong>Viza</strong>
+                </div>
+
+                <div class="hajj-item">
+                    ✈️
+                    <strong>Bilet</strong>
+                </div>
+
+                <div class="hajj-item">
+                    🏨
+                    <strong>Otel</strong>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- LIVE TV -->
+
+<section class="container" id="live">
+
+    <div class="section-heading">
+
+        <h2>📺 Canlı TV</h2>
+
+        <p>
+            Canlı televiziya və dini yayımlar üçün bölmə.
+        </p>
+
+    </div>
+
+    <div class="live-grid">
+
+        <a href="#" class="live-card">
+            <div class="live">● CANLI</div>
+            <h3>🕋 Məkkə</h3>
+        </a>
+
+        <a href="#" class="live-card">
+            <div class="live">● CANLI</div>
+            <h3>🕌 Mədinə</h3>
+        </a>
+
+        <a href="#" class="live-card">
+            <div class="live">● CANLI</div>
+            <h3>📺 Dini TV</h3>
+        </a>
+
+        <a href="#" class="live-card">
+            <div class="live">● CANLI</div>
+            <h3>🇦🇿 Azərbaycan TV</h3>
+        </a>
+
+        <a href="#" class="live-card">
+            <div class="live">● CANLI</div>
+            <h3>📰 Xəbər TV</h3>
+        </a>
+
+        <a href="#" class="live-card">
+            <div class="live">● CANLI</div>
+            <h3>🌍 Dünya TV</h3>
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- NEWS -->
+
+<section class="container" id="news">
+
+    <div class="section-heading">
+
+        <h2>📰 Son xəbərlər</h2>
+
+        <p>
+            Azərbaycan, dünya, iqtisadiyyat, din, texnologiya və digər xəbərlər.
+        </p>
+
+    </div>
+
+    <div class="news-grid">
+
+        <article class="news-card">
+
+            <div class="news-image">🇦🇿</div>
+
+            <div class="news-content">
+
+                <span class="news-category">AZƏRBAYCAN</span>
+
+                <h3>Azərbaycan xəbərləri</h3>
+
+                <p>
+                    Ölkədə baş verən son hadisələr və gündəlik xəbərlər.
+                </p>
+
+            </div>
+
+        </article>
+
+
+        <article class="news-card">
+
+            <div class="news-image">🌍</div>
+
+            <div class="news-content">
+
+                <span class="news-category">DÜNYA</span>
+
+                <h3>Dünya xəbərləri</h3>
+
+                <p>
+                    Dünyada baş verən ən son hadisələr.
+                </p>
+
+            </div>
+
+        </article>
+
+
+        <article class="news-card">
+
+            <div class="news-image">💰</div>
+
+            <div class="news-content">
+
+                <span class="news-category">İQTİSADİYYAT</span>
+
+                <h3>İqtisadi xəbərlər</h3>
+
+                <p>
+                    Bazarlar, biznes, maliyyə və iqtisadiyyat.
+                </p>
+
+            </div>
+
+        </article>
+
+
+        <article class="news-card">
+
+            <div class="news-image">🕋</div>
+
+            <div class="news-content">
+
+                <span class="news-category">DİN</span>
+
+                <h3>Dini xəbərlər</h3>
+
+                <p>
+                    İslam dünyası və dini tədbirlər haqqında xəbərlər.
+                </p>
+
+            </div>
+
+        </article>
+
+
+        <article class="news-card">
+
+            <div class="news-image">💻</div>
+
+            <div class="news-content">
+
+                <span class="news-category">TEXNOLOGİYA</span>
+
+                <h3>Texnologiya</h3>
+
+                <p>
+                    Yeni texnologiyalar, süni intellekt və internet.
+                </p>
+
+            </div>
+
+        </article>
+
+
+        <article class="news-card">
+
+            <div class="news-image">🚗</div>
+
+            <div class="news-content">
+
+                <span class="news-category">AVTOMOBİL</span>
+
+                <h3>Avtomobil xəbərləri</h3>
+
+                <p>
+                    Avtomobillər, yeni modellər və yol məlumatları.
+                </p>
+
+            </div>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- SPORTS -->
+
+<section class="container" id="sports">
+
+    <div class="section-heading">
+
+        <h2>⚽ İdman</h2>
+
+        <p>
+            Futbol, MMA, UFC və digər idman xəbərləri.
+        </p>
+
+    </div>
+
+    <div class="sports-grid">
+
+        <div class="sport-card">
+            <div class="sport-icon">⚽</div>
+            <h3>Futbol</h3>
+        </div>
+
+        <div class="sport-card">
+            <div class="sport-icon">🥊</div>
+            <h3>MMA / UFC</h3>
+        </div>
+
+        <div class="sport-card">
+            <div class="sport-icon">🏀</div>
+            <h3>Basketbol</h3>
+        </div>
+
+        <div class="sport-card">
+            <div class="sport-icon">🎾</div>
+            <h3>Tennis</h3>
+        </div>
+
+        <div class="sport-card">
+            <div class="sport-icon">🏎️</div>
+            <h3>Formula 1</h3>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- AUTOMOBILE -->
+
+<section class="container">
+
+    <div class="section-heading">
+
+        <h2>🚗 Avtomobil</h2>
+
+        <p>
+            Sürücülər üçün faydalı məlumatlar.
+        </p>
+
+    </div>
+
+    <div class="cards">
+
+        <div class="card">
+            <div class="icon">⛽</div>
+            <h3>Yanacaq xərcini hesabla</h3>
+            <p>100 km üçün yanacaq sərfiyyatını və xərci hesablayın.</p>
+        </div>
+
+        <div class="card">
+            <div class="icon">🛞</div>
+            <h3>Təkər ölçüləri</h3>
+            <p>Avtomobil təkər ölçüləri haqqında məlumat.</p>
+        </div>
+
+        <div class="card">
+            <div class="icon">🔧</div>
+            <h3>Servis</h3>
+            <p>Yağ, filtr və texniki xidmət məlumatları.</p>
+        </div>
+
+        <div class="card">
+            <div class="icon">🚘</div>
+            <h3>Avtomobil xəbərləri</h3>
+            <p>Yeni avtomobillər və avtomobil dünyasından xəbərlər.</p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- WEATHER & CURRENCY -->
+
+<section class="container">
+
+    <div class="section-heading">
+
+        <h2>🌤 Gündəlik məlumatlar</h2>
+
+        <p>
+            Sonradan avtomatik məlumatlarla yenilənəcək bölmələr.
+        </p>
+
+    </div>
+
+    <div class="tool-grid">
+
+        <div class="tool">
+            <strong>🌤 Hava</strong>
+            <small>Bakı və rayonlar üzrə hava proqnozu</small>
+        </div>
+
+        <div class="tool">
+            <strong>💵 USD / AZN</strong>
+            <small>Valyuta məzənnələri</small>
+        </div>
+
+        <div class="tool">
+            <strong>💶 EUR / AZN</strong>
+            <small>Avro məzənnəsi</small>
+        </div>
+
+        <div class="tool">
+            <strong>₺ TRY / AZN</strong>
+            <small>Türkiyə lirəsi məzənnəsi</small>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- EDUCATION -->
+
+<section class="container">
+
+    <div class="section-heading">
+
+        <h2>📚 Təhsil</h2>
+
+        <p>
+            Öyrənmək və gündəlik istifadə üçün faydalı resurslar.
+        </p>
+
+    </div>
+
+    <div class="cards">
+
+        <div class="card">
+            <div class="icon">🇬🇧</div>
+            <h3>İngilis dili</h3>
+            <p>Sözlər, qrammatika və testlər.</p>
+        </div>
+
+        <div class="card">
+            <div class="icon">🔤</div>
+            <h3>Tərcümə</h3>
+            <p>Faydalı söz və ifadələr.</p>
+        </div>
+
+        <div class="card">
+            <div class="icon">📝</div>
+            <h3>Essay</h3>
+            <p>Yazı və öyrənmə resursları.</p>
+        </div>
+
+        <div class="card">
+            <div class="icon">📖</div>
+            <h3>Lüğət</h3>
+            <p>Sözlərin mənası və izahı.</p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- GAMES -->
+
+<section class="container">
+
+    <div class="section-heading">
+
+        <h2>🎮 Oyunlar</h2>
+
+        <p>
+            Oyun kodları və faydalı oyun məlumatları.
+        </p>
+
+    </div>
+
+    <div class="cards">
+
+        <div class="card">
+            <div class="icon">🚔</div>
+            <h3>GTA 5 kodları</h3>
+            <p>PlayStation və digər platformalar üçün kodlar.</p>
         </div>
 
         <div class="card">
             <div class="icon">🎮</div>
-            <h3>Oyunlar</h3>
-            <p>
-                Oyun kodları, bələdçilər və oyunlarla
-                bağlı faydalı məlumatlar.
-            </p>
+            <h3>PlayStation</h3>
+            <p>PS4 və PS5 oyun məlumatları.</p>
+        </div>
+
+        <div class="card">
+            <div class="icon">🏆</div>
+            <h3>Oyun bələdçiləri</h3>
+            <p>Faydalı oyun məsləhətləri və bələdçilər.</p>
+        </div>
+
+        <div class="card">
+            <div class="icon">🔥</div>
+            <h3>Populyar oyunlar</h3>
+            <p>Ən çox axtarılan oyunlar.</p>
         </div>
 
     </div>
+
 </section>
 
-<section class="container" id="about">
-    <h2 class="section-title">Faydalan nədir?</h2>
 
-    <div class="card">
+<!-- FOOD -->
+
+<section class="container">
+
+    <div class="section-heading">
+
+        <h2>🍳 Mətbəx</h2>
+
         <p>
-            Faydalan insanların gündəlik həyatında ehtiyac
-            duyduğu faydalı məlumatları və praktik alətləri
-            bir yerdə təqdim edən platformadır.
+            Reseptlər və mətbəx üçün faydalı hesablamalar.
         </p>
+
     </div>
+
+    <div class="cards">
+
+        <div class="card">
+            <div class="icon">🍲</div>
+            <h3>Reseptlər</h3>
+            <p>Azərbaycan və dünya mətbəxindən reseptlər.</p>
+        </div>
+
+        <div class="card">
+            <div class="icon">⚖️</div>
+            <h3>Ölçü çevirmə</h3>
+            <p>Qram, kiloqram, litr və digər ölçülər.</p>
+        </div>
+
+        <div class="card">
+            <div class="icon">🍽️</div>
+            <h3>Porsiya hesabla</h3>
+            <p>Qonaq sayına görə məhsul miqdarını hesablayın.</p>
+        </div>
+
+        <div class="card">
+            <div class="icon">🔥</div>
+            <h3>Kalori</h3>
+            <p>Qidaların kalori məlumatları.</p>
+        </div>
+
+    </div>
+
 </section>
+
+
+<!-- USEFUL TOOLS -->
+
+<section class="container">
+
+    <div class="section-heading">
+
+        <h2>🛠 Faydalı alətlər</h2>
+
+        <p>
+            Gündəlik işlər üçün kiçik, amma faydalı alətlər.
+        </p>
+
+    </div>
+
+    <div class="tool-grid">
+
+        <div class="tool">
+            <strong>🔳 QR kod generatoru</strong>
+            <small>Sonradan işlək şəkildə əlavə ediləcək.</small>
+        </div>
+
+        <div class="tool">
+            <strong>🔐 Parol generatoru</strong>
+            <small>Güclü parollar yaratmaq üçün.</small>
+        </div>
+
+        <div class="tool">
+            <strong>🔢 Mətn sayğacı</strong>
+            <small>Söz və simvolları hesablayın.</small>
+        </div>
+
+        <div class="tool">
+            <strong>📄 PDF alətləri</strong>
+            <small>PDF faylları ilə işləmək üçün.</small>
+        </div>
+
+        <div class="tool">
+            <strong>📐 Ölçü çevirici</strong>
+            <small>Müxtəlif ölçü vahidlərini çevirin.</small>
+        </div>
+
+        <div class="tool">
+            <strong>⏱ Vaxt kalkulyatoru</strong>
+            <small>Tarix və vaxt hesablamaları.</small>
+        </div>
+
+        <div class="tool">
+            <strong>📅 Tarix kalkulyatoru</strong>
+            <small>İki tarix arasındakı müddəti hesablayın.</small>
+        </div>
+
+        <div class="tool">
+            <strong>🔗 Link alətləri</strong>
+            <small>Gələcəkdə müxtəlif link alətləri.</small>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FOOTER -->
 
 <footer>
-    <strong>Faydalan</strong>
-    <p>Gündəlik həyat üçün faydalı platforma</p>
+
+    <div class="footer-inner">
+
+        <div class="footer-brand">
+
+            <h2>Faydalan</h2>
+
+            <p>
+                Gündəlik həyat üçün faydalı məlumatlar,
+                alətlər və xidmətlər.
+            </p>
+
+        </div>
+
+        <div class="footer-column">
+
+            <h4>Kəşf et</h4>
+
+            <a href="#tools">Kalkulyatorlar</a>
+            <a href="#news">Xəbərlər</a>
+            <a href="#sports">İdman</a>
+            <a href="#religion">Din</a>
+
+        </div>
+
+        <div class="footer-column">
+
+            <h4>Faydalı</h4>
+
+            <a href="#home">Ev & Təmir</a>
+            <a href="#">Avtomobil</a>
+            <a href="#">Təhsil</a>
+            <a href="#">Oyunlar</a>
+
+        </div>
+
+        <div class="footer-column">
+
+            <h4>Platforma</h4>
+
+            <a href="#">Haqqımızda</a>
+            <a href="#">Əlaqə</a>
+            <a href="#">Məxfilik</a>
+            <a href="#">Qaydalar</a>
+
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+
+        © 2026 Faydalan. Bütün hüquqlar qorunur.
+
+    </div>
+
 </footer>
 
 </body>
