@@ -15,7 +15,7 @@ color:#f8fafc;
 line-height:1.6
 }
 a{text-decoration:none;color:inherit}
-button,input,select{font:inherit}
+button,input,select,textarea{font:inherit}
 
 header{
 position:sticky;
@@ -59,6 +59,20 @@ transition:0.2s
 }
 
 .nav-links a:hover{color:#10b981}
+
+.admin-btn{
+background:#10b981;
+color:#fff;
+border:none;
+padding:8px 14px;
+border-radius:8px;
+font-weight:bold;
+cursor:pointer;
+font-size:13px;
+transition:0.2s;
+}
+
+.admin-btn:hover{background:#059669}
 
 .container{
 max-width:1280px;
@@ -298,10 +312,6 @@ cursor:pointer;
 transition:0.2s
 }
 
-.btn-sm.pdf-btn{
-background:#0284c7
-}
-
 .btn-sm:hover{opacity:0.85}
 
 /* DUA SECTION */
@@ -394,8 +404,8 @@ border-top:1px solid #334155;
 padding-top:8px
 }
 
-/* PDF MODAL */
-.pdf-modal{
+/* ADMIN PANEL & MODALS */
+.modal{
 display:none;
 position:fixed;
 top:0; left:0; width:100%; height:100%;
@@ -406,24 +416,22 @@ justify-content:center;
 padding:20px
 }
 
-.pdf-modal.active{
-display:flex
-}
+.modal.active{display:flex}
 
-.pdf-content{
+.modal-content{
 background:#1e293b;
 width:100%;
-max-width:1000px;
-height:90vh;
+max-width:600px;
 border-radius:12px;
+border:1px solid #10b981;
+overflow:hidden;
+max-height:90vh;
 display:flex;
-flex-direction:column;
-border:1px solid #38bdf8;
-overflow:hidden
+flex-direction:column
 }
 
-.pdf-header{
-padding:12px 20px;
+.modal-header{
+padding:15px 20px;
 background:#0f172a;
 display:flex;
 justify-content:space-between;
@@ -431,9 +439,31 @@ align-items:center;
 border-bottom:1px solid #334155
 }
 
-.pdf-header h4{
-color:#34d399;
-font-size:16px
+.modal-body{
+padding:20px;
+overflow-y:auto
+}
+
+.form-group{
+margin-bottom:15px
+}
+
+.form-group label{
+display:block;
+font-size:13px;
+color:#cbd5e1;
+margin-bottom:5px;
+font-weight:bold
+}
+
+.form-group input, .form-group select, .form-group textarea{
+width:100%;
+background:#0f172a;
+border:1px solid #334155;
+color:#fff;
+padding:10px;
+border-radius:6px;
+outline:none
 }
 
 .close-btn{
@@ -444,12 +474,6 @@ padding:6px 14px;
 border-radius:6px;
 cursor:pointer;
 font-weight:bold
-}
-
-.pdf-frame{
-width:100%;
-height:100%;
-border:none
 }
 
 footer{
@@ -477,14 +501,15 @@ margin-top:50px
 <a href="#live">Məkkə/Mədinə</a>
 <a href="#quran">Quran (30 Qari)</a>
 <a href="#scholars">Sələf Alimləri</a>
-<a href="#duas">Səhih Dualar (100+)</a>
+<a href="#duas">Səhih Dualar</a>
 </nav>
+<button class="admin-btn" onclick="openAdminModal()">⚙️ Admin Panel</button>
 </div>
 </header>
 
 <section class="hero">
 <h1>Mənheci Sələf İlə Haqq Elm Portalı</h1>
-<p>Qurani-Kərim (30 Qari), Səhih Hədis Duaları, Sələfi alimlərinin audio dərsləri və PDF nəşrləri.</p>
+<p>Qurani-Kərim (30 Qari), Səhih Hədis Duaları, Sələfi alimlərinin audio dərsləri və resursları.</p>
 </section>
 
 <!-- CANLI MƏKKƏ VƏ MƏDİNƏ YAYIMLARI -->
@@ -500,7 +525,7 @@ margin-top:50px
 <div class="video-message" id="videoMessage">Kanal seçin</div>
 </div>
 
-<div class="channel-list">
+<div class="channel-list" id="channelContainer">
 <div class="channel active" onclick="playChannel('🕋 Məkkə — Quran TV', 'https://cdn-globecast.akamaized.net/live/eds/saudi_quran/hls_roku/index.m3u8', this)">
 <strong>🕋 Məkkə — Quran TV</strong>
 <small>CANLI 24/7</small>
@@ -509,19 +534,11 @@ margin-top:50px
 <strong>🕌 Mədinə — Sunnah TV</strong>
 <small>CANLI 24/7</small>
 </div>
-<div class="channel" onclick="openBackup('🕋 Məkkə — Alternativ', 'https://quran.tv/radio/')">
-<strong>🕋 Məkkə — Alternativ Link</strong>
-<small>Xarici Pəncərədə Açır</small>
-</div>
-<div class="channel" onclick="openBackup('🕌 Mədinə — Alternativ', 'https://makkahlive.net/madinalive.aspx')">
-<strong>🕌 Mədinə — Alternativ Link</strong>
-<small>Xarici Pəncərədə Açır</small>
-</div>
 </div>
 </div>
 </section>
 
-<!-- QURANİ-KƏRİM BÖLMƏSİ (30 QARİ) -->
+<!-- QURANİ-KƏRİM BÖLMƏSİ -->
 <section class="container" id="quran">
 <div class="section-heading">
 <h2>📖 Qurani-Kərim — 30 Professional Qari</h2>
@@ -530,7 +547,6 @@ margin-top:50px
 
 <div class="quran-controls">
 <select id="reciterSelect" onchange="changeReciter()">
-<!-- 30 PROFESSIONAL QARİ -->
 <option value="ar.alafasy">1. Mişari Rəşid əl-Afasy (مشاري العفاسي)</option>
 <option value="ar.abdulbasitmurattal">2. Əbdülbaset Əbdülsəməd (عبد الباسط عبد الصمد)</option>
 <option value="ar.saoodshuraym">3. Saud əş-Şureym (سعود الشريم)</option>
@@ -574,16 +590,14 @@ margin-top:50px
 </div>
 </section>
 
-<!-- SƏLƏF ALİMLƏRİ VƏ PDF KİTABLAR -->
+<!-- SƏLƏF ALİMLƏRİ VƏ DƏRSLƏR -->
 <section class="container" id="scholars">
 <div class="section-heading">
-<h2>📚 Sələfi Alimlərinin Kitabları və Dərsləri</h2>
-<p>Dərsləri dinləyə və ya PDF kitabları birbaşa saytın içində oxuya bilərsiniz</p>
+<h2>📚 Sələfi Alimlərinin Dərsləri</h2>
+<p>Dərsləri dinləyə bilərsiniz</p>
 </div>
 
-<div class="scholar-grid">
-
-<!-- ŞEYX ƏLBANİ -->
+<div class="scholar-grid" id="scholarContainer">
 <div class="scholar-card">
 <h3>Şeyx Məhəmməd Nasiruddin əl-Əlbani</h3>
 <span class="title">Əsrə Döhfə Verən Hədis Alimi</span>
@@ -592,79 +606,14 @@ margin-top:50px
 <span>Səfətus-Saləh (Namazın Qılınması)</span>
 <div class="btn-group">
 <button class="btn-sm" onclick="playLesson('Namazın Qılınması - Şeyx Əlbani', 'https://server8.mp3quran.net/albani/001.mp3')">▶ Audio</button>
-<button class="btn-sm pdf-btn" onclick="openPdf('Səfətus-Saləh (Namazın Qılınma Qaydası)', 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf')">📖 Oxu</button>
-</div>
-</li>
-<li>
-<span>Silsilətül-Huda vən-Nur</span>
-<div class="btn-group">
-<button class="btn-sm pdf-btn" onclick="openPdf('Silsilətül-Huda vən-Nur', 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf')">📖 Oxu</button>
 </div>
 </li>
 </ul>
 </div>
-
-<!-- ŞEYX İBN BAZZ -->
-<div class="scholar-card">
-<h3>Şeyx Əbdüləziz ibn Bazz</h3>
-<span class="title">Böyük Alimlər Heyətinin Sədri</span>
-<ul class="lesson-list">
-<li>
-<span>Üç Əsas İzahı (Usul əl-Sələsə)</span>
-<div class="btn-group">
-<button class="btn-sm" onclick="playLesson('Üç Əsas - Şeyx İbn Bazz', 'https://server12.mp3quran.net/binbaz/001.mp3')">▶ Audio</button>
-<button class="btn-sm pdf-btn" onclick="openPdf('Üç Əsas İzahı', 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf')">📖 Oxu</button>
-</div>
-</li>
-<li>
-<span>Məcmu əl-Fətava</span>
-<div class="btn-group">
-<button class="btn-sm pdf-btn" onclick="openPdf('Məcmu əl-Fətava', 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf')">📖 Oxu</button>
-</div>
-</li>
-</ul>
-</div>
-
-<!-- ŞEYX İBN USEYMİN -->
-<div class="scholar-card">
-<h3>Şeyx Məhəmməd ibn Saleh əl-Useymin</h3>
-<span class="title">Fəqih və Müfəssir</span>
-<ul class="lesson-list">
-<li>
-<span>Şərh əl-Əqıdətül-Wasitiyyah</span>
-<div class="btn-group">
-<button class="btn-sm" onclick="playLesson('Əqidə Dərsləri - Şeyx Useymin', 'https://server10.mp3quran.net/othman/001.mp3')">▶ Audio</button>
-<button class="btn-sm pdf-btn" onclick="openPdf('Şərh əl-Əqıdətül-Wasitiyyah', 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf')">📖 Oxu</button>
-</div>
-</li>
-<li>
-<span>Şərhu Riadis-Salihin</span>
-<div class="btn-group">
-<button class="btn-sm pdf-btn" onclick="openPdf('Şərhu Riadis-Salihin', 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf')">📖 Oxu</button>
-</div>
-</li>
-</ul>
-</div>
-
-<!-- ŞEYX FOVZAN -->
-<div class="scholar-card">
-<h3>Şeyx Saleh əl-Fovzan</h3>
-<span class="title">Müasir Sələf Alimi</span>
-<ul class="lesson-list">
-<li>
-<span>Kitabut-Tövhid Şərhi</span>
-<div class="btn-group">
-<button class="btn-sm" onclick="playLesson('Tövhid Dərsi - Şeyx Fovzan', 'https://server16.mp3quran.net/fawzan/001.mp3')">▶ Audio</button>
-<button class="btn-sm pdf-btn" onclick="openPdf('Kitabut-Tövhid Şərhi', 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf')">📖 Oxu</button>
-</div>
-</li>
-</ul>
-</div>
-
 </div>
 </section>
 
-<!-- SƏHİH HƏDİS DUALARI (100+) -->
+<!-- SƏHİH HƏDİS DUALARI -->
 <section class="container" id="duas">
 <div class="section-heading">
 <h2>🤲 Səhih Hədislərdən Dualar və Zikrlər</h2>
@@ -686,19 +635,62 @@ margin-top:50px
 <div class="dua-grid" id="duaContainer"></div>
 </section>
 
-<!-- PDF READER MODAL -->
-<div class="pdf-modal" id="pdfModal">
-<div class="pdf-content">
-<div class="pdf-header">
-<h4 id="pdfTitle">Kitab Oxuyucu</h4>
-<button class="close-btn" onclick="closePdf()">Bağla ✖</button>
+<!-- ADMIN PANEL MODAL -->
+<div class="modal" id="adminModal">
+<div class="modal-content">
+<div class="modal-header">
+<h4>⚙️ Admin Panel — Yeni Məlumat Əlavə Et</h4>
+<button class="close-btn" onclick="closeAdminModal()">✖</button>
 </div>
-<iframe class="pdf-frame" id="pdfFrame" src=""></iframe>
+<div class="modal-body">
+<div class="form-group">
+<label>Əlavə Etmək İstədiyiniz Bölmə:</label>
+<select id="addType" onchange="toggleAdminForm()">
+<option value="dua">🤲 Yeni Dua / Zikr</option>
+<option value="lesson">🎙️ Yeni Audio Dərs (MP3)</option>
+<option value="channel">📺 Yeni Canlı Yayım / Video Linki</option>
+</select>
+</div>
+
+<!-- DUA FORM -->
+<div id="duaForm">
+<div class="form-group">
+<label>Kateqoriya:</label>
+<select id="newDuaCat">
+<option value="gundelik">Gündəlik Dualar</option>
+<option value="seher_axsam">Səhər və Axşam Zikrləri</option>
+<option value="namaz">Namaz Duaları</option>
+<option value="sixinti">Sıxıntı Duaları</option>
+<option value="quran">Quran Duaları</option>
+</select>
+</div>
+<div class="form-group"><label>Duanın Başlığı:</label><input type="text" id="newDuaTitle" placeholder="Məs: Əsəbləşərkən olunan dua"></div>
+<div class="form-group"><label>Ərəbcə Mətni:</label><input type="text" id="newDuaAr" placeholder="Ərəbcə mətni yazın..."></div>
+<div class="form-group"><label>Oxunuşu (Transkripsiya):</label><input type="text" id="newDuaTr" placeholder="Oxunuşunu yazın..."></div>
+<div class="form-group"><label>Azərbaycanca Mənası:</label><textarea id="newDuaAz" placeholder="Mənasını daxil edin..."></textarea></div>
+<div class="form-group"><label>Mənbə (Hədis kitabı):</label><input type="text" id="newDuaSrc" placeholder="Məs: Səhih əl-Buxari (1234)"></div>
+</div>
+
+<!-- LESSON FORM -->
+<div id="lessonForm" style="display:none;">
+<div class="form-group"><label>Alimin Adı:</label><input type="text" id="newScholarName" placeholder="Məs: Şeyx Saleh əl-Fovzan"></div>
+<div class="form-group"><label>Dərsin Adı:</label><input type="text" id="newLessonTitle" placeholder="Məs: Tövhid Dərsi №1"></div>
+<div class="form-group"><label>Audio MP3 URL Keçidi:</label><input type="text" id="newLessonUrl" placeholder="https://domain.com/audio.mp3"></div>
+</div>
+
+<!-- CHANNEL FORM -->
+<div id="channelForm" style="display:none;">
+<div class="form-group"><label>Kanalın / Videonun Adı:</label><input type="text" id="newChannelName" placeholder="Məs: Məkkə Canlı"></div>
+<div class="form-group"><label>Yayım / HLS URL Linki (.m3u8):</label><input type="text" id="newChannelUrl" placeholder="https://...index.m3u8"></div>
+</div>
+
+<button class="admin-btn" style="width:100%; padding:12px; margin-top:10px;" onclick="saveAdminData()">💾 Əlavə Et və Yadda Saxla</button>
+</div>
 </div>
 </div>
 
 <footer>
-<p>© 2026 Faydalan.ilm — Sələf-i Salihin Fəhmi İlə İslami Elm Portalı</p>
+<p>© Faydalan.ilm — Sələf-i Salihin Fəhmi İlə İslami Elm Portalı</p>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
@@ -722,13 +714,9 @@ video.src=url; video.addEventListener("loadedmetadata", ()=>{ message.textConten
 }
 }
 
-function openBackup(name,url){
-window.open(url,"_blank");
-}
-
 playChannel('🕋 Məkkə — Quran TV', 'https://cdn-globecast.akamaized.net/live/eds/saudi_quran/hls_roku/index.m3u8', null);
 
-/* QURAN API INTEGRATION (30 QARİ DƏSTƏYİ) */
+/* QURAN API INTEGRATION (30 QARİ) */
 let surahsData = [];
 let currentSurahNum = 1;
 
@@ -805,48 +793,12 @@ audioPlayer.play().catch(e => console.log("Oynatmaq üçün pleyerə basın."));
 document.getElementById("quranPlayerBox").scrollIntoView({behavior:"smooth"});
 }
 
-/* 100+ SƏHİH DUA VƏ ZİKR BAZASI */
-const duaList = [
-{cat:"gundelik", title:"Evdən çıxarkən olunan dua", ar:"بِسْمِ اللَّهِ ، تَوَكَّلْتُ عَلَى اللَّهِ ، وَلا حَوْلَ وَلا قُوَّةَ إِلاَّ بِاللَّهِ", tr:"Bismilləhi, təvəkkəltu 'aləlləhi, və lə havlə və lə quvvətə illə billəh.", az:"Allahın adı ilə! Allaha təvəkkül etdim. Qüdrət və güc yalnız Allahdadır.", src:"Əbu Davud (5095), ət-Tirmizi (3426)"},
-{cat:"gundelik", title:"Evə daxil olarkən dua", ar:"بِسْمِ اللَّهِ وَلَجْنَا، وَبِسْمِ اللَّهِ خَرَجْنَا، وَعَلَى رَبِّنَا تَوَكَّلْنَا", tr:"Bismilləhi vələcnə, və bismilləhi xaracnə, və 'alə Rabbinə təvəkkəlnə.", az:"Allahın adı ilə girdik, Allahın adı ilə çıxdıq və Rəbbimizə təvəkkül etdik.", src:"Əbu Davud (5096)"},
-{cat:"gundelik", title:"Yatmazdan əvvəl dua", ar:"بِاسْمِكَ رَبِّي وَضَعْتُ جَنْبِي، وَبِكَ أَرْفَعُهُ", tr:"Bismikə Rabbi vəda'tu cənbii və bikə ərfa'uhu.", az:"Ey Rəbbim! Sənin adınla böyrümü yerə qoydum və Sənin sayəndə onu qaldıraram.", src:"Səhih əl-Buxari (6320)"},
-{cat:"gundelik", title:"Yuxudan oyanarkən dua", ar:"الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا بَعْدَ مَا أَمَاتَنَا وَإِلَيْهِ النُّشُورُ", tr:"Əlhamdu lilləhillezii ahyənə ba'də mə əmətənə və ileyhin-nuşuur.", az:"Bizi öldürdükdən sonra dirildən Allaha həmd olsun. Dönüş də yalnız Onadır.", src:"Səhih əl-Buxari (6312)"},
-{cat:"gundelik", title:"Yeməkdən əvvəl dua", ar:"بِسْمِ اللَّهِ", tr:"Bismilləh.", az:"Allahın adı ilə!", src:"Əbu Davud (3767)"},
-{cat:"gundelik", title:"Yeməkdən sonra dua", ar:"الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنِي هَذَا وَرَزَقَنِيهِ مِنْ غَيْرِ حَوْلٍ مِنِّي وَلا قُوَّةٍ", tr:"Əlhamdu lilləhillezii ət'amanii hələ və razaqaniihi min ğayri havlin minnii və lə quvvətin.", az:"Mənim heç bir gücüm və qüdrətim olmadan bunu mənə yedizdirən və ruzi verən Allaha həmd olsun!", src:"Ət-Tirmizi (3458)"},
-{cat:"gundelik", title:"Paltar geyinərkən dua", ar:"الْحَمْدُ لِلَّهِ الَّذِي كَسَانِي هَذَا الثَّوْبَ وَرَزَقَنِيهِ مِنْ غَيْرِ حَوْلٍ مِنِّي وَلا قُوَّةٍ", tr:"Əlhamdu lilləhillezii kəsənii həzəs-sevbə və razaqaniihi min ğayri havlin minnii və lə quvvətin.", az:"Mənim heç bir gücüm olmadan bu libası mənə geyindirən Allaha həmd olsun!", src:"Əbu Davud (4023)"},
-{cat:"gundelik", title:"Aynaya baxarkən dua", ar:"اللَّهُمَّ كَمَا حَسَّنْتَ خَلْقِي فَحَسِّنْ خُلُقِي", tr:"Allahummə kəmə hassəntə xalquii fəhassin xuluqii.", az:"Allahım! Xarici görünüşümü gözəl etdiyin kimi, əxlaqımı da gözəlləşdir!", src:"Əhməd (3821)"},
-{cat:"gundelik", title:"Tualetə girərkən dua", ar:"اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْخُبُثِ وَالْخَبَائِثِ", tr:"Allahummə innii ə'uuzu bikə minəl-xubusi vəl-xabə'is.", az:"Allahım! Ərkək və dişi şeytanların şərindən Sənə sığınıram.", src:"Səhih əl-Buxari (142)"},
-{cat:"gundelik", title:"Tualetdən çıxarkən dua", ar:"غُفْرَانَكَ", tr:"Ğufrənəkə.", az:"(Allahım!) Bağışlanmağımı diləyirəm!", src:"Əbu Davud (30)"},
-
-{cat:"seher_axsam", title:"Ayətəl-Kürsi (Səhər və Axşam)", ar:"اللَّهُ لا إِلَهَ إِلاَّ هُوَ الْحَيُّ الْقَيُّومُ لا تَأْخُذُهُ سِنَةٌ وَلا نَوْمٌ", tr:"Allahu lə iləhə illə huval-Hayyul-Qayyuum...", az:"Allah, Ondan başqa məbud yoxdur, Əbədi Yaşayandır, Qəyyumdur...", src:"Səhih ən-Nəsai (9928)"},
-{cat:"seher_axsam", title:"Seyyidul-İstifğar (Bağışlanma duası)", ar:"اللَّهُمَّ أَنْتَ رَبِّي لا إِلَهَ إِلاَّ أَنْتَ خَلَقْتَنِي وَأَنَا عَبْدُكَ وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ", tr:"Allahummə əntə Rabbii lə iləhə illə əntə xalaqtanii və ənə 'abduk...", az:"Allahım! Sən mənim Rəbbimsən. Səndən başqa ilah yoxdur. Məni Sən yaratdın və mən Sənin bəndəndəm...", src:"Səhih əl-Buxari (6306)"},
-{cat:"seher_axsam", title:"Şərdən sığınma duası (3 dəfə)", ar:"بِسْمِ اللَّهِ الَّذِي لا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الأَرْضِ وَلا فِي السَّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ", tr:"Bismilləhillezii lə yadurru mə'asmihi şey'un fil-ardi və lə fis-səmə'i və huvas-Səmii'ul-'Aliim.", az:"Adı çəkiləndə yerdə və göydə heç bir şeyin zərər verə bilmədiyi Allahın adı ilə! O, Eşidəndir, Biləndir!", src:"Əbu Davud (5088)"},
-{cat:"seher_axsam", title:"Rza duası (3 dəfə)", ar:"رَضِيتُ بِاللَّهِ رَبًّا وَبِالإِسْلامِ دِينًا وَبِمُحَمَّدٍ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ نَبِيًّا", tr:"Radiitu billəhi Rabbən və bil-Isləəmi diinən və bi Muhammadin sallallahu 'aleyhi və səlləmə nəbiyyən.", az:"Allahın Rəbb, İslamın din, Məhəmmədin (s.ə.s) peyğəmbər olmasından razı oldum!", src:"Əbu Davud (5072)"},
-
-{cat:"namaz", title:"Rukuda deyildilər dua", ar:"سُبْحَانَ رَبِّيَ الْعَظِيمِ", tr:"Subhənə Rabbiyəl-'Aziim (3 dəfə).", az:"Böyük Rəbbim nöhqsansızdır və pakdır!", src:"Səhih Müslim (772)"},
-{cat:"namaz", title:"Səcdədə deyildilər dua", ar:"سُبْحَانَ رَبِّيَ الأَعْلَى", tr:"Subhənə Rabbiyəl-A'lər (3 dəfə).", az:"Ən uca Rəbbim nöhqsansızdır və pakdır!", src:"Səhih Müslim (772)"},
-{cat:"namaz", title:"Səcdədən qalxarkən iki səcdə arası", ar:"رَبِّ اغْفِرْ لِي ، رَبِّ اغْفِرْ لِي", tr:"Rabbığfir lii, Rabbığfir lii.", az:"Rəbbim, beni bağışla! Rəbbim, beni bağışla!", src:"Əbu Davud (874)"},
-{cat:"namaz", title:"Namazdan sonra ən əsas zikr", ar:"أَسْتَغْفِرُ اللَّهَ (٣) اللَّهُمَّ أَنْتَ السَّلامُ وَمِنْكَ السَّلامُ تَبَارَكْتَ يَا ذَا الْجَلالِ وَالإِكْرَامِ", tr:"Astəğfirullah (3 dəfə). Allahummə əntəs-Sələəmu və minkəs-sələəm, təbəəraktə yə zəl-Cələəli vəl-İkrəəm.", az:"Allahdan bağışlanma diləyirəm. Allahım! Sən Salamısn (əmin-amanlıq verənsən)...", src:"Səhih Müslim (591)"},
-
-{cat:"sixinti", title:"Sıxıntı və kədər duası (Yunus ə.s duası)", ar:"لا إِلَهَ إِلاَّ أَنْتَ سُبْحَانَكَ إِنِّي كُنْتُ مِنَ الظَّالِمِينَ", tr:"Lə iləhə illə əntə subhənəkə innii kuntu minəz-zəəlimiin.", az:"Səndən başqa ilah yoxdur, Sən paksan! Həqiqətən mən zalımlardan olmuşam.", src:"Ət-Tirmizi (3505)"},
-{cat:"sixinti", title:"Ağır kədər anında dua", ar:"اللَّهُمَّ إِنِّي عَبْدُكَ ابْنُ عَبْدِكَ ابْنُ أَمَتِكَ نَاصِيَتِي بِيَدِكَ مَاضٍ فِيَّ حُكْمُكَ عَدْلٌ فِيَّ قَضَاؤُكَ", tr:"Allahummə innii 'abdukə ibnu 'abdikə ibnu əmətikə nəəsiyatii biyədik...", az:"Allahım! Mən Sənin qulunam, qulunun oğluyam. Alın yazım Sənin əlindədir...", src:"Əhməd (3712)"},
-{cat:"sixinti", title:"Borcdan və kədərdən sığınma", ar:"اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ وَالْعَجْزِ وَالْكَسَلِ وَالْبُخْلِ وَالْجُبْنِ وَضَلَعِ الدَّيْنِ وَغَلَبَةِ الرِّجَالِ", tr:"Allahummə innii ə'uuzu bikə minəl-hammi vəl-hazən vəl-'aczi vəl-kəsəl...", az:"Allahım! Kədərdən, hüzndən, acizlikdən, tənbəllikdən, xəsislikdən, qorxaqlıqdan, borcun ağırlığından Sənə sığınıram.", src:"Səhih əl-Buxari (2893)"},
-
-{cat:"quran", title:"Hidayət və Rəhmət duası (Ali İmran 8)", ar:"رَبَّنَا لا تُزِغْ قُلُوبَنَا بَعْدَ إِذْ هَدَيْتَنَا وَهَبْ لَنَا مِنْ لَدُنْكَ رَحْمَةً إِنَّكَ أَنْتَ الْوَهَّابُ", tr:"Rabbənə lə tuzığ quluubənə ba'də iz hədəytənə və hab lənə min ladunkə rahmətən innəkə əntəl-Vahhəəb.", az:"Ey Rəbbimiz! Bizi doğru yola yönəltdikdən sonra qəlblərimizi sapdırma və bizə Öz dərgahından rəhmət bəxş et!", src:"Qurani-Kərim (Ali İmran, 8)"},
-{cat:"quran", title:"Dünya və Axirət Xeyri (Bəqərə 201)", ar:"رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ", tr:"Rabbənə əətinə fid-dunyə hasanətən və fil-əəxirati hasanətən və qinə 'azəəbən-nəər.", az:"Ey Rəbbimiz! Bizə dünyada da xeyir ver, axirətdə də xeyir ver və bizi cəhənnəm əzabından qoru!", src:"Qurani-Kərim (Bəqərə, 201)"}
+/* DUA VA ZIKRLER DATA SİSTEMİ */
+let duaList = JSON.parse(localStorage.getItem("custom_duas")) || [
+{cat:"gundelik", title:"Evdən çıxarkən olunan dua", ar:"بِسْمِ اللَّهِ ، تَوَكَّلْتُ عَلَى اللَّهِ ، وَلا حَوْلَ وَلا قُوَّةَ إِلاَّ بِاللَّهِ", tr:"Bismilləhi, təvəkkəltu 'aləlləhi, və lə havlə və lə quvvətə illə billəh.", az:"Allahın adı ilə! Allaha təvəkkül etdim. Qüdrət və güc yalnız Allahdadır.", src:"Əbu Davud (5095)"},
+{cat:"seher_axsam", title:"Ayətəl-Kürsi (Səhər və Axşam)", ar:"اللَّهُ لا إِلَهَ إِلاَّ هُوَ الْحَيُّ الْقَيُّومُ", tr:"Allahu lə iləhə illə huval-Hayyul-Qayyuum...", az:"Allah, Ondan başqa məbud yoxdur, Əbədi Yaşayandır...", src:"Səhih ən-Nəsai (9928)"},
+{cat:"sixinti", title:"Sıxıntı və kədər duası", ar:"لا إِلَهَ إِلاَّ أَنْتَ سُبْحَانَكَ إِنِّي كُنْتُ مِنَ الظَّالِمِينَ", tr:"Lə iləhə illə əntə subhənəkə innii kuntu minəz-zəəlimiin.", az:"Səndən başqa ilah yoxdur, Sən paksan! Həqiqətən mən zalımlardan olmuşam.", src:"Ət-Tirmizi (3505)"}
 ];
-
-// Avtomatik kateqoriyaları çoxaltmaq üçün köməkçi generator (100-ə tamamlamaq üçün)
-for(let i=1; i<=80; i++){
-  duaList.push({
-    cat: i%5===0 ? "quran" : (i%4===0 ? "sixinti" : (i%3===0 ? "namaz" : (i%2===0 ? "seher_axsam" : "gundelik"))),
-    title: `Səhih Zikr və Dua №${i+20}`,
-    ar: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ ، سُبْحَانَ اللَّهِ الْعَظِيمِ",
-    tr: "Subhənalləhi və bihamdihi, Subhənalləhil-'Aziim.",
-    az: "Allah nöhqsansızdır və Ona həmd olsun! Böyük Allah hər cür nöqsandan uzaqdır!",
-    src: "Səhih əl-Buxari (6482) / Müslim (2691)"
-  });
-}
 
 function renderDuas(list){
 const container = document.getElementById("duaContainer");
@@ -885,23 +837,95 @@ const q = document.getElementById("duaSearch").value.toLowerCase();
 
 const filtered = duaList.filter(d => {
 const matchCat = (cat === 'all' || d.cat === cat);
-const matchQuery = d.title.toLowerCase().includes(q) || d.az.toLowerCase().includes(q) || d.tr.toLowerCase().includes(q);
+const matchQuery = d.title.toLowerCase().includes(q) || d.az.toLowerCase().includes(q);
 return matchCat && matchQuery;
 });
 
 renderDuas(filtered);
 }
 
-/* PDF VIEWER */
-function openPdf(title, url){
-document.getElementById("pdfTitle").textContent = title;
-document.getElementById("pdfFrame").src = url;
-document.getElementById("pdfModal").classList.add("active");
+/* ADMIN PANEL LOGIC */
+function openAdminModal(){
+const pass = prompt("Admin Panel üçün şifrəni daxil edin:");
+if(pass === "Or0508878248"){
+document.getElementById("adminModal").classList.add("active");
+} else if(pass !== null){
+alert("Şifrə yanlışdır!");
+}
 }
 
-function closePdf(){
-document.getElementById("pdfModal").classList.remove("active");
-document.getElementById("pdfFrame").src = "";
+function closeAdminModal(){
+document.getElementById("adminModal").classList.remove("active");
+}
+
+function toggleAdminForm(){
+const type = document.getElementById("addType").value;
+document.getElementById("duaForm").style.display = type === "dua" ? "block" : "none";
+document.getElementById("lessonForm").style.display = type === "lesson" ? "block" : "none";
+document.getElementById("channelForm").style.display = type === "channel" ? "block" : "none";
+}
+
+function saveAdminData(){
+const type = document.getElementById("addType").value;
+
+if(type === "dua"){
+const title = document.getElementById("newDuaTitle").value;
+const ar = document.getElementById("newDuaAr").value;
+const tr = document.getElementById("newDuaTr").value;
+const az = document.getElementById("newDuaAz").value;
+const src = document.getElementById("newDuaSrc").value;
+const cat = document.getElementById("newDuaCat").value;
+
+if(!title || !az){ alert("Zəhmət olmasa başlığı və mənanı yazın."); return; }
+
+duaList.unshift({cat, title, ar, tr, az, src});
+localStorage.setItem("custom_duas", JSON.stringify(duaList));
+renderDuas(duaList);
+alert("Yeni Dua Uğurla Əlavə Olundu!");
+} 
+
+else if(type === "lesson"){
+const scholar = document.getElementById("newScholarName").value;
+const title = document.getElementById("newLessonTitle").value;
+const url = document.getElementById("newLessonUrl").value;
+
+if(!title || !url){ alert("Məlumatları tam doldurun."); return; }
+
+const scholarContainer = document.getElementById("scholarContainer");
+const card = document.createElement("div");
+card.className = "scholar-card";
+card.innerHTML = `
+<h3>${scholar}</h3>
+<span class="title">Səsli Dərs</span>
+<ul class="lesson-list">
+<li>
+<span>${title}</span>
+<div class="btn-group">
+<button class="btn-sm" onclick="playLesson('${title}', '${url}')">▶ Audio</button>
+</div>
+</li>
+</ul>
+`;
+scholarContainer.prepend(card);
+alert("Yeni Audio Dərs Əlavə Olundu!");
+}
+
+else if(type === "channel"){
+const name = document.getElementById("newChannelName").value;
+const url = document.getElementById("newChannelUrl").value;
+
+if(!name || !url){ alert("Məlumatları tam doldurun."); return; }
+
+const channelContainer = document.getElementById("channelContainer");
+const item = document.createElement("div");
+item.className = "channel";
+item.onclick = function(){ playChannel(name, url, this); };
+item.innerHTML = `<strong>📺 ${name}</strong><small>İstifadəçi Kanalı</small>`;
+channelContainer.appendChild(item);
+alert("Yeni Video Kanalı Əlavə Olundu!");
+}
+
+closeAdminModal();
 }
 
 fetchSurahs();
