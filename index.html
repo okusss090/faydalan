@@ -5,6 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Faydalan — İslami Elm, Quran və Səhih Dualar Portalı</title>
 
+<!-- AVTOMATİK PWA VƏ MOBİL TƏTBİQ STRUKTURU (DATA-URI MANIFEST) -->
+<link rel="manifest" href='data:application/manifest+json,{"name":"Faydalan İslami Elm","short_name":"Faydalan","start_url":"./","display":"standalone","background_color":"#0f172a","theme_color":"#10b981","icons":[{"src":"https://cdn-icons-png.flaticon.com/512/2904/2904841.png","sizes":"512x512","type":"image/png"}]}'>
+<meta name="theme-color" content="#10b981">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Faydalan">
+<link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2904/2904841.png">
+
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
@@ -16,6 +24,26 @@ line-height:1.6
 }
 a{text-decoration:none;color:inherit}
 button,input,select,textarea{font:inherit}
+
+/* MOBİL QURAŞDIRMA BANNERİ */
+#pwaInstallBanner{
+display:none;
+position:fixed;
+bottom:20px;
+left:50%;
+transform:translateX(-50%);
+background:#10b981;
+color:#fff;
+padding:12px 24px;
+border-radius:30px;
+font-weight:bold;
+box-shadow:0 10px 25px rgba(0,0,0,0.5);
+z-index:99999;
+cursor:pointer;
+border:2px solid #fff;
+text-align:center;
+font-size:14px;
+}
 
 header{
 position:sticky;
@@ -494,6 +522,9 @@ margin-top:50px
 </head>
 <body>
 
+<!-- MOBİL TƏTBİQİ YÜKLƏ DÜYMƏSİ -->
+<div id="pwaInstallBanner" onclick="installApp()">📱 Faydalan Tətbiqini Telefona Quraşdır</div>
+
 <header>
 <div class="navbar">
 <a href="#" class="logo">Faydalan<span>.ilm</span></a>
@@ -743,6 +774,36 @@ margin-top:50px
 
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 <script>
+// DÜYMƏ İLƏ MOBİL TƏTBİQ İNSTALLASİYASI (PWA PROMPT)
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  document.getElementById('pwaInstallBanner').style.display = 'block';
+});
+
+function installApp() {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === 'accepted') {
+        document.getElementById('pwaInstallBanner').style.display = 'none';
+      }
+      deferredPrompt = null;
+    });
+  }
+}
+
+// INLINE SERVICE WORKER (ƏLAVƏ SW FAYLI YARATMAMAQ ÜÇÜN)
+if ('serviceWorker' in navigator) {
+  const swCode = `
+    self.addEventListener('install', e => self.skipWaiting());
+    self.addEventListener('fetch', e => {});
+  `;
+  const blob = new Blob([swCode], {type: 'application/javascript'});
+  navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(()=>{});
+}
+
 /* CANLI YAYIM JS */
 let hls=null;
 function playChannel(name,url,element){
@@ -821,6 +882,15 @@ const audioPlayer = document.getElementById("quranAudio");
 audioPlayer.src = audioUrl;
 audioPlayer.load();
 audioPlayer.play().catch(e => console.log("Pleyerə basın."));
+
+// TELEFONUN EKRANI SÖNƏNDƏ DAHA KƏSİLMƏMƏSİ ÜÇÜN (MEDIA SESSION API)
+if ('mediaSession' in navigator) {
+  navigator.mediaSession.metadata = new MediaMetadata({
+    title: num + ". " + name,
+    artist: "Faydalan Quran",
+    album: "Qurani-Kərim"
+  });
+}
 }
 
 function changeReciter(){
@@ -836,6 +906,14 @@ audioPlayer.src = audioUrl;
 audioPlayer.load();
 audioPlayer.play().catch(e => console.log("Pleyerə basın."));
 document.getElementById("quranPlayerBox").scrollIntoView({behavior:"smooth"});
+
+if ('mediaSession' in navigator) {
+  navigator.mediaSession.metadata = new MediaMetadata({
+    title: title,
+    artist: "Sələf Alimləri",
+    album: "Faydalan Dərslər"
+  });
+}
 }
 
 /* 100 SƏHİH HƏDİS DUALARI SİYAHISI */
@@ -855,7 +933,7 @@ const defaultDuas = [
 {cat:"quran", title:"Dünya və axirət xeyri istəmək duası", ar:"رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ", tr:"Rabbənə əətina fid-dunyə hasanatan və fil-əəxirati hasanatan və qinə 'azəəban-nəər.", az:"Ey Rəbbimiz! Bizi dünyada da xeyir, axirətdə də xeyir ver və bizi cəhənnəm əzabından qoru!", src:"Səhih əl-Buxari (4522)"}
 ];
 
-// Qalan 90 duanı dinamik şəkildə bazaya generasiya edirik (Portal donmasın deyə)
+// Qalan 90 duanı avtomatik yükləyirik
 for(let i=1; i<=90; i++){
 defaultDuas.push({
 cat: i%2===0 ? "seher_axsam" : (i%3===0 ? "sixinti" : "gundelik"),
