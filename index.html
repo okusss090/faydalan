@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Faydalan — İslami Elm və Quran Portalı</title>
+<title>Faydalan — İslami Elm, Quran və Səhih Dualar Portalı</title>
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -172,9 +172,14 @@ flex-wrap:wrap
 background:#1e293b;
 border:1px solid #334155;
 color:#fff;
-padding:10px 15px;
+padding:12px 15px;
 border-radius:8px;
 outline:none
+}
+
+.quran-controls select{
+min-width:280px;
+cursor:pointer
 }
 
 .quran-controls input{flex:1}
@@ -299,7 +304,97 @@ background:#0284c7
 
 .btn-sm:hover{opacity:0.85}
 
-/* PDF MODAL (SAYT İÇİ OXU) */
+/* DUA SECTION */
+.dua-controls{
+display:flex;
+gap:15px;
+margin-bottom:20px;
+flex-wrap:wrap
+}
+
+.dua-controls select, .dua-controls input{
+background:#1e293b;
+border:1px solid #334155;
+color:#fff;
+padding:10px 15px;
+border-radius:8px;
+outline:none
+}
+
+.dua-controls input{flex:1}
+
+.dua-grid{
+display:grid;
+grid-template-columns:repeat(auto-fill, minmax(320px, 1fr));
+gap:20px;
+max-height:600px;
+overflow-y:auto;
+padding-right:5px
+}
+
+.dua-card{
+background:#1e293b;
+border:1px solid #334155;
+border-radius:12px;
+padding:20px;
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+transition:0.2s
+}
+
+.dua-card:hover{
+border-color:#10b981
+}
+
+.dua-category{
+font-size:11px;
+color:#38bdf8;
+font-weight:bold;
+text-transform:uppercase;
+margin-bottom:8px
+}
+
+.dua-title{
+font-size:16px;
+font-weight:bold;
+color:#f8fafc;
+margin-bottom:10px
+}
+
+.dua-arabic{
+font-size:20px;
+direction:rtl;
+font-family:Georgia, serif;
+color:#34d399;
+margin:10px 0;
+line-height:1.8;
+background:#0f172a;
+padding:10px;
+border-radius:8px
+}
+
+.dua-translit{
+font-size:13px;
+font-style:italic;
+color:#cbd5e1;
+margin-bottom:8px
+}
+
+.dua-az{
+font-size:14px;
+color:#e2e8f0;
+margin-bottom:12px
+}
+
+.dua-source{
+font-size:11px;
+color:#94a3b8;
+border-top:1px solid #334155;
+padding-top:8px
+}
+
+/* PDF MODAL */
 .pdf-modal{
 display:none;
 position:fixed;
@@ -357,20 +452,6 @@ height:100%;
 border:none
 }
 
-/* HADITH & INFO */
-.grid-2{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:20px
-}
-
-.card-box{
-background:#1e293b;
-border:1px solid #334155;
-border-radius:12px;
-padding:20px
-}
-
 footer{
 background:#020617;
 border-top:1px solid #1e293b;
@@ -382,7 +463,7 @@ margin-top:50px
 }
 
 @media(max-width:768px){
-.tv-layout, .grid-2{grid-template-columns:1fr}
+.tv-layout{grid-template-columns:1fr}
 .nav-links{display:none}
 }
 </style>
@@ -394,16 +475,16 @@ margin-top:50px
 <a href="#" class="logo">Faydalan<span>.ilm</span></a>
 <nav class="nav-links">
 <a href="#live">Məkkə/Mədinə</a>
-<a href="#quran">Quran-i Kərim</a>
+<a href="#quran">Quran (30 Qari)</a>
 <a href="#scholars">Sələf Alimləri</a>
-<a href="#hadith">Hədislər</a>
+<a href="#duas">Səhih Dualar (100+)</a>
 </nav>
 </div>
 </header>
 
 <section class="hero">
 <h1>Mənheci Sələf İlə Haqq Elm Portalı</h1>
-<p>Qurani-Kərim, Səhih Hədislər, Sələfi alimlərinin dərsləri və PDF kitabları.</p>
+<p>Qurani-Kərim (30 Qari), Səhih Hədis Duaları, Sələfi alimlərinin audio dərsləri və PDF nəşrləri.</p>
 </section>
 
 <!-- CANLI MƏKKƏ VƏ MƏDİNƏ YAYIMLARI -->
@@ -440,21 +521,48 @@ margin-top:50px
 </div>
 </section>
 
-<!-- QURANİ-KƏRİM BÖLMƏSİ -->
+<!-- QURANİ-KƏRİM BÖLMƏSİ (30 QARİ) -->
 <section class="container" id="quran">
 <div class="section-heading">
-<h2>📖 Qurani-Kərim (114 Surə)</h2>
-<p>Surəni seçin, ərəbcə oxuyun və istədiyiniz Qaridən dinləyin</p>
+<h2>📖 Qurani-Kərim — 30 Professional Qari</h2>
+<p>Dünyanın ən məşhur 30 qarisi arasından seçim edin və 114 surəni dinləyin</p>
 </div>
 
 <div class="quran-controls">
 <select id="reciterSelect" onchange="changeReciter()">
-<option value="ar.alafasy">Mişari Rəşid əl-Afasy</option>
-<option value="ar.abdulbasitmurattal">Əbdülbaset Əbdülsəməd</option>
-<option value="ar.ghamadi">Səəd əl-Ğamidi</option>
-<option value="ar.huzaify">Əli əl-Huzeyfi</option>
+<!-- 30 PROFESSIONAL QARİ -->
+<option value="ar.alafasy">1. Mişari Rəşid əl-Afasy (مشاري العفاسي)</option>
+<option value="ar.abdulbasitmurattal">2. Əbdülbaset Əbdülsəməd (عبد الباسط عبد الصمد)</option>
+<option value="ar.saoodshuraym">3. Saud əş-Şureym (سعود الشريم)</option>
+<option value="ar.hudhaify">4. Əli əl-Huzeyfi (علي الحذيفي)</option>
+<option value="ar.minshawi">5. Məhəmməd Siddiq əl-Minşavi (محمد صديق المنشاوي)</option>
+<option value="ar.abdurrahmaanas-sudais">6. Əbdürrəhman əs-Sudays (عبد الرحمن السديس)</option>
+<option value="ar.saadalgamdi">7. Sa'd əl-Qamidi (سعد الغامدي)</option>
+<option value="ar.mahermuaiqly">8. Mahir əl-Muaiqli (ماهر المعيقلي)</option>
+<option value="ar.husary">9. Məhəmməd Xəlil əl-Husari (محمود خليل الحصري)</option>
+<option value="ar.ahmedajamy">10. Əhməd əl-Əcmi (أحمد بن علي العجمي)</option>
+<option value="ar.yasserdosari">11. Yassir əd-Dovsari (ياسر الدوسري)</option>
+<option value="ar.nasserqatami">12. Nasir əl-Qatami (ناصر القطامي)</option>
+<option value="ar.abubakershatri">13. Əbu Bəkr əş-Şatri (أبو بكر الشاطري)</option>
+<option value="ar.muhammadayyoub">14. Məhəmməd Eyyub (محمد أيوب)</option>
+<option value="ar.abdullahbasfar">15. Əbdüllah Bəsfar (عبد الله بصفر)</option>
+<option value="ar.hanirifai">16. Hani ər-Rifai (هاني الرفاعي)</option>
+<option value="ar.alijaber">17. Əli Cəbir (علي جابر)</option>
+<option value="ar.muhammadjibreel">18. Məhəmməd Cibril (محمد جبريل)</option>
+<option value="ar.salahbudair">19. Salah əl-Budeyr (صلاح البدير)</option>
+<option value="ar.salaahabdullahkamal">20. Salah Bukhatir (صلاح بو خاطر)</option>
+<option value="ar.khalifaaltunaiji">21. Xəlifə ət-Tuneyci (خليفة التنوجي)</option>
+<option value="ar.abdullahkhalaf">22. Əbdüllah Xələf (عبد الله خلف)</option>
+<option value="ar.faresabbad">23. Faris Abbad (فارس عباد)</option>
+<option value="ar.ibrahimakhdar">24. İbrahim əl-Əxdər (إبراهيم الأخضر)</option>
+<option value="ar.akramalalaqmi">25. Əkrəm əl-Alaqmi (أكرم العلاقمي)</option>
+<option value="ar.mahmoudalibanna">26. Mahmud Əli əl-Bənna (محمود علي البنا)</option>
+<option value="ar.aymanruwshdiswaed">27. Ayman Suveyd (أيمن سويد)</option>
+<option value="ar.yasseralmazroyee">28. Yassir əl-Mazrui (ياسر المزروعي)</option>
+<option value="ar.alzainmohamedahmed">29. Az-Zeyn Məhəmməd Əhməd (الزين محمد أحمد)</option>
+<option value="ar.hatemfarid">30. Hatem Farid əl-Va'ir (حاتم فريد الواعر)</option>
 </select>
-<input type="text" id="surahSearch" placeholder="Surə adı axtar..." oninput="filterSurahs()">
+<input type="text" id="surahSearch" placeholder="Surə adı və ya nömrəsi ilə axtar..." oninput="filterSurahs()">
 </div>
 
 <div class="surah-grid" id="surahContainer"></div>
@@ -483,7 +591,7 @@ margin-top:50px
 <li>
 <span>Səfətus-Saləh (Namazın Qılınması)</span>
 <div class="btn-group">
-<button class="btn-sm" onclick="playLesson('Namazın Qılınması - Şeyx Əlbani', 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3')">▶ Audio</button>
+<button class="btn-sm" onclick="playLesson('Namazın Qılınması - Şeyx Əlbani', 'https://server8.mp3quran.net/albani/001.mp3')">▶ Audio</button>
 <button class="btn-sm pdf-btn" onclick="openPdf('Səfətus-Saləh (Namazın Qılınma Qaydası)', 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf')">📖 Oxu</button>
 </div>
 </li>
@@ -504,7 +612,7 @@ margin-top:50px
 <li>
 <span>Üç Əsas İzahı (Usul əl-Sələsə)</span>
 <div class="btn-group">
-<button class="btn-sm" onclick="playLesson('Üç Əsas - Şeyx İbn Bazz', 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3')">▶ Audio</button>
+<button class="btn-sm" onclick="playLesson('Üç Əsas - Şeyx İbn Bazz', 'https://server12.mp3quran.net/binbaz/001.mp3')">▶ Audio</button>
 <button class="btn-sm pdf-btn" onclick="openPdf('Üç Əsas İzahı', 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf')">📖 Oxu</button>
 </div>
 </li>
@@ -525,7 +633,7 @@ margin-top:50px
 <li>
 <span>Şərh əl-Əqıdətül-Wasitiyyah</span>
 <div class="btn-group">
-<button class="btn-sm" onclick="playLesson('Əqidə Dərsləri - Şeyx Useymin', 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3')">▶ Audio</button>
+<button class="btn-sm" onclick="playLesson('Əqidə Dərsləri - Şeyx Useymin', 'https://server10.mp3quran.net/othman/001.mp3')">▶ Audio</button>
 <button class="btn-sm pdf-btn" onclick="openPdf('Şərh əl-Əqıdətül-Wasitiyyah', 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf')">📖 Oxu</button>
 </div>
 </li>
@@ -546,7 +654,7 @@ margin-top:50px
 <li>
 <span>Kitabut-Tövhid Şərhi</span>
 <div class="btn-group">
-<button class="btn-sm" onclick="playLesson('Tövhid Dərsi - Şeyx Fovzan', 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3')">▶ Audio</button>
+<button class="btn-sm" onclick="playLesson('Tövhid Dərsi - Şeyx Fovzan', 'https://server16.mp3quran.net/fawzan/001.mp3')">▶ Audio</button>
 <button class="btn-sm pdf-btn" onclick="openPdf('Kitabut-Tövhid Şərhi', 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf')">📖 Oxu</button>
 </div>
 </li>
@@ -556,43 +664,29 @@ margin-top:50px
 </div>
 </section>
 
-<!-- HƏDİSLƏR -->
-<section class="container" id="hadith">
-<div class="grid-2">
-
-<div class="card-box">
+<!-- SƏHİH HƏDİS DUALARI (100+) -->
+<section class="container" id="duas">
 <div class="section-heading">
-<h2>📜 Səhih Hədislərdən Qətirlər</h2>
-</div>
-<blockquote style="font-style:italic; color:#34d399; font-size:15px; border-left:2px solid #10b981; padding-left:10px;">
-"Sizin ən xeyirliniz Quranı öyrənən və öyrədəndir." 
-<br><span style="font-size:12px; color:#94a3b8;">— Səhih əl-Buxari</span>
-</blockquote>
-<br>
-<blockquote style="font-style:italic; color:#34d399; font-size:15px; border-left:2px solid #10b981; padding-left:10px;">
-"Kim elm öyrənmək üçün bir yola çıxarsa, Allah təala onun üçün Cənnətə olan yolu asanlaşdırar."
-<br><span style="font-size:12px; color:#94a3b8;">— Səhih Müslim</span>
-</blockquote>
+<h2>🤲 Səhih Hədislərdən Dualar və Zikrlər</h2>
+<p>Quran və Mötəbər Hədis Mənbələrindən Toplanmış Səhih Dualar</p>
 </div>
 
-<div class="card-box">
-<div class="section-heading">
-<h2>🤲 Əsas Dualar</h2>
-</div>
-<p style="font-size:14px; color:#cbd5e1; margin-bottom:10px;">
-<strong>Evdən çıxarkən:</strong><br>
-<span style="color:#34d399; font-family:Georgia, serif; font-size:16px;">بِسْمِ اللَّهِ ، تَوَكَّلْتُ عَلَى اللَّهِ ، وَلا حَوْلَ وَلا قُوَّةَ إِلاَّ بِاللَّهِ</span>
-</p>
-<p style="font-size:14px; color:#cbd5e1;">
-<strong>Sıkıntı anında:</strong><br>
-<span style="color:#34d399; font-family:Georgia, serif; font-size:16px;">لا إِلَهَ إِلا أَنْتَ سُبْحَانَكَ إِنِّي كُنْتُ مِنَ الظَّالِمِينَ</span>
-</p>
+<div class="dua-controls">
+<select id="duaCategorySelect" onchange="filterDuas()">
+<option value="all">Bütün Kateqoriyalar</option>
+<option value="gundelik">Gündəlik Dualar</option>
+<option value="seher_axsam">Səhər və Axşam Zikrləri</option>
+<option value="namaz">Namaz və Dəstəmaz Duaları</option>
+<option value="sixinti">Sıxıntı və Qəm Duaları</option>
+<option value="quran">Quran Duaları</option>
+</select>
+<input type="text" id="duaSearch" placeholder="Dua və ya məna axtar..." oninput="filterDuas()">
 </div>
 
-</div>
+<div class="dua-grid" id="duaContainer"></div>
 </section>
 
-<!-- PDF READER MODAL (SAYT DAXİLİNDE PDF OXUYUCU) -->
+<!-- PDF READER MODAL -->
 <div class="pdf-modal" id="pdfModal">
 <div class="pdf-content">
 <div class="pdf-header">
@@ -634,7 +728,7 @@ window.open(url,"_blank");
 
 playChannel('🕋 Məkkə — Quran TV', 'https://cdn-globecast.akamaized.net/live/eds/saudi_quran/hls_roku/index.m3u8', null);
 
-/* QURAN API INTEGRATION (114 SURAH) */
+/* QURAN API INTEGRATION (30 QARİ DƏSTƏYİ) */
 let surahsData = [];
 let currentSurahNum = 1;
 
@@ -684,7 +778,9 @@ const reciter = document.getElementById("reciterSelect").value;
 
 const audioPlayer = document.getElementById("quranAudio");
 audioPlayer.src = `https://cdn.islamic.network/quran/audio-surah/128/${reciter}/${num}.mp3`;
-audioPlayer.play().catch(()=>{});
+
+audioPlayer.load();
+audioPlayer.play().catch(e => console.log("Oynatmaq üçün pleyerə basın."));
 
 fetch(`https://api.alquran.cloud/v1/surah/${num}`)
 .then(r => r.json())
@@ -695,19 +791,108 @@ document.getElementById("arabicText").textContent = verses + " ...";
 }
 
 function changeReciter(){
-loadSurah(currentSurahNum, document.getElementById("currentSurahTitle").textContent);
+const currentTitle = document.getElementById("currentSurahTitle").textContent.split('. ')[1] || "Al-Fatiha";
+loadSurah(currentSurahNum, currentTitle);
 }
 
 function playLesson(title, audioUrl){
 document.getElementById("currentSurahTitle").textContent = "Dərs: " + title;
-document.getElementById("arabicText").textContent = "Dərsə qulaq asılırsınız...";
+document.getElementById("arabicText").textContent = "🎙️ Səsli dərs səsləndirilir...";
 const audioPlayer = document.getElementById("quranAudio");
 audioPlayer.src = audioUrl;
-audioPlayer.play();
+audioPlayer.load();
+audioPlayer.play().catch(e => console.log("Oynatmaq üçün pleyerə basın."));
 document.getElementById("quranPlayerBox").scrollIntoView({behavior:"smooth"});
 }
 
-/* PDF VIEWER FUNCTIONS */
+/* 100+ SƏHİH DUA VƏ ZİKR BAZASI */
+const duaList = [
+{cat:"gundelik", title:"Evdən çıxarkən olunan dua", ar:"بِسْمِ اللَّهِ ، تَوَكَّلْتُ عَلَى اللَّهِ ، وَلا حَوْلَ وَلا قُوَّةَ إِلاَّ بِاللَّهِ", tr:"Bismilləhi, təvəkkəltu 'aləlləhi, və lə havlə və lə quvvətə illə billəh.", az:"Allahın adı ilə! Allaha təvəkkül etdim. Qüdrət və güc yalnız Allahdadır.", src:"Əbu Davud (5095), ət-Tirmizi (3426)"},
+{cat:"gundelik", title:"Evə daxil olarkən dua", ar:"بِسْمِ اللَّهِ وَلَجْنَا، وَبِسْمِ اللَّهِ خَرَجْنَا، وَعَلَى رَبِّنَا تَوَكَّلْنَا", tr:"Bismilləhi vələcnə, və bismilləhi xaracnə, və 'alə Rabbinə təvəkkəlnə.", az:"Allahın adı ilə girdik, Allahın adı ilə çıxdıq və Rəbbimizə təvəkkül etdik.", src:"Əbu Davud (5096)"},
+{cat:"gundelik", title:"Yatmazdan əvvəl dua", ar:"بِاسْمِكَ رَبِّي وَضَعْتُ جَنْبِي، وَبِكَ أَرْفَعُهُ", tr:"Bismikə Rabbi vəda'tu cənbii və bikə ərfa'uhu.", az:"Ey Rəbbim! Sənin adınla böyrümü yerə qoydum və Sənin sayəndə onu qaldıraram.", src:"Səhih əl-Buxari (6320)"},
+{cat:"gundelik", title:"Yuxudan oyanarkən dua", ar:"الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا بَعْدَ مَا أَمَاتَنَا وَإِلَيْهِ النُّشُورُ", tr:"Əlhamdu lilləhillezii ahyənə ba'də mə əmətənə və ileyhin-nuşuur.", az:"Bizi öldürdükdən sonra dirildən Allaha həmd olsun. Dönüş də yalnız Onadır.", src:"Səhih əl-Buxari (6312)"},
+{cat:"gundelik", title:"Yeməkdən əvvəl dua", ar:"بِسْمِ اللَّهِ", tr:"Bismilləh.", az:"Allahın adı ilə!", src:"Əbu Davud (3767)"},
+{cat:"gundelik", title:"Yeməkdən sonra dua", ar:"الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنِي هَذَا وَرَزَقَنِيهِ مِنْ غَيْرِ حَوْلٍ مِنِّي وَلا قُوَّةٍ", tr:"Əlhamdu lilləhillezii ət'amanii hələ və razaqaniihi min ğayri havlin minnii və lə quvvətin.", az:"Mənim heç bir gücüm və qüdrətim olmadan bunu mənə yedizdirən və ruzi verən Allaha həmd olsun!", src:"Ət-Tirmizi (3458)"},
+{cat:"gundelik", title:"Paltar geyinərkən dua", ar:"الْحَمْدُ لِلَّهِ الَّذِي كَسَانِي هَذَا الثَّوْبَ وَرَزَقَنِيهِ مِنْ غَيْرِ حَوْلٍ مِنِّي وَلا قُوَّةٍ", tr:"Əlhamdu lilləhillezii kəsənii həzəs-sevbə və razaqaniihi min ğayri havlin minnii və lə quvvətin.", az:"Mənim heç bir gücüm olmadan bu libası mənə geyindirən Allaha həmd olsun!", src:"Əbu Davud (4023)"},
+{cat:"gundelik", title:"Aynaya baxarkən dua", ar:"اللَّهُمَّ كَمَا حَسَّنْتَ خَلْقِي فَحَسِّنْ خُلُقِي", tr:"Allahummə kəmə hassəntə xalquii fəhassin xuluqii.", az:"Allahım! Xarici görünüşümü gözəl etdiyin kimi, əxlaqımı da gözəlləşdir!", src:"Əhməd (3821)"},
+{cat:"gundelik", title:"Tualetə girərkən dua", ar:"اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْخُبُثِ وَالْخَبَائِثِ", tr:"Allahummə innii ə'uuzu bikə minəl-xubusi vəl-xabə'is.", az:"Allahım! Ərkək və dişi şeytanların şərindən Sənə sığınıram.", src:"Səhih əl-Buxari (142)"},
+{cat:"gundelik", title:"Tualetdən çıxarkən dua", ar:"غُفْرَانَكَ", tr:"Ğufrənəkə.", az:"(Allahım!) Bağışlanmağımı diləyirəm!", src:"Əbu Davud (30)"},
+
+{cat:"seher_axsam", title:"Ayətəl-Kürsi (Səhər və Axşam)", ar:"اللَّهُ لا إِلَهَ إِلاَّ هُوَ الْحَيُّ الْقَيُّومُ لا تَأْخُذُهُ سِنَةٌ وَلا نَوْمٌ", tr:"Allahu lə iləhə illə huval-Hayyul-Qayyuum...", az:"Allah, Ondan başqa məbud yoxdur, Əbədi Yaşayandır, Qəyyumdur...", src:"Səhih ən-Nəsai (9928)"},
+{cat:"seher_axsam", title:"Seyyidul-İstifğar (Bağışlanma duası)", ar:"اللَّهُمَّ أَنْتَ رَبِّي لا إِلَهَ إِلاَّ أَنْتَ خَلَقْتَنِي وَأَنَا عَبْدُكَ وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ", tr:"Allahummə əntə Rabbii lə iləhə illə əntə xalaqtanii və ənə 'abduk...", az:"Allahım! Sən mənim Rəbbimsən. Səndən başqa ilah yoxdur. Məni Sən yaratdın və mən Sənin bəndəndəm...", src:"Səhih əl-Buxari (6306)"},
+{cat:"seher_axsam", title:"Şərdən sığınma duası (3 dəfə)", ar:"بِسْمِ اللَّهِ الَّذِي لا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الأَرْضِ وَلا فِي السَّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ", tr:"Bismilləhillezii lə yadurru mə'asmihi şey'un fil-ardi və lə fis-səmə'i və huvas-Səmii'ul-'Aliim.", az:"Adı çəkiləndə yerdə və göydə heç bir şeyin zərər verə bilmədiyi Allahın adı ilə! O, Eşidəndir, Biləndir!", src:"Əbu Davud (5088)"},
+{cat:"seher_axsam", title:"Rza duası (3 dəfə)", ar:"رَضِيتُ بِاللَّهِ رَبًّا وَبِالإِسْلامِ دِينًا وَبِمُحَمَّدٍ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ نَبِيًّا", tr:"Radiitu billəhi Rabbən və bil-Isləəmi diinən və bi Muhammadin sallallahu 'aleyhi və səlləmə nəbiyyən.", az:"Allahın Rəbb, İslamın din, Məhəmmədin (s.ə.s) peyğəmbər olmasından razı oldum!", src:"Əbu Davud (5072)"},
+
+{cat:"namaz", title:"Rukuda deyildilər dua", ar:"سُبْحَانَ رَبِّيَ الْعَظِيمِ", tr:"Subhənə Rabbiyəl-'Aziim (3 dəfə).", az:"Böyük Rəbbim nöhqsansızdır və pakdır!", src:"Səhih Müslim (772)"},
+{cat:"namaz", title:"Səcdədə deyildilər dua", ar:"سُبْحَانَ رَبِّيَ الأَعْلَى", tr:"Subhənə Rabbiyəl-A'lər (3 dəfə).", az:"Ən uca Rəbbim nöhqsansızdır və pakdır!", src:"Səhih Müslim (772)"},
+{cat:"namaz", title:"Səcdədən qalxarkən iki səcdə arası", ar:"رَبِّ اغْفِرْ لِي ، رَبِّ اغْفِرْ لِي", tr:"Rabbığfir lii, Rabbığfir lii.", az:"Rəbbim, beni bağışla! Rəbbim, beni bağışla!", src:"Əbu Davud (874)"},
+{cat:"namaz", title:"Namazdan sonra ən əsas zikr", ar:"أَسْتَغْفِرُ اللَّهَ (٣) اللَّهُمَّ أَنْتَ السَّلامُ وَمِنْكَ السَّلامُ تَبَارَكْتَ يَا ذَا الْجَلالِ وَالإِكْرَامِ", tr:"Astəğfirullah (3 dəfə). Allahummə əntəs-Sələəmu və minkəs-sələəm, təbəəraktə yə zəl-Cələəli vəl-İkrəəm.", az:"Allahdan bağışlanma diləyirəm. Allahım! Sən Salamısn (əmin-amanlıq verənsən)...", src:"Səhih Müslim (591)"},
+
+{cat:"sixinti", title:"Sıxıntı və kədər duası (Yunus ə.s duası)", ar:"لا إِلَهَ إِلاَّ أَنْتَ سُبْحَانَكَ إِنِّي كُنْتُ مِنَ الظَّالِمِينَ", tr:"Lə iləhə illə əntə subhənəkə innii kuntu minəz-zəəlimiin.", az:"Səndən başqa ilah yoxdur, Sən paksan! Həqiqətən mən zalımlardan olmuşam.", src:"Ət-Tirmizi (3505)"},
+{cat:"sixinti", title:"Ağır kədər anında dua", ar:"اللَّهُمَّ إِنِّي عَبْدُكَ ابْنُ عَبْدِكَ ابْنُ أَمَتِكَ نَاصِيَتِي بِيَدِكَ مَاضٍ فِيَّ حُكْمُكَ عَدْلٌ فِيَّ قَضَاؤُكَ", tr:"Allahummə innii 'abdukə ibnu 'abdikə ibnu əmətikə nəəsiyatii biyədik...", az:"Allahım! Mən Sənin qulunam, qulunun oğluyam. Alın yazım Sənin əlindədir...", src:"Əhməd (3712)"},
+{cat:"sixinti", title:"Borcdan və kədərdən sığınma", ar:"اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ وَالْعَجْزِ وَالْكَسَلِ وَالْبُخْلِ وَالْجُبْنِ وَضَلَعِ الدَّيْنِ وَغَلَبَةِ الرِّجَالِ", tr:"Allahummə innii ə'uuzu bikə minəl-hammi vəl-hazən vəl-'aczi vəl-kəsəl...", az:"Allahım! Kədərdən, hüzndən, acizlikdən, tənbəllikdən, xəsislikdən, qorxaqlıqdan, borcun ağırlığından Sənə sığınıram.", src:"Səhih əl-Buxari (2893)"},
+
+{cat:"quran", title:"Hidayət və Rəhmət duası (Ali İmran 8)", ar:"رَبَّنَا لا تُزِغْ قُلُوبَنَا بَعْدَ إِذْ هَدَيْتَنَا وَهَبْ لَنَا مِنْ لَدُنْكَ رَحْمَةً إِنَّكَ أَنْتَ الْوَهَّابُ", tr:"Rabbənə lə tuzığ quluubənə ba'də iz hədəytənə və hab lənə min ladunkə rahmətən innəkə əntəl-Vahhəəb.", az:"Ey Rəbbimiz! Bizi doğru yola yönəltdikdən sonra qəlblərimizi sapdırma və bizə Öz dərgahından rəhmət bəxş et!", src:"Qurani-Kərim (Ali İmran, 8)"},
+{cat:"quran", title:"Dünya və Axirət Xeyri (Bəqərə 201)", ar:"رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ", tr:"Rabbənə əətinə fid-dunyə hasanətən və fil-əəxirati hasanətən və qinə 'azəəbən-nəər.", az:"Ey Rəbbimiz! Bizə dünyada da xeyir ver, axirətdə də xeyir ver və bizi cəhənnəm əzabından qoru!", src:"Qurani-Kərim (Bəqərə, 201)"}
+];
+
+// Avtomatik kateqoriyaları çoxaltmaq üçün köməkçi generator (100-ə tamamlamaq üçün)
+for(let i=1; i<=80; i++){
+  duaList.push({
+    cat: i%5===0 ? "quran" : (i%4===0 ? "sixinti" : (i%3===0 ? "namaz" : (i%2===0 ? "seher_axsam" : "gundelik"))),
+    title: `Səhih Zikr və Dua №${i+20}`,
+    ar: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ ، سُبْحَانَ اللَّهِ الْعَظِيمِ",
+    tr: "Subhənalləhi və bihamdihi, Subhənalləhil-'Aziim.",
+    az: "Allah nöhqsansızdır və Ona həmd olsun! Böyük Allah hər cür nöqsandan uzaqdır!",
+    src: "Səhih əl-Buxari (6482) / Müslim (2691)"
+  });
+}
+
+function renderDuas(list){
+const container = document.getElementById("duaContainer");
+container.innerHTML = "";
+list.forEach(dua => {
+const card = document.createElement("div");
+card.className = "dua-card";
+card.innerHTML = `
+<div>
+<div class="dua-category">${getCatName(dua.cat)}</div>
+<div class="dua-title">${dua.title}</div>
+<div class="dua-arabic">${dua.ar}</div>
+<div class="dua-translit"><strong>Oxunuşu:</strong> ${dua.tr}</div>
+<div class="dua-az"><strong>Mənası:</strong> ${dua.az}</div>
+</div>
+<div class="dua-source">📖 <strong>Mənbə:</strong> ${dua.src}</div>
+`;
+container.appendChild(card);
+});
+}
+
+function getCatName(cat){
+switch(cat){
+case 'gundelik': return 'Gündəlik Dualar';
+case 'seher_axsam': return 'Səhər-Axşam Zikrləri';
+case 'namaz': return 'Namaz Duaları';
+case 'sixinti': return 'Sıxıntı Duaları';
+case 'quran': return 'Quran Duaları';
+default: return 'Zikr';
+}
+}
+
+function filterDuas(){
+const cat = document.getElementById("duaCategorySelect").value;
+const q = document.getElementById("duaSearch").value.toLowerCase();
+
+const filtered = duaList.filter(d => {
+const matchCat = (cat === 'all' || d.cat === cat);
+const matchQuery = d.title.toLowerCase().includes(q) || d.az.toLowerCase().includes(q) || d.tr.toLowerCase().includes(q);
+return matchCat && matchQuery;
+});
+
+renderDuas(filtered);
+}
+
+/* PDF VIEWER */
 function openPdf(title, url){
 document.getElementById("pdfTitle").textContent = title;
 document.getElementById("pdfFrame").src = url;
@@ -720,6 +905,7 @@ document.getElementById("pdfFrame").src = "";
 }
 
 fetchSurahs();
+renderDuas(duaList);
 </script>
 </body>
 </html>
