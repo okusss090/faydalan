@@ -123,6 +123,11 @@ font-weight:700;
 cursor:pointer
 }
 
+.action-btn.secondary{
+background:#eef4ff;
+color:#1769e0
+}
+
 .section-heading{
 margin-bottom:28px
 }
@@ -207,10 +212,22 @@ transition:.2s
 .card:hover,
 .calc-card:hover,
 .category-card:hover,
-.tool:hover{
+.tool:hover,
+.sport-card:hover{
 transform:translateY(-4px);
 box-shadow:0 15px 35px rgba(15,23,42,.08)
 }
+
+.sport-card{cursor:pointer}
+.sport-card.active{border-color:#1769e0;box-shadow:0 15px 35px rgba(23,105,224,.15)}
+.religion-card{cursor:pointer}
+.religion-card.active{border-color:#16a36d;box-shadow:0 15px 35px rgba(22,163,109,.15)}
+.religion-audio{margin-top:10px;width:100%}
+.dua-item{border-top:1px dashed #e5e9f0;padding-top:10px;margin-top:10px}
+.dua-item:first-child{border-top:none;margin-top:0}
+.dua-item .ar{font-size:16px;font-weight:700;direction:rtl;margin-bottom:4px}
+.dua-item .meaning{color:#667085;font-size:13px}
+.religion-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
 
 .card-icon{
 width:52px;
@@ -262,9 +279,12 @@ font-size:12px
 }
 
 .main-news h3{
-font-size:30px;
-margin:8px 0
+font-size:28px;
+margin:8px 0;
+line-height:1.15
 }
+
+.main-news p{color:#dce8ff;font-size:14px}
 
 .side-news{
 display:grid;
@@ -275,7 +295,8 @@ gap:12px
 background:#fff;
 border:1px solid #e5e9f0;
 border-radius:16px;
-padding:18px
+padding:18px;
+cursor:pointer
 }
 
 .news-mini span,
@@ -284,6 +305,19 @@ color:#1769e0;
 font-size:11px;
 font-weight:800
 }
+
+.news-mini h4{margin-top:6px;font-size:15px;line-height:1.3}
+.news-mini .src{color:#98a2b3;font-size:11px;margin-top:6px;display:block}
+
+.news-list{margin-top:10px;display:grid;gap:8px}
+.news-list-item{
+border-top:1px dashed #e5e9f0;
+padding-top:8px;
+font-size:13px;
+cursor:pointer
+}
+.news-list-item:hover{color:#1769e0}
+.news-loading{color:#98a2b3;font-size:13px}
 
 .news-image{
 height:145px;
@@ -383,7 +417,8 @@ display:none
 display:block
 }
 
-.calc-form input{
+.calc-form input,
+.calc-form select{
 width:100%;
 border:1px solid #d8dee8;
 border-radius:9px;
@@ -400,6 +435,8 @@ border-radius:9px;
 color:#087443;
 font-weight:700
 }
+
+.result.err{background:#fdecec;color:#b3261e}
 
 /* KEYBOARD */
 
@@ -481,6 +518,33 @@ font-size:38px;
 margin-bottom:8px
 }
 
+.sports-result{
+grid-column:1 / -1;
+margin-top:6px;
+background:#fff;
+border:1px solid #e5e9f0;
+border-radius:17px;
+padding:22px;
+display:none
+}
+
+.sports-result.active{display:block}
+
+.event-row{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:12px;
+padding:12px 0;
+border-top:1px solid #eef1f6
+}
+
+.event-row:first-of-type{border-top:none}
+
+.event-row .teams{font-weight:700;font-size:14px}
+.event-row .meta{color:#98a2b3;font-size:12px;margin-top:3px}
+.event-row .when{font-size:13px;font-weight:700;color:#1769e0;white-space:nowrap}
+
 footer{
 background:#101828;
 color:#fff;
@@ -524,12 +588,43 @@ opacity:0;
 transform:translateY(20px);
 pointer-events:none;
 transition:.3s;
-z-index:10000
+z-index:10000;
+max-width:320px
 }
 
 .toast.show{
 opacity:1;
 transform:translateY(0)
+}
+
+/* TOOLS */
+
+.tool{cursor:default}
+.tool-form{margin-top:12px;display:none}
+.tool-form.active{display:block}
+.tool-form input,
+.tool-form select{
+width:100%;
+border:1px solid #d8dee8;
+border-radius:9px;
+padding:10px;
+margin-bottom:8px;
+outline:none
+}
+.tool-row{display:flex;gap:8px}
+.tool-row input{flex:1}
+.qr-preview{margin-top:10px}
+.qr-preview img{border-radius:9px;border:1px solid #e5e9f0}
+.password-out{
+font-family:monospace;
+font-size:15px;
+word-break:break-all
+}
+.stopwatch-display{
+font-size:32px;
+font-weight:800;
+text-align:center;
+margin:10px 0
 }
 
 @media(max-width:1100px){
@@ -652,43 +747,59 @@ kalkulyatorlar, xəbərlər, idman, din və daha çoxu.
 
 <div class="container">
 
-<div class="section-heading">
+<div class="section-heading" style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px">
+<div>
 <h2>📰 Son xəbərlər</h2>
-<p>Azərbaycan, dünya, iqtisadiyyat, texnologiya, din, avtomobil və idman.</p>
+<p>Azərbaycan, dünya, iqtisadiyyat və texnologiya xəbərləri avtomatik yenilənir.</p>
+</div>
+<button class="action-btn secondary" onclick="refreshNews()">🔄 Yenilə</button>
 </div>
 
 <div class="portal-grid">
 
-<div class="main-news">
+<div class="main-news" id="mainNews">
 <div class="tag">SEÇİLMİŞ</div>
-<h3>Günün əsas xəbərləri burada olacaq</h3>
-<p>Real online xəbər sistemi növbəti mərhələdə qoşulacaq.</p>
+<h3 id="mainNewsTitle">Xəbərlər yüklənir...</h3>
+<p id="mainNewsDesc"></p>
 </div>
 
 <div class="side-news">
 
-<div class="news-mini">
+<div class="news-mini" data-feed="az" onclick="openNewsCategory('az')">
 <span>🇦🇿 AZƏRBAYCAN</span>
 <h4>Azərbaycan xəbərləri</h4>
+<span class="news-loading">Yüklənir...</span>
 </div>
 
-<div class="news-mini">
+<div class="news-mini" data-feed="world" onclick="openNewsCategory('world')">
 <span>🌍 DÜNYA</span>
 <h4>Dünya xəbərləri</h4>
+<span class="news-loading">Yüklənir...</span>
 </div>
 
-<div class="news-mini">
+<div class="news-mini" data-feed="business" onclick="openNewsCategory('business')">
 <span>💰 İQTİSADİYYAT</span>
 <h4>İqtisadiyyat</h4>
+<span class="news-loading">Yüklənir...</span>
 </div>
 
-<div class="news-mini">
+<div class="news-mini" data-feed="tech" onclick="openNewsCategory('tech')">
 <span>💻 TEXNOLOGİYA</span>
 <h4>Texnologiya</h4>
+<span class="news-loading">Yüklənir...</span>
 </div>
 
 </div>
 </div>
+
+<div class="sports-result" id="newsExpanded">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+<strong id="newsExpandedTitle">Xəbərlər</strong>
+<button class="action-btn secondary" onclick="closeNewsExpanded()">Bağla ✕</button>
+</div>
+<div class="news-list" id="newsExpandedList"></div>
+</div>
+
 </div>
 </section>
 
@@ -921,52 +1032,60 @@ Kanal seçin
 
 <div class="religion-grid">
 
-<div class="religion-card">
+<div class="religion-card" onclick="loadReligion('quran', this)">
 <div class="big">📖</div>
 <h3>Quran</h3>
-<p>Quran və surələr.</p>
+<p>Təsadüfi ayə + tərcümə + səsli oxunuş.</p>
 </div>
 
-<div class="religion-card">
+<div class="religion-card" onclick="loadReligion('dua', this)">
 <div class="big">🤲</div>
 <h3>Dua və zikrlər</h3>
 <p>Gündəlik dualar.</p>
 </div>
 
-<div class="religion-card">
+<div class="religion-card" onclick="loadReligion('mekke', this)">
 <div class="big">🕋</div>
 <h3>Məkkə</h3>
 <p>Məkkə haqqında məlumat.</p>
 </div>
 
-<div class="religion-card">
+<div class="religion-card" onclick="loadReligion('medine', this)">
 <div class="big">🕌</div>
 <h3>Mədinə</h3>
 <p>Mədinə haqqında məlumat.</p>
 </div>
 
-<div class="religion-card">
+<div class="religion-card" onclick="loadReligion('hecc', this)">
 <div class="big">🕋</div>
 <h3>Həcc</h3>
 <p>Həcc hazırlığı.</p>
 </div>
 
-<div class="religion-card">
+<div class="religion-card" onclick="loadReligion('umre', this)">
 <div class="big">✈️</div>
 <h3>Ümrə</h3>
 <p>Ümrə səfəri.</p>
 </div>
 
-<div class="religion-card">
+<div class="religion-card" onclick="loadReligion('viza', this)">
 <div class="big">🛂</div>
 <h3>Viza</h3>
 <p>Səfər və viza məlumatları.</p>
 </div>
 
-<div class="religion-card">
+<div class="religion-card" onclick="loadReligion('otel', this)">
 <div class="big">🏨</div>
 <h3>Otel</h3>
 <p>Həcc və Ümrə paketləri.</p>
+</div>
+
+<div class="sports-result" id="religionResult">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+<strong id="religionResultTitle">Məlumat</strong>
+<button class="action-btn secondary" onclick="closeReligionResult()">Bağla ✕</button>
+</div>
+<div id="religionResultBody"><p class="news-loading">Yüklənir...</p></div>
 </div>
 
 </div>
@@ -979,34 +1098,42 @@ Kanal seçin
 
 <div class="section-heading">
 <h2>⚽ İdman</h2>
-<p>Futbol, MMA, basketbol, tennis və Formula 1.</p>
+<p>Kartlardan birinə klikləyin — yaxın oyun/yarış təqvimi açılacaq.</p>
 </div>
 
 <div class="sports-grid">
 
-<div class="sport-card">
+<div class="sport-card" data-sport="football" onclick="loadSport('football', this)">
 <div class="big">⚽</div>
 <h3>Futbol</h3>
 </div>
 
-<div class="sport-card">
+<div class="sport-card" data-sport="mma" onclick="loadSport('mma', this)">
 <div class="big">🥊</div>
 <h3>MMA / UFC</h3>
 </div>
 
-<div class="sport-card">
+<div class="sport-card" data-sport="basketball" onclick="loadSport('basketball', this)">
 <div class="big">🏀</div>
 <h3>Basketbol</h3>
 </div>
 
-<div class="sport-card">
+<div class="sport-card" data-sport="tennis" onclick="loadSport('tennis', this)">
 <div class="big">🎾</div>
 <h3>Tennis</h3>
 </div>
 
-<div class="sport-card">
+<div class="sport-card" data-sport="f1" onclick="loadSport('f1', this)">
 <div class="big">🏎️</div>
 <h3>Formula 1</h3>
+</div>
+
+<div class="sports-result" id="sportsResult">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+<strong id="sportsResultTitle">Yaxın oyunlar</strong>
+<button class="action-btn secondary" onclick="closeSportsResult()">Bağla ✕</button>
+</div>
+<div id="sportsResultBody"><p class="news-loading">Yüklənir...</p></div>
 </div>
 
 </div>
@@ -1018,7 +1145,7 @@ Kanal seçin
 
 <div class="section-heading">
 <h2>🏠 Ev & Təmir</h2>
-<p>Ev tikintisi və təmir üçün faydalı bölmələr.</p>
+<p>Ev tikintisi və təmir üçün faydalı hesablayıcılar.</p>
 </div>
 
 <div class="cards">
@@ -1027,24 +1154,57 @@ Kanal seçin
 <div class="card-icon">🎨</div>
 <h3>Boya</h3>
 <p>Divar sahəsinə görə boya hesabla.</p>
+<button class="action-btn" onclick="toggleCalc('paintCalc')">Hesabla</button>
+<div class="calc-form" id="paintCalc">
+<input id="paintArea" type="number" placeholder="Divar sahəsi (m²)">
+<input id="paintCoats" type="number" placeholder="Qat sayı (məs: 2)" value="2">
+<button class="action-btn" onclick="paintCalcRun()">Hesabla</button>
+<div class="result" id="paintResult"></div>
+</div>
 </div>
 
 <div class="card">
 <div class="card-icon">🧱</div>
 <h3>Kafel</h3>
 <p>Kafel miqdarını hesabla.</p>
+<button class="action-btn" onclick="toggleCalc('tileCalc')">Hesabla</button>
+<div class="calc-form" id="tileCalc">
+<input id="tileFloorArea" type="number" placeholder="Döşəmə sahəsi (m²)">
+<input id="tileWidth" type="number" placeholder="Bir kafel eni (sm)">
+<input id="tileHeight" type="number" placeholder="Bir kafel hündürlüyü (sm)">
+<button class="action-btn" onclick="tileCalcRun()">Hesabla</button>
+<div class="result" id="tileResult"></div>
+</div>
 </div>
 
 <div class="card">
 <div class="card-icon">🪵</div>
 <h3>Laminat</h3>
 <p>Laminat miqdarını hesabla.</p>
+<button class="action-btn" onclick="toggleCalc('laminateCalc')">Hesabla</button>
+<div class="calc-form" id="laminateCalc">
+<input id="laminateArea" type="number" placeholder="Otaq sahəsi (m²)">
+<input id="laminatePackArea" type="number" placeholder="1 paketin sahəsi (m², adətən 2.2)" value="2.2">
+<button class="action-btn" onclick="laminateCalcRun()">Hesabla</button>
+<div class="result" id="laminateResult"></div>
+</div>
 </div>
 
 <div class="card">
 <div class="card-icon">🏗️</div>
 <h3>Təmir smetası</h3>
 <p>Təmir üçün ilkin smeta.</p>
+<button class="action-btn" onclick="toggleCalc('repairCalc')">Hesabla</button>
+<div class="calc-form" id="repairCalc">
+<input id="repairArea" type="number" placeholder="Ümumi sahə (m²)">
+<select id="repairLevel">
+<option value="300">Sadə təmir (~300 ₼/m²)</option>
+<option value="550">Orta səviyyə (~550 ₼/m²)</option>
+<option value="900">Premium təmir (~900 ₼/m²)</option>
+</select>
+<button class="action-btn" onclick="repairCalcRun()">Hesabla</button>
+<div class="result" id="repairResult"></div>
+</div>
 </div>
 
 </div>
@@ -1064,41 +1224,100 @@ Kanal seçin
 <div class="tool">
 <strong>🔳 QR generatoru</strong>
 <small>QR kod yaratmaq.</small>
+<div style="margin-top:10px"><button class="action-btn" onclick="toggleCalc('qrTool')">Aç</button></div>
+<div class="tool-form" id="qrTool">
+<input id="qrText" placeholder="Mətn və ya link daxil edin">
+<button class="action-btn" onclick="generateQR()">Yarat</button>
+<div class="qr-preview" id="qrPreview"></div>
+</div>
 </div>
 
 <div class="tool">
 <strong>🔐 Parol generatoru</strong>
 <small>Güclü parol yaratmaq.</small>
+<div style="margin-top:10px"><button class="action-btn" onclick="toggleCalc('passTool')">Aç</button></div>
+<div class="tool-form" id="passTool">
+<input id="passLength" type="number" placeholder="Uzunluq" value="14">
+<button class="action-btn" onclick="generatePassword()">Yarat</button>
+<div class="result password-out" id="passResult"></div>
+</div>
 </div>
 
 <div class="tool">
 <strong>🔢 Mətn sayğacı</strong>
 <small>Söz və simvolları saymaq.</small>
+<div style="margin-top:10px"><button class="action-btn" onclick="toggleCalc('countTool')">Aç</button></div>
+<div class="tool-form" id="countTool">
+<textarea id="countText" oninput="updateTextCount()" placeholder="Mətni bura yazın..." style="width:100%;min-height:90px;border:1px solid #d8dee8;border-radius:9px;padding:10px"></textarea>
+<div class="result" id="countResult">Söz: 0 · Simvol: 0</div>
+</div>
 </div>
 
 <div class="tool">
-<strong>📄 PDF alətləri</strong>
-<small>PDF ilə işləmək.</small>
+<strong>📄 PDF birləşdirici</strong>
+<small>Bir neçə PDF-i birləşdirmək.</small>
+<div style="margin-top:10px"><button class="action-btn" onclick="toggleCalc('pdfTool')">Aç</button></div>
+<div class="tool-form" id="pdfTool">
+<input id="pdfFiles" type="file" accept="application/pdf" multiple>
+<button class="action-btn" onclick="mergePdfs()">Birləşdir və endir</button>
+<div class="result" id="pdfResult"></div>
+</div>
 </div>
 
 <div class="tool">
 <strong>📐 Ölçü çevirici</strong>
 <small>Ölçü vahidlərini çevirmək.</small>
+<div style="margin-top:10px"><button class="action-btn" onclick="toggleCalc('unitTool')">Aç</button></div>
+<div class="tool-form" id="unitTool">
+<input id="unitValue" type="number" placeholder="Dəyər" value="1">
+<select id="unitType" onchange="renderUnitOptions()">
+<option value="length">Uzunluq</option>
+<option value="weight">Çəki</option>
+<option value="temp">Temperatur</option>
+</select>
+<div class="tool-row">
+<select id="unitFrom"></select>
+<select id="unitTo"></select>
+</div>
+<button class="action-btn" onclick="unitConvert()">Çevir</button>
+<div class="result" id="unitResult"></div>
+</div>
 </div>
 
 <div class="tool">
 <strong>📅 Tarix alətləri</strong>
-<small>Tarix hesablamaları.</small>
+<small>İki tarix arasındakı fərq.</small>
+<div style="margin-top:10px"><button class="action-btn" onclick="toggleCalc('dateTool')">Aç</button></div>
+<div class="tool-form" id="dateTool">
+<input id="dateFrom" type="date">
+<input id="dateTo" type="date">
+<button class="action-btn" onclick="dateDiffCalc()">Fərqi hesabla</button>
+<div class="result" id="dateResult"></div>
+</div>
 </div>
 
 <div class="tool">
 <strong>⏱ Vaxt alətləri</strong>
-<small>Vaxt hesablamaları.</small>
+<small>Sadə xronometr.</small>
+<div style="margin-top:10px"><button class="action-btn" onclick="toggleCalc('timeTool')">Aç</button></div>
+<div class="tool-form" id="timeTool">
+<div class="stopwatch-display" id="stopwatchDisplay">00:00.0</div>
+<div style="display:flex;gap:8px">
+<button class="action-btn" onclick="stopwatchToggle()" id="stopwatchBtn">Başlat</button>
+<button class="action-btn secondary" onclick="stopwatchReset()">Sıfırla</button>
+</div>
+</div>
 </div>
 
 <div class="tool">
 <strong>🔗 Link alətləri</strong>
-<small>Faydalı link funksiyaları.</small>
+<small>Link qısaltmaq və kopyalamaq.</small>
+<div style="margin-top:10px"><button class="action-btn" onclick="toggleCalc('linkTool')">Aç</button></div>
+<div class="tool-form" id="linkTool">
+<input id="linkInput" placeholder="https://...">
+<button class="action-btn" onclick="shortenLink()">Qısalt (yeni pəncərədə)</button>
+<div class="result" id="linkResult"></div>
+</div>
 </div>
 
 </div>
@@ -1152,6 +1371,8 @@ alətlər, xəbərlər və xidmətlər.
 
 <!-- HLS.JS -->
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+<!-- PDF-LIB (client-side PDF merge, no server needed) -->
+<script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 
 <script>
 
@@ -1278,14 +1499,20 @@ const map={
 "futbol":"sports",
 "mma":"sports",
 "ufc":"sports",
+"formula":"sports",
+"tennis":"sports",
+"basketbol":"sports",
 "hesab":"calculators",
 "kredit":"calculators",
 "btu":"calculators",
 "klaviatura":"keyboard",
 "ev":"home",
+"boya":"home",
+"kafel":"home",
 "təmir":"home",
 "alət":"tools",
-"qr":"tools"
+"qr":"tools",
+"parol":"tools"
 };
 
 for(const key in map){
@@ -1307,7 +1534,7 @@ showToast("Nəticə tapılmadı.");
 
 
 /* =========================
-   CALCULATORS
+   CALCULATORS (existing)
 ========================= */
 
 function toggleCalc(id){
@@ -1465,6 +1692,580 @@ ageValue--;
 
 ageResult.textContent="Yaş: "+ageValue;
 
+}
+
+
+/* =========================
+   HOME / TƏMIR CALCULATORS (new)
+========================= */
+
+function paintCalcRun(){
+const area=Number(document.getElementById("paintArea").value);
+const coats=Number(document.getElementById("paintCoats").value)||1;
+const out=document.getElementById("paintResult");
+if(!area){
+out.className="result err";
+out.textContent="Sahəni daxil edin.";
+return;
+}
+const coveragePerLiter=10;
+const liters=(area*coats)/coveragePerLiter;
+out.className="result";
+out.textContent="Lazım olan boya: "+liters.toFixed(1)+" litr (1 litr ~10 m² örtür, "+coats+" qat üçün)";
+}
+
+function tileCalcRun(){
+const floor=Number(document.getElementById("tileFloorArea").value);
+const w=Number(document.getElementById("tileWidth").value);
+const h=Number(document.getElementById("tileHeight").value);
+const out=document.getElementById("tileResult");
+if(!floor||!w||!h){
+out.className="result err";
+out.textContent="Bütün sahələri doldurun.";
+return;
+}
+const tileArea=(w/100)*(h/100);
+const count=Math.ceil((floor/tileArea)*1.1);
+out.className="result";
+out.textContent="Lazım olan kafel: "+count+" ədəd (10% ehtiyat daxil)";
+}
+
+function laminateCalcRun(){
+const area=Number(document.getElementById("laminateArea").value);
+const packArea=Number(document.getElementById("laminatePackArea").value)||2.2;
+const out=document.getElementById("laminateResult");
+if(!area){
+out.className="result err";
+out.textContent="Sahəni daxil edin.";
+return;
+}
+const packs=Math.ceil((area*1.08)/packArea);
+out.className="result";
+out.textContent="Lazım olan paket: "+packs+" paket (8% ehtiyat daxil)";
+}
+
+function repairCalcRun(){
+const area=Number(document.getElementById("repairArea").value);
+const rate=Number(document.getElementById("repairLevel").value);
+const out=document.getElementById("repairResult");
+if(!area){
+out.className="result err";
+out.textContent="Sahəni daxil edin.";
+return;
+}
+const total=area*rate;
+out.className="result";
+out.textContent="Təxmini smeta: "+total.toLocaleString("az-AZ")+" ₼ (yalnız orientasiya üçündür)";
+}
+
+
+/* =========================
+   NEWS (RSS via rss2json)
+========================= */
+
+const NEWS_FEEDS={
+az:{label:"Azərbaycan xəbərləri",url:"http://feeds.bbci.co.uk/azeri/rss.xml"},
+world:{label:"Dünya xəbərləri",url:"http://feeds.bbci.co.uk/news/world/rss.xml"},
+business:{label:"İqtisadiyyat",url:"http://feeds.bbci.co.uk/news/business/rss.xml"},
+tech:{label:"Texnologiya",url:"http://feeds.bbci.co.uk/news/technology/rss.xml"}
+};
+
+const newsCache={};
+
+async function fetchFeed(key){
+if(newsCache[key]){
+return newsCache[key];
+}
+const feed=NEWS_FEEDS[key];
+const api="https://api.rss2json.com/v1/api.json?rss_url="+encodeURIComponent(feed.url);
+const res=await fetch(api);
+if(!res.ok){
+throw new Error("network");
+}
+const data=await res.json();
+if(data.status!=="ok" || !data.items || !data.items.length){
+throw new Error("empty");
+}
+newsCache[key]=data.items;
+return data.items;
+}
+
+function stripHtml(html){
+const div=document.createElement("div");
+div.innerHTML=html||"";
+return (div.textContent||div.innerText||"").trim();
+}
+
+async function loadNewsPreview(key){
+const el=document.querySelector('.news-mini[data-feed="'+key+'"]');
+const loadingEl=el.querySelector(".news-loading");
+try{
+const items=await fetchFeed(key);
+const first=items[0];
+loadingEl.outerHTML='<span class="src">'+stripHtml(first.title).slice(0,70)+'</span>';
+}catch(e){
+loadingEl.textContent="Hazırda yüklənmir";
+}
+}
+
+async function loadMainNews(){
+try{
+const items=await fetchFeed("az");
+const first=items[0];
+document.getElementById("mainNewsTitle").textContent=stripHtml(first.title);
+document.getElementById("mainNewsDesc").textContent=stripHtml(first.description).slice(0,140)+"...";
+}catch(e){
+document.getElementById("mainNewsTitle").textContent="Xəbərlər hazırda yüklənmir";
+document.getElementById("mainNewsDesc").textContent="Bir az sonra yenidən cəhd edin.";
+}
+}
+
+async function openNewsCategory(key){
+const panel=document.getElementById("newsExpanded");
+const list=document.getElementById("newsExpandedList");
+const title=document.getElementById("newsExpandedTitle");
+title.textContent=NEWS_FEEDS[key].label;
+list.innerHTML='<p class="news-loading">Yüklənir...</p>';
+panel.classList.add("active");
+panel.scrollIntoView({behavior:"smooth",block:"nearest"});
+try{
+const items=await fetchFeed(key);
+list.innerHTML="";
+items.slice(0,10).forEach(item=>{
+const row=document.createElement("div");
+row.className="news-list-item";
+row.textContent=stripHtml(item.title);
+row.onclick=()=>window.open(item.link,"_blank");
+list.appendChild(row);
+});
+}catch(e){
+list.innerHTML='<p class="news-loading">Bu xəbər mənbəyi hazırda əlçatan deyil. Bir az sonra yenidən cəhd edin.</p>';
+}
+}
+
+function closeNewsExpanded(){
+document.getElementById("newsExpanded").classList.remove("active");
+}
+
+function refreshNews(){
+Object.keys(newsCache).forEach(k=>delete newsCache[k]);
+document.querySelectorAll(".news-mini").forEach(el=>{
+const key=el.getAttribute("data-feed");
+el.querySelector(".src, .news-loading")?.remove();
+const span=document.createElement("span");
+span.className="news-loading";
+span.textContent="Yüklənir...";
+el.appendChild(span);
+});
+loadMainNews();
+Object.keys(NEWS_FEEDS).forEach(loadNewsPreview);
+showToast("Xəbərlər yenilənir...");
+}
+
+loadMainNews();
+Object.keys(NEWS_FEEDS).forEach(loadNewsPreview);
+
+
+/* =========================
+   RELIGION SECTION
+========================= */
+
+const DUA_LIST=[
+{ar:"بِسْمِ اللَّهِ",tr:"Bismillah",meaning:"Hər işə başlarkən deyilən zikr — Allahın adı ilə."},
+{ar:"سُبْحَانَ اللَّهِ وَبِحَمْدِهِ",tr:"Subhanallahi wa bihamdih",meaning:"Allahı həmd ilə təsbih edirəm."},
+{ar:"اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ",tr:"Allahumma salli ala Muhammad",meaning:"Peyğəmbərə salavat gətirmək."},
+{ar:"رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً",tr:"Rabbana atina fid-dunya hasanatan wa fil-akhirati hasanah",meaning:"Ey Rəbbimiz, bizə dünyada da yaxşılıq ver, axirətdə də yaxşılıq ver."},
+{ar:"أَسْتَغْفِرُ اللَّهَ",tr:"Astaghfirullah",meaning:"Allahdan bağışlanma diləyirəm."},
+{ar:"لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ",tr:"La hawla wa la quwwata illa billah",meaning:"Güc-qüvvət yalnız Allahdandır."}
+];
+
+const RELIGION_STATIC={
+mekke:{
+title:"Məkkə əl-Mükərrəmə",
+html:'<p style="margin-bottom:10px">İslamın ən müqəddəs şəhəri, Məscid əl-Haram və Kəbənin yerləşdiyi məkan. Milyonlarla müsəlman ildə Həcc və Ümrə üçün buraya səfər edir.</p>'+
+'<div class="religion-actions">'+
+'<button class="action-btn" onclick="document.getElementById(\'live\').scrollIntoView({behavior:\'smooth\'});closeReligionResult()">📺 Canlı yayımı izlə</button>'+
+'<button class="action-btn secondary" onclick="window.open(\'https://www.google.com/maps/place/Kaaba\',\'_blank\')">🗺️ Xəritədə bax</button>'+
+'</div>'
+},
+medine:{
+title:"Mədinə əl-Münəvvərə",
+html:'<p style="margin-bottom:10px">Peyğəmbər Məscidinin (Məscid ən-Nəbəvi) yerləşdiyi şəhər. Məkkədən sonra İslamda ikinci ən müqəddəs məkan sayılır.</p>'+
+'<div class="religion-actions">'+
+'<button class="action-btn" onclick="document.getElementById(\'live\').scrollIntoView({behavior:\'smooth\'});closeReligionResult()">📺 Canlı yayımı izlə</button>'+
+'<button class="action-btn secondary" onclick="window.open(\'https://www.google.com/maps/place/Al-Masjid+an-Nabawi\',\'_blank\')">🗺️ Xəritədə bax</button>'+
+'</div>'
+},
+hecc:{
+title:"Həcc — əsas mərhələlər",
+html:'<ol style="padding-left:18px;display:grid;gap:6px">'+
+'<li>İhrama girmək (niyyət və xüsusi geyim)</li>'+
+'<li>Məkkəyə giriş və Təvaf</li>'+
+'<li>Səfa və Mərvə arasında Səy</li>'+
+'<li>Minaya getmək (8 Zilhiccə)</li>'+
+'<li>Ərəfə günü — Ərəfat düzündə vüquf</li>'+
+'<li>Müzdəlifədə gecələmə</li>'+
+'<li>Cəmərat daşlama və qurban</li>'+
+'<li>Vida təvafı</li>'+
+'</ol>'+
+'<p style="margin-top:10px;color:#667085;font-size:13px">Bu, ümumi məlumat xarakterlidir — dəqiq dini hökmlər üçün mötəbər dini məsləhətçiyə müraciət edin.</p>'
+},
+umre:{
+title:"Ümrə — əsas mərhələlər",
+html:'<ol style="padding-left:18px;display:grid;gap:6px">'+
+'<li>İhrama girmək</li>'+
+'<li>Kəbəni təvaf etmək (7 dövrə)</li>'+
+'<li>Səfa və Mərvə arasında Səy (7 dövrə)</li>'+
+'<li>Saç qırxdırmaq və ya qısaltmaq (Həlq/Təqsir)</li>'+
+'</ol>'+
+'<p style="margin-top:10px;color:#667085;font-size:13px">Ümrə ilin istənilən vaxtı edilə bilər, Həccdən fərqli olaraq zaman məhdudiyyəti yoxdur.</p>'
+},
+viza:{
+title:"Səfər və viza məlumatları",
+html:'<p style="margin-bottom:10px">Səudiyyə Ərəbistanına Həcc, Ümrə və turist səfərləri üçün elektron viza tələb olunur. Ən doğru və yenilənmiş məlumatı yalnız rəsmi mənbələrdən əldə edin.</p>'+
+'<div class="religion-actions">'+
+'<button class="action-btn" onclick="window.open(\'https://visa.visitsaudi.com\',\'_blank\')">🛂 Rəsmi turist viza portalı</button>'+
+'<button class="action-btn secondary" onclick="window.open(\'https://www.nusuk.sa\',\'_blank\')">🕋 Nusuk — Həcc/Ümrə portalı</button>'+
+'</div>'
+},
+otel:{
+title:"Otel — Məkkə və Mədinə",
+html:'<p style="margin-bottom:10px">Məscidə yaxınlığa, qiymətə və rəylərə görə otel axtarışı üçün etibarlı bron platformalarından istifadə edin.</p>'+
+'<div class="religion-actions">'+
+'<button class="action-btn" onclick="window.open(\'https://www.booking.com/city/sa/makkah.html\',\'_blank\')">🏨 Məkkədə otellər</button>'+
+'<button class="action-btn secondary" onclick="window.open(\'https://www.booking.com/city/sa/madinah.html\',\'_blank\')">🏨 Mədinədə otellər</button>'+
+'</div>'
+}
+};
+
+function renderDuaList(){
+return DUA_LIST.map(d=>
+'<div class="dua-item"><div class="ar">'+d.ar+'</div><div class="meaning"><strong>'+d.tr+'</strong> — '+d.meaning+'</div></div>'
+).join("");
+}
+
+async function loadReligion(key,cardEl){
+
+document.querySelectorAll(".religion-card").forEach(c=>c.classList.remove("active"));
+if(cardEl){
+cardEl.classList.add("active");
+}
+
+const panel=document.getElementById("religionResult");
+const body=document.getElementById("religionResultBody");
+const title=document.getElementById("religionResultTitle");
+
+panel.classList.add("active");
+panel.scrollIntoView({behavior:"smooth",block:"nearest"});
+
+if(key==="dua"){
+title.textContent="Gündəlik dua və zikrlər";
+body.innerHTML=renderDuaList();
+return;
+}
+
+if(RELIGION_STATIC[key]){
+title.textContent=RELIGION_STATIC[key].title;
+body.innerHTML=RELIGION_STATIC[key].html;
+return;
+}
+
+if(key==="quran"){
+title.textContent="Quran — təsadüfi ayə";
+body.innerHTML='<p class="news-loading">Yüklənir...</p>';
+try{
+const randomAyah=Math.floor(Math.random()*6236)+1;
+const url="https://api.alquran.cloud/v1/ayah/"+randomAyah+"/editions/quran-uthmani,en.sahih,ar.alafasy";
+const res=await fetch(url);
+if(!res.ok){throw new Error("network");}
+const data=await res.json();
+const editions=data.data;
+const arabic=editions.find(e=>e.edition.identifier==="quran-uthmani");
+const english=editions.find(e=>e.edition.identifier==="en.sahih");
+const audio=editions.find(e=>e.edition.identifier==="ar.alafasy");
+body.innerHTML=
+'<div style="font-size:22px;direction:rtl;text-align:right;margin-bottom:12px;line-height:1.8">'+arabic.text+'</div>'+
+'<p style="color:#667085;margin-bottom:8px">'+english.text+'</p>'+
+'<p style="font-size:12px;color:#98a2b3;margin-bottom:8px">Surə '+arabic.surah.number+' — '+arabic.surah.englishName+', ayə '+arabic.numberInSurah+'</p>'+
+(audio.audio?'<audio class="religion-audio" controls src="'+audio.audio+'"></audio>':'')+
+'<div class="religion-actions"><button class="action-btn secondary" onclick="loadReligion(\'quran\')">🔄 Başqa ayə</button></div>';
+}catch(e){
+body.innerHTML='<p class="news-loading">Ayə hazırda yüklənmədi. Bir az sonra yenidən cəhd edin.</p>';
+}
+}
+}
+
+function closeReligionResult(){
+document.getElementById("religionResult").classList.remove("active");
+document.querySelectorAll(".religion-card").forEach(c=>c.classList.remove("active"));
+}
+
+
+/* =========================
+   SPORTS SCHEDULES (TheSportsDB free API)
+========================= */
+
+const SPORT_LEAGUES={
+football:{label:"Futbol — İngiltərə Premyer Liqası",id:"4328"},
+basketball:{label:"Basketbol — NBA",id:"4387"},
+mma:{label:"MMA — UFC",id:"4443"},
+f1:{label:"Formula 1",id:"4370"},
+tennis:{label:"Tennis — ATP",id:"4464"}
+};
+
+async function loadSport(key,cardEl){
+
+document.querySelectorAll(".sport-card").forEach(c=>c.classList.remove("active"));
+if(cardEl){
+cardEl.classList.add("active");
+}
+
+const panel=document.getElementById("sportsResult");
+const body=document.getElementById("sportsResultBody");
+const title=document.getElementById("sportsResultTitle");
+
+const league=SPORT_LEAGUES[key];
+title.textContent=league.label+" — yaxın oyunlar";
+body.innerHTML='<p class="news-loading">Yüklənir...</p>';
+panel.classList.add("active");
+panel.scrollIntoView({behavior:"smooth",block:"nearest"});
+
+try{
+const url="https://www.thesportsdb.com/api/v1/json/3/eventsnextleague.php?id="+league.id;
+const res=await fetch(url);
+if(!res.ok){
+throw new Error("network");
+}
+const data=await res.json();
+if(!data.events || !data.events.length){
+body.innerHTML='<p class="news-loading">Hazırda planlaşdırılan tədbir tapılmadı. Bir az sonra yenidən yoxlayın.</p>';
+return;
+}
+body.innerHTML="";
+data.events.slice(0,8).forEach(ev=>{
+const row=document.createElement("div");
+row.className="event-row";
+const teams=ev.strEvent || (ev.strHomeTeam+" vs "+ev.strAwayTeam);
+const dateStr=ev.dateEvent||"";
+const timeStr=ev.strTime?ev.strTime.slice(0,5):"";
+row.innerHTML=
+'<div><div class="teams">'+teams+'</div><div class="meta">'+(ev.strVenue||ev.strLeague||"")+'</div></div>'+
+'<div class="when">'+dateStr+(timeStr?" · "+timeStr:"")+'</div>';
+body.appendChild(row);
+});
+}catch(e){
+body.innerHTML='<p class="news-loading">Məlumat hazırda yüklənmədi. İnternet bağlantısını yoxlayıb yenidən cəhd edin.</p>';
+}
+}
+
+function closeSportsResult(){
+document.getElementById("sportsResult").classList.remove("active");
+document.querySelectorAll(".sport-card").forEach(c=>c.classList.remove("active"));
+}
+
+
+/* =========================
+   TOOLS
+========================= */
+
+function generateQR(){
+const text=document.getElementById("qrText").value.trim();
+const preview=document.getElementById("qrPreview");
+if(!text){
+preview.innerHTML='<p class="news-loading">Mətn daxil edin.</p>';
+return;
+}
+const url="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data="+encodeURIComponent(text);
+preview.innerHTML='<img src="'+url+'" width="180" height="180" alt="QR code">';
+}
+
+function generatePassword(){
+const len=Math.max(4,Math.min(64,Number(document.getElementById("passLength").value)||14));
+const chars="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=";
+let out="";
+const arr=new Uint32Array(len);
+if(window.crypto && window.crypto.getRandomValues){
+window.crypto.getRandomValues(arr);
+}else{
+for(let i=0;i<len;i++){arr[i]=Math.floor(Math.random()*1e9);}
+}
+for(let i=0;i<len;i++){
+out+=chars[arr[i]%chars.length];
+}
+document.getElementById("passResult").textContent=out;
+}
+
+function updateTextCount(){
+const text=document.getElementById("countText").value;
+const words=text.trim().length?text.trim().split(/\s+/).length:0;
+const chars=text.length;
+document.getElementById("countResult").textContent="Söz: "+words+" · Simvol: "+chars;
+}
+
+async function mergePdfs(){
+const input=document.getElementById("pdfFiles");
+const out=document.getElementById("pdfResult");
+if(!input.files || input.files.length<2){
+out.className="result err";
+out.textContent="Ən azı 2 PDF faylı seçin.";
+return;
+}
+if(!window.PDFLib){
+out.className="result err";
+out.textContent="PDF alətini yükləmək mümkün olmadı. Səhifəni yeniləyin.";
+return;
+}
+out.className="result";
+out.textContent="Birləşdirilir...";
+try{
+const {PDFDocument}=window.PDFLib;
+const merged=await PDFDocument.create();
+for(const file of input.files){
+const bytes=await file.arrayBuffer();
+const src=await PDFDocument.load(bytes);
+const pages=await merged.copyPages(src, src.getPageIndices());
+pages.forEach(p=>merged.addPage(p));
+}
+const mergedBytes=await merged.save();
+const blob=new Blob([mergedBytes],{type:"application/pdf"});
+const link=document.createElement("a");
+link.href=URL.createObjectURL(blob);
+link.download="birlesmis.pdf";
+link.click();
+out.textContent="Hazırdır — fayl endirildi.";
+}catch(e){
+out.className="result err";
+out.textContent="Xəta baş verdi. Faylların düzgün PDF olduğuna əmin olun.";
+}
+}
+
+const UNIT_OPTIONS={
+length:[["m","metr"],["km","kilometr"],["cm","santimetr"],["mi","mil"],["ft","fut"]],
+weight:[["kg","kiloqram"],["g","qram"],["lb","funt"],["oz","unsiya"]],
+temp:[["c","Selsi"],["f","Fahrenheit"],["k","Kelvin"]]
+};
+
+function renderUnitOptions(){
+const type=document.getElementById("unitType").value;
+const from=document.getElementById("unitFrom");
+const to=document.getElementById("unitTo");
+from.innerHTML="";
+to.innerHTML="";
+UNIT_OPTIONS[type].forEach(([val,label])=>{
+from.innerHTML+='<option value="'+val+'">'+label+'</option>';
+to.innerHTML+='<option value="'+val+'">'+label+'</option>';
+});
+if(UNIT_OPTIONS[type][1]){
+to.value=UNIT_OPTIONS[type][1][0];
+}
+}
+renderUnitOptions();
+
+function toMeters(v,u){
+return {m:1,km:1000,cm:0.01,mi:1609.34,ft:0.3048}[u]*v;
+}
+function toKg(v,u){
+return {kg:1,g:0.001,lb:0.453592,oz:0.0283495}[u]*v;
+}
+function tempToC(v,u){
+if(u==="c")return v;
+if(u==="f")return (v-32)*5/9;
+if(u==="k")return v-273.15;
+}
+function cToTemp(v,u){
+if(u==="c")return v;
+if(u==="f")return v*9/5+32;
+if(u==="k")return v+273.15;
+}
+
+function unitConvert(){
+const type=document.getElementById("unitType").value;
+const value=Number(document.getElementById("unitValue").value);
+const from=document.getElementById("unitFrom").value;
+const to=document.getElementById("unitTo").value;
+const out=document.getElementById("unitResult");
+if(isNaN(value)){
+out.className="result err";
+out.textContent="Dəyəri daxil edin.";
+return;
+}
+let result;
+if(type==="length"){
+result=toMeters(value,from)/{m:1,km:1000,cm:0.01,mi:1609.34,ft:0.3048}[to];
+}else if(type==="weight"){
+result=toKg(value,from)/{kg:1,g:0.001,lb:0.453592,oz:0.0283495}[to];
+}else{
+result=cToTemp(tempToC(value,from),to);
+}
+out.className="result";
+out.textContent=value+" "+from+" = "+result.toFixed(3)+" "+to;
+}
+
+function dateDiffCalc(){
+const from=document.getElementById("dateFrom").value;
+const to=document.getElementById("dateTo").value;
+const out=document.getElementById("dateResult");
+if(!from||!to){
+out.className="result err";
+out.textContent="Hər iki tarixi seçin.";
+return;
+}
+const d1=new Date(from);
+const d2=new Date(to);
+const diffDays=Math.round(Math.abs(d2-d1)/(1000*60*60*24));
+out.className="result";
+out.textContent="Fərq: "+diffDays+" gün";
+}
+
+let stopwatchInterval=null;
+let stopwatchStart=0;
+let stopwatchElapsed=0;
+let stopwatchRunning=false;
+
+function formatStopwatch(ms){
+const totalSec=ms/1000;
+const min=Math.floor(totalSec/60);
+const sec=Math.floor(totalSec%60);
+const tenth=Math.floor((ms%1000)/100);
+return String(min).padStart(2,"0")+":"+String(sec).padStart(2,"0")+"."+tenth;
+}
+
+function stopwatchToggle(){
+const btn=document.getElementById("stopwatchBtn");
+if(!stopwatchRunning){
+stopwatchStart=Date.now()-stopwatchElapsed;
+stopwatchInterval=setInterval(()=>{
+stopwatchElapsed=Date.now()-stopwatchStart;
+document.getElementById("stopwatchDisplay").textContent=formatStopwatch(stopwatchElapsed);
+},100);
+stopwatchRunning=true;
+btn.textContent="Dayandır";
+}else{
+clearInterval(stopwatchInterval);
+stopwatchRunning=false;
+btn.textContent="Davam et";
+}
+}
+
+function stopwatchReset(){
+clearInterval(stopwatchInterval);
+stopwatchRunning=false;
+stopwatchElapsed=0;
+document.getElementById("stopwatchDisplay").textContent="00:00.0";
+document.getElementById("stopwatchBtn").textContent="Başlat";
+}
+
+function shortenLink(){
+const url=document.getElementById("linkInput").value.trim();
+const out=document.getElementById("linkResult");
+if(!url || !/^https?:\/\//i.test(url)){
+out.className="result err";
+out.textContent="Düzgün link daxil edin (http:// və ya https:// ilə).";
+return;
+}
+window.open("https://tinyurl.com/app/create?url="+encodeURIComponent(url),"_blank");
+out.className="result";
+out.textContent="Qısaltma səhifəsi yeni pəncərədə açıldı.";
 }
 
 
